@@ -1,0 +1,6 @@
+../Core/Src/freertos.c:108:6:MX_FREERTOS_Init	8	static
+../Core/Src/freertos.c:162:6:StartDefaultTask	16	static
+../Core/Src/freertos.c:179:6:StartTime	16	static
+../Core/Src/freertos.c:203:6:StartLED	16	static
+../Core/Src/freertos.c:226:6:StartLCD	16	static
+../Core/Src/freertos.c:248:6:StartUart	16	static
