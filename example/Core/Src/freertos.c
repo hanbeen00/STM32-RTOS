@@ -29,6 +29,8 @@
 #include "tim.h"
 #include "CLCD.h"
 #include "usart.h"
+#include "events.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,15 +50,15 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-volatile uint32_t time = 0;
-uint8_t str[20];
+volatile uint32_t time_1sec = 0;
+char str[20];
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal,
+  .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for TimeTask */
 osThreadId_t TimeTaskHandle;
@@ -70,7 +72,7 @@ osThreadId_t LEDTaskHandle;
 const osThreadAttr_t LEDTask_attributes = {
   .name = "LEDTask",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityLow,
+  .priority = (osPriority_t) osPriorityBelowNormal,
 };
 /* Definitions for LCDTask */
 osThreadId_t LCDTaskHandle;
@@ -84,7 +86,22 @@ osThreadId_t UartTaskHandle;
 const osThreadAttr_t UartTask_attributes = {
   .name = "UartTask",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityLow,
+  .priority = (osPriority_t) osPriorityBelowNormal,
+};
+/* Definitions for timeMutex */
+osMutexId_t timeMutexHandle;
+const osMutexAttr_t timeMutex_attributes = {
+  .name = "timeMutex"
+};
+/* Definitions for timeSem */
+osSemaphoreId_t timeSemHandle;
+const osSemaphoreAttr_t timeSem_attributes = {
+  .name = "timeSem"
+};
+/* Definitions for eventFlags */
+osEventFlagsId_t eventFlagsHandle;
+const osEventFlagsAttr_t eventFlags_attributes = {
+  .name = "eventFlags"
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -109,10 +126,17 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
+  /* Create the mutex(es) */
+  /* creation of timeMutex */
+  timeMutexHandle = osMutexNew(&timeMutex_attributes);
 
   /* USER CODE BEGIN RTOS_MUTEX */
 	/* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
+
+  /* Create the semaphores(s) */
+  /* creation of timeSem */
+  timeSemHandle = osSemaphoreNew(1, 0, &timeSem_attributes);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
 	/* add semaphores, ... */
@@ -146,7 +170,11 @@ void MX_FREERTOS_Init(void) {
 	/* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
+  /* creation of eventFlags */
+  eventFlagsHandle = osEventFlagsNew(&eventFlags_attributes);
+
   /* USER CODE BEGIN RTOS_EVENTS */
+
 	/* add events, ... */
   /* USER CODE END RTOS_EVENTS */
 
@@ -183,12 +211,20 @@ void StartTime(void *argument)
 
 	/* Infinite loop */
 	for (;;) {
-		if (flag_time) {
-			flag_time = 0;
-			time++;
+		// 세마포어 대기 (무한 대기)
+//		if (osSemaphoreAcquire(timeSemHandle, osWaitForever) == osOK) {
+//			time_1sec++;
+//			HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+//		}
+
+		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_TIME_BIT,
+		osFlagsWaitAny, osWaitForever);
+		if (flags & EVENT_TIME_BIT) {
+			osMutexAcquire(timeMutexHandle, osWaitForever);
+			time_1sec++;
+			osMutexRelease(timeMutexHandle);
 			HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
 		}
-		osDelay(1);
 	}
   /* USER CODE END StartTime */
 }
@@ -207,11 +243,11 @@ void StartLED(void *argument)
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, SET);
 	/* Infinite loop */
 	for (;;) {
-		if (flag_led) {
-			flag_led = 0;
+		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_LED_BIT,
+		osFlagsWaitAny, osWaitForever);
+		if (flags & EVENT_LED_BIT) {
 			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 		}
-		osDelay(10);
 	}
   /* USER CODE END StartLED */
 }
@@ -230,10 +266,18 @@ void StartLCD(void *argument)
 	CLCD_Init();
 	/* Infinite loop */
 	for (;;) {
-		// TODO: 시간 표시 코드 추가 (LCD_Write 함수 등)
-		sprintf(str, "%d", time);
-		CLCD_Puts(0, 0, str);
-		osDelay(500);
+		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_LCD_BIT,
+		osFlagsWaitAny, osWaitForever);
+		if (flags & EVENT_LCD_BIT) {
+			uint32_t local_time;
+
+			osMutexAcquire(timeMutexHandle, osWaitForever);
+			local_time = time_1sec;
+			osMutexRelease(timeMutexHandle);
+
+			sprintf(str, "%lu", local_time);
+			CLCD_Puts(0, 0, (unsigned char *)str);
+		}
 	}
   /* USER CODE END StartLCD */
 }
@@ -248,13 +292,20 @@ void StartLCD(void *argument)
 void StartUart(void *argument)
 {
   /* USER CODE BEGIN StartUart */
-
-// TODO: UART초기화
 	/* Infinite loop */
 	for (;;) {
 		// TODO: 시간 전송
-		printf("%d\n",time);
-		osDelay(1000);
+		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_UART_BIT,
+		osFlagsWaitAny, osWaitForever);
+		if (flags & EVENT_UART_BIT) {
+			uint32_t local_time;
+
+			osMutexAcquire(timeMutexHandle, osWaitForever);
+			local_time = time_1sec;
+			osMutexRelease(timeMutexHandle);
+
+			printf("%lu\n", local_time);
+		}
 	}
   /* USER CODE END StartUart */
 }

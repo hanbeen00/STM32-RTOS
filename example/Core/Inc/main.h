@@ -31,8 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-extern volatile uint8_t flag_time;
-extern volatile uint8_t flag_led;
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

@@ -25,14 +25,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "events.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-int _write(int file, char* p, int len)
-{
-	HAL_UART_Transmit(&huart3, p, len, 10);
+int _write(int file, char *p, int len) {
+	HAL_UART_Transmit(&huart3, (uint8_t *)p, len, 10);
 	return len;
 }
 /* USER CODE END PTD */
@@ -50,8 +50,7 @@ int _write(int file, char* p, int len)
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-volatile uint8_t flag_time = 0;
-volatile uint8_t flag_led = 0;
+
 uint8_t rx3_data;
 /* USER CODE END PV */
 
@@ -103,8 +102,8 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart3, &rx3_data, 1);
-  printf("Hello\n");
+	HAL_UART_Receive_IT(&huart3, &rx3_data, 1);
+	printf("Hello\n");
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -145,12 +144,11 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLM = 8;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 4;
   RCC_OscInitStruct.PLL.PLLN = 168;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 4;
@@ -183,16 +181,18 @@ static void MX_NVIC_Init(void)
   /* TIM7_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(TIM7_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(TIM7_IRQn);
+  /* USART3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART3_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(USART3_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-	if(huart->Instance == USART3)
-	{
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	if (huart->Instance == USART3) {
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
-		HAL_UART_Receive_IT(&huart3, &rx3_data, 1);
 		HAL_UART_Transmit(&huart3, &rx3_data, 1, 10);
+		HAL_UART_Receive_IT(&huart3, &rx3_data, 1);
+		osEventFlagsSet(eventFlagsHandle, EVENT_UART_BIT);
 	}
 }
 /* USER CODE END 4 */
@@ -209,8 +209,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 	if (htim->Instance == TIM7) {
-		flag_time = 1;
-		flag_led = 1;
+		//osSemaphoreRelease(timeSemHandle);  // 세마포어로 TimeTask 깨우기
+
+		osEventFlagsSet(eventFlagsHandle, EVENT_TIME_BIT | EVENT_LED_BIT | EVENT_LCD_BIT | EVENT_UART_BIT);
 	}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM3)
