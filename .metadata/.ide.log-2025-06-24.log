@@ -1,0 +1,101 @@
+2025-06-25 00:07:35,339 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 269937688 Bytes (772800512)
+2025-06-25 00:07:35,443 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 291371352 Bytes (772800512)
+2025-06-25 00:07:35,959 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 331153056 Bytes (772800512)
+2025-06-25 00:07:36,294 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SPI
+2025-06-25 00:07:36,295 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: FREERTOS
+2025-06-25 00:07:36,295 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: TIM6_7
+2025-06-25 00:07:36,295 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SYS
+2025-06-25 00:07:36,295 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: RCC
+2025-06-25 00:07:36,295 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: NVIC
+2025-06-25 00:07:36,295 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: USART
+2025-06-25 00:07:36,295 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: GPIO
+2025-06-25 00:07:36,297 [INFO] CodeGenerator:882 - code generatio: config db path: C:\ST\STM32CubeIDE_1.14.0\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.14.1.202504091515\\db\
+2025-06-25 00:07:36,398 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\license.tmp_save
+2025-06-25 00:07:36,745 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\license.tmp
+2025-06-25 00:07:36,837 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\gpio.c_save
+2025-06-25 00:07:36,972 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\gpio.c
+2025-06-25 00:07:36,979 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\gpio.h_save
+2025-06-25 00:07:37,064 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\gpio.h
+2025-06-25 00:07:37,237 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-06-25 00:07:37,249 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp_save
+2025-06-25 00:07:37,311 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp
+2025-06-25 00:07:37,319 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp_save
+2025-06-25 00:07:37,385 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp
+2025-06-25 00:07:37,392 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp_save
+2025-06-25 00:07:37,459 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp
+2025-06-25 00:07:37,467 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp_save
+2025-06-25 00:07:37,555 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp
+2025-06-25 00:07:37,562 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp_save
+2025-06-25 00:07:37,632 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp
+2025-06-25 00:07:37,640 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp_save
+2025-06-25 00:07:37,693 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp
+2025-06-25 00:07:37,702 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp_save
+2025-06-25 00:07:37,761 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp
+2025-06-25 00:07:37,768 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp_save
+2025-06-25 00:07:37,829 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp
+2025-06-25 00:07:37,833 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp_save
+2025-06-25 00:07:37,883 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp
+2025-06-25 00:07:37,905 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-06-25 00:07:37,916 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp_save
+2025-06-25 00:07:37,961 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp
+2025-06-25 00:07:37,968 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp_save
+2025-06-25 00:07:38,013 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp
+2025-06-25 00:07:38,018 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp_save
+2025-06-25 00:07:38,071 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp
+2025-06-25 00:07:38,083 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp_save
+2025-06-25 00:07:38,135 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp
+2025-06-25 00:07:38,144 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp_save
+2025-06-25 00:07:38,195 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp
+2025-06-25 00:07:38,204 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp_save
+2025-06-25 00:07:38,258 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp
+2025-06-25 00:07:38,265 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp_save
+2025-06-25 00:07:38,321 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp
+2025-06-25 00:07:38,330 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp_save
+2025-06-25 00:07:38,381 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp
+2025-06-25 00:07:38,389 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp_save
+2025-06-25 00:07:38,435 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp
+2025-06-25 00:07:38,443 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\FreeRTOSConfig.h_save
+2025-06-25 00:07:38,507 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\FreeRTOSConfig.h
+2025-06-25 00:07:38,515 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\freertos.c_save
+2025-06-25 00:07:38,585 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\freertos.c
+2025-06-25 00:07:38,597 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\spi.c_save
+2025-06-25 00:07:38,705 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\spi.c
+2025-06-25 00:07:38,711 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\spi.h_save
+2025-06-25 00:07:38,762 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\spi.h
+2025-06-25 00:07:38,775 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\tim.c_save
+2025-06-25 00:07:38,845 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\tim.c
+2025-06-25 00:07:38,853 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\tim.h_save
+2025-06-25 00:07:38,907 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\tim.h
+2025-06-25 00:07:38,922 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\usart.c_save
+2025-06-25 00:07:39,000 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\usart.c
+2025-06-25 00:07:39,011 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\usart.h_save
+2025-06-25 00:07:39,066 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\usart.h
+2025-06-25 00:07:39,082 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_it.c_save
+2025-06-25 00:07:39,164 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_it.c
+2025-06-25 00:07:39,173 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_it.h_save
+2025-06-25 00:07:39,225 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_it.h
+2025-06-25 00:07:39,250 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_msp.c_save
+2025-06-25 00:07:39,327 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_msp.c
+2025-06-25 00:07:39,333 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\system.tmp_save
+2025-06-25 00:07:39,377 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\system.tmp
+2025-06-25 00:07:39,383 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_timebase_tim.c_save
+2025-06-25 00:07:39,436 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_timebase_tim.c
+2025-06-25 00:07:39,452 [INFO] CodeEngine:319 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_hal_conf.h_save
+2025-06-25 00:07:39,510 [INFO] CodeEngine:343 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_hal_conf.h
+2025-06-25 00:07:39,542 [INFO] ApiDbMcu:508 - Load IP Config File for SPI2
+2025-06-25 00:07:39,555 [INFO] ApiDbMcu:508 - Load IP Config File for TIM7
+2025-06-25 00:07:39,559 [INFO] ApiDbMcu:508 - Load IP Config File for USART3
+2025-06-25 00:07:39,563 [INFO] ApiDbMcu:508 - Load IP Config File for RCC
+2025-06-25 00:07:39,581 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\main.h_save
+2025-06-25 00:07:39,660 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\main.h
+2025-06-25 00:07:39,669 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\main.c_save
+2025-06-25 00:07:39,764 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\main.c
+2025-06-25 00:07:40,367 [INFO] ProjectBuilder:3324 - Time for Copy HAL[1] : 417mS.
+2025-06-25 00:07:40,377 [INFO] ProjectBuilder:4912 - Project Generator version: 4.6.0.1-B1
+2025-06-25 00:07:40,442 [INFO] ConfigFileManager:1590 - The Die is : DIE413
+2025-06-25 00:07:40,446 [INFO] ApiDbMcu:508 - Load IP Config File for FATFS
+2025-06-25 00:07:40,447 [INFO] ApiDbMcu:508 - Load IP Config File for LIBJPEG
+2025-06-25 00:07:40,452 [INFO] ApiDbMcu:508 - Load IP Config File for LWIP
+2025-06-25 00:07:40,457 [INFO] ApiDbMcu:508 - Load IP Config File for MBEDTLS
+2025-06-25 00:07:40,462 [INFO] ApiDbMcu:508 - Load IP Config File for USB_DEVICE
+2025-06-25 00:07:40,465 [INFO] ApiDbMcu:508 - Load IP Config File for USB_HOST

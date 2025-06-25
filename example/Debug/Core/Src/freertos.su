@@ -1,6 +1,9 @@
-../Core/Src/freertos.c:125:6:MX_FREERTOS_Init	8	static
-../Core/Src/freertos.c:190:6:StartDefaultTask	16	static
-../Core/Src/freertos.c:207:6:StartTime	24	static
-../Core/Src/freertos.c:239:6:StartLED	24	static
-../Core/Src/freertos.c:262:6:StartLCD	24	static
-../Core/Src/freertos.c:292:6:StartUart	24	static
+../Core/Src/freertos.c:133:6:MX_FREERTOS_Init	8	static
+../Core/Src/freertos.c:214:6:StartDefaultTask	16	static
+../Core/Src/freertos.c:230:6:StartTime	24	static
+../Core/Src/freertos.c:261:6:StartLED	24	static
+../Core/Src/freertos.c:283:6:StartLCD	24	static
+../Core/Src/freertos.c:311:6:StartUart	24	static
+../Core/Src/freertos.c:338:6:StartVS1003	24	static
+../Core/Src/freertos.c:378:6:StartFATFS	48	static
+../Core/Src/freertos.c:450:6:StartADC2DMA	48	static

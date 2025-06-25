@@ -19,6 +19,11 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "adc.h"
+#include "dma.h"
+#include "fatfs.h"
+#include "sdio.h"
+#include "spi.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -32,7 +37,7 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 int _write(int file, char *p, int len) {
-	HAL_UART_Transmit(&huart3, (uint8_t *)p, len, 10);
+	HAL_UART_Transmit(&huart3, (uint8_t*) p, len, 10);
 	return len;
 }
 /* USER CODE END PTD */
@@ -50,7 +55,7 @@ int _write(int file, char *p, int len) {
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint16_t adcval[4] = {0};
 uint8_t rx3_data;
 /* USER CODE END PV */
 
@@ -96,14 +101,24 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_TIM7_Init();
   MX_USART3_UART_Init();
+  MX_SPI2_Init();
+  MX_SDIO_SD_Init();
+  MX_FATFS_Init();
+  MX_ADC1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+    CLCD_GPIO_Init();
+    CLCD_Init();
+    HAL_ADC_Start_DMA(&hadc1,&adcval[0],4);
 	HAL_UART_Receive_IT(&huart3, &rx3_data, 1);
 	printf("Hello\n");
+
+
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -151,7 +166,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLM = 4;
   RCC_OscInitStruct.PLL.PLLN = 168;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 4;
+  RCC_OscInitStruct.PLL.PLLQ = 7;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -181,6 +196,9 @@ static void MX_NVIC_Init(void)
   /* TIM7_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(TIM7_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(TIM7_IRQn);
+  /* EXTI9_5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
   /* USART3_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(USART3_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(USART3_IRQn);
@@ -193,6 +211,17 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 		HAL_UART_Transmit(&huart3, &rx3_data, 1, 10);
 		HAL_UART_Receive_IT(&huart3, &rx3_data, 1);
 		osEventFlagsSet(eventFlagsHandle, EVENT_UART_BIT);
+	}
+}
+
+extern osThreadId_t VS1003TaskHandle;
+// EXTI 콜백 함수 예시
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	if (GPIO_Pin == GPIO_PIN_7) // DREQ 핀
+	{
+		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		vTaskNotifyGiveFromISR(VS1003TaskHandle, &xHigherPriorityTaskWoken);
+		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 	}
 }
 /* USER CODE END 4 */
@@ -211,7 +240,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if (htim->Instance == TIM7) {
 		//osSemaphoreRelease(timeSemHandle);  // 세마포어로 TimeTask 깨우기
 
-		osEventFlagsSet(eventFlagsHandle, EVENT_TIME_BIT | EVENT_LED_BIT | EVENT_LCD_BIT | EVENT_UART_BIT);
+		osEventFlagsSet(eventFlagsHandle,
+		EVENT_TIME_BIT | EVENT_LED_BIT | EVENT_LCD_BIT | EVENT_UART_BIT);
 	}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM3)
