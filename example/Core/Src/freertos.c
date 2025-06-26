@@ -29,12 +29,13 @@
 #include "tim.h"
 #include "CLCD.h"
 #include "VS1003.h"
-#include "MP3Sample.h"
 #include "usart.h"
 #include "events.h"
 #include <stdio.h>
 #include "fatfs.h"
 #include "sdio.h"
+#include "udp_echoserver.h"
+#include "udp_ntp_client.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,6 +50,7 @@ uint8_t mp3_buf[MP3_BUF_SIZE];
 volatile uint32_t mp3_buf_len = 0;
 volatile uint32_t mp3_buf_index = 0;
 extern uint16_t adcval[4];
+extern struct netif gnetif;
 
 #define MP3_CHUNK_SIZE 32
 
@@ -66,48 +68,75 @@ char str[20];
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = { .name = "defaultTask",
-		.stack_size = 128 * 4, .priority = (osPriority_t) osPriorityLow, };
+const osThreadAttr_t defaultTask_attributes = {
+  .name = "defaultTask",
+  .stack_size = 2048 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
 /* Definitions for TimeTask */
 osThreadId_t TimeTaskHandle;
-const osThreadAttr_t TimeTask_attributes = { .name = "TimeTask", .stack_size =
-		128 * 4, .priority = (osPriority_t) osPriorityAboveNormal, };
+const osThreadAttr_t TimeTask_attributes = {
+  .name = "TimeTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityAboveNormal,
+};
 /* Definitions for LEDTask */
 osThreadId_t LEDTaskHandle;
-const osThreadAttr_t LEDTask_attributes = { .name = "LEDTask", .stack_size = 128
-		* 4, .priority = (osPriority_t) osPriorityBelowNormal, };
+const osThreadAttr_t LEDTask_attributes = {
+  .name = "LEDTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityBelowNormal,
+};
 /* Definitions for LCDTask */
 osThreadId_t LCDTaskHandle;
-const osThreadAttr_t LCDTask_attributes = { .name = "LCDTask", .stack_size = 128
-		* 4, .priority = (osPriority_t) osPriorityNormal, };
+const osThreadAttr_t LCDTask_attributes = {
+  .name = "LCDTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* Definitions for UartTask */
 osThreadId_t UartTaskHandle;
-const osThreadAttr_t UartTask_attributes = { .name = "UartTask", .stack_size =
-		128 * 4, .priority = (osPriority_t) osPriorityBelowNormal, };
+const osThreadAttr_t UartTask_attributes = {
+  .name = "UartTask",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityBelowNormal,
+};
 /* Definitions for VS1003Task */
 osThreadId_t VS1003TaskHandle;
-const osThreadAttr_t VS1003Task_attributes = { .name = "VS1003Task",
-		.stack_size = 128 * 4, .priority = (osPriority_t) osPriorityNormal, };
+const osThreadAttr_t VS1003Task_attributes = {
+  .name = "VS1003Task",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 /* Definitions for FATFSTask */
 osThreadId_t FATFSTaskHandle;
-const osThreadAttr_t FATFSTask_attributes = { .name = "FATFSTask", .stack_size =
-		512 * 4, .priority = (osPriority_t) osPriorityBelowNormal, };
+const osThreadAttr_t FATFSTask_attributes = {
+  .name = "FATFSTask",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityBelowNormal,
+};
 /* Definitions for ADC2DMATask */
 osThreadId_t ADC2DMATaskHandle;
-const osThreadAttr_t ADC2DMATask_attributes = { .name = "ADC2DMATask",
-		.stack_size = 128 * 4, .priority = (osPriority_t) osPriorityLow, };
+const osThreadAttr_t ADC2DMATask_attributes = {
+  .name = "ADC2DMATask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
 /* Definitions for volQueue */
 osMessageQueueId_t volQueueHandle;
-const osMessageQueueAttr_t volQueue_attributes = { .name = "volQueue" };
+const osMessageQueueAttr_t volQueue_attributes = {
+  .name = "volQueue"
+};
 /* Definitions for timeMutex */
 osMutexId_t timeMutexHandle;
-const osMutexAttr_t timeMutex_attributes = { .name = "timeMutex" };
-/* Definitions for timeSem */
-osSemaphoreId_t timeSemHandle;
-const osSemaphoreAttr_t timeSem_attributes = { .name = "timeSem" };
+const osMutexAttr_t timeMutex_attributes = {
+  .name = "timeMutex"
+};
 /* Definitions for eventFlags */
 osEventFlagsId_t eventFlagsHandle;
-const osEventFlagsAttr_t eventFlags_attributes = { .name = "eventFlags" };
+const osEventFlagsAttr_t eventFlags_attributes = {
+  .name = "eventFlags"
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -123,84 +152,79 @@ void StartVS1003(void *argument);
 void StartFATFS(void *argument);
 void StartADC2DMA(void *argument);
 
+extern void MX_LWIP_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
- * @brief  FreeRTOS initialization
- * @param  None
- * @retval None
- */
+  * @brief  FreeRTOS initialization
+  * @param  None
+  * @retval None
+  */
 void MX_FREERTOS_Init(void) {
-	/* USER CODE BEGIN Init */
+  /* USER CODE BEGIN Init */
 
-	/* USER CODE END Init */
-	/* Create the mutex(es) */
-	/* creation of timeMutex */
-	timeMutexHandle = osMutexNew(&timeMutex_attributes);
+  /* USER CODE END Init */
+  /* Create the mutex(es) */
+  /* creation of timeMutex */
+  timeMutexHandle = osMutexNew(&timeMutex_attributes);
 
-	/* USER CODE BEGIN RTOS_MUTEX */
+  /* USER CODE BEGIN RTOS_MUTEX */
 	/* add mutexes, ... */
-	/* USER CODE END RTOS_MUTEX */
+  /* USER CODE END RTOS_MUTEX */
 
-	/* Create the semaphores(s) */
-	/* creation of timeSem */
-	timeSemHandle = osSemaphoreNew(1, 0, &timeSem_attributes);
-
-	/* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
 	/* add semaphores, ... */
-	/* USER CODE END RTOS_SEMAPHORES */
+  /* USER CODE END RTOS_SEMAPHORES */
 
-	/* USER CODE BEGIN RTOS_TIMERS */
+  /* USER CODE BEGIN RTOS_TIMERS */
 	/* start timers, add new ones, ... */
-	/* USER CODE END RTOS_TIMERS */
+  /* USER CODE END RTOS_TIMERS */
 
-	/* Create the queue(s) */
-	/* creation of volQueue */
-	volQueueHandle = osMessageQueueNew(5, sizeof(uint8_t),
-			&volQueue_attributes);
+  /* Create the queue(s) */
+  /* creation of volQueue */
+  volQueueHandle = osMessageQueueNew (5, sizeof(uint8_t), &volQueue_attributes);
 
-	/* USER CODE BEGIN RTOS_QUEUES */
+  /* USER CODE BEGIN RTOS_QUEUES */
 	/* add queues, ... */
-	/* USER CODE END RTOS_QUEUES */
+  /* USER CODE END RTOS_QUEUES */
 
-	/* Create the thread(s) */
-	/* creation of defaultTask */
-	defaultTaskHandle = osThreadNew(StartDefaultTask, NULL,
-			&defaultTask_attributes);
+  /* Create the thread(s) */
+  /* creation of defaultTask */
+  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
-	/* creation of TimeTask */
-	TimeTaskHandle = osThreadNew(StartTime, NULL, &TimeTask_attributes);
+  /* creation of TimeTask */
+  TimeTaskHandle = osThreadNew(StartTime, NULL, &TimeTask_attributes);
 
-	/* creation of LEDTask */
-	LEDTaskHandle = osThreadNew(StartLED, NULL, &LEDTask_attributes);
+  /* creation of LEDTask */
+  LEDTaskHandle = osThreadNew(StartLED, NULL, &LEDTask_attributes);
 
-	/* creation of LCDTask */
-	LCDTaskHandle = osThreadNew(StartLCD, NULL, &LCDTask_attributes);
+  /* creation of LCDTask */
+  LCDTaskHandle = osThreadNew(StartLCD, NULL, &LCDTask_attributes);
 
-	/* creation of UartTask */
-	UartTaskHandle = osThreadNew(StartUart, NULL, &UartTask_attributes);
+  /* creation of UartTask */
+  UartTaskHandle = osThreadNew(StartUart, NULL, &UartTask_attributes);
 
-	/* creation of VS1003Task */
-	VS1003TaskHandle = osThreadNew(StartVS1003, NULL, &VS1003Task_attributes);
+  /* creation of VS1003Task */
+  VS1003TaskHandle = osThreadNew(StartVS1003, NULL, &VS1003Task_attributes);
 
-	/* creation of FATFSTask */
-	FATFSTaskHandle = osThreadNew(StartFATFS, NULL, &FATFSTask_attributes);
+  /* creation of FATFSTask */
+  FATFSTaskHandle = osThreadNew(StartFATFS, NULL, &FATFSTask_attributes);
 
-	/* creation of ADC2DMATask */
-	ADC2DMATaskHandle = osThreadNew(StartADC2DMA, NULL,
-			&ADC2DMATask_attributes);
+  /* creation of ADC2DMATask */
+  ADC2DMATaskHandle = osThreadNew(StartADC2DMA, NULL, &ADC2DMATask_attributes);
 
-	/* USER CODE BEGIN RTOS_THREADS */
+  /* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
-	/* USER CODE END RTOS_THREADS */
+  /* USER CODE END RTOS_THREADS */
 
-	/* creation of eventFlags */
-	eventFlagsHandle = osEventFlagsNew(&eventFlags_attributes);
+  /* creation of eventFlags */
+  eventFlagsHandle = osEventFlagsNew(&eventFlags_attributes);
 
-	/* USER CODE BEGIN RTOS_EVENTS */
-
+  /* USER CODE BEGIN RTOS_EVENTS */
+	size_t free_heap = xPortGetFreeHeapSize();
+	//printf("Free heap size after init: %u bytes\n", (unsigned int)free_heap);
 	/* add events, ... */
-	/* USER CODE END RTOS_EVENTS */
+  /* USER CODE END RTOS_EVENTS */
 
 }
 
@@ -211,13 +235,30 @@ void MX_FREERTOS_Init(void) {
  * @retval None
  */
 /* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument) {
-	/* USER CODE BEGIN StartDefaultTask */
+void StartDefaultTask(void *argument)
+{
+  /* init code for LWIP */
+  MX_LWIP_Init();
+  /* USER CODE BEGIN StartDefaultTask */
+  //osDelay(2000);
+	udp_ntp_client_init();
+	printf("cccccccc\n");
+	//udp_echoserver_init();
+
 	/* Infinite loop */
 	for (;;) {
-		osDelay(1);
+		/* Read a received packet from the Ethernet buffers and send it
+		 to the lwIP for handling */
+
+		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_ETH_BIT,
+		osFlagsWaitAny, osWaitForever);
+		if (flags & EVENT_ETH_BIT) {
+			ethernetif_input(&gnetif);
+		}
+//		/* Handle timeouts */
+		sys_check_timeouts();
 	}
-	/* USER CODE END StartDefaultTask */
+  /* USER CODE END StartDefaultTask */
 }
 
 /* USER CODE BEGIN Header_StartTime */
@@ -227,8 +268,9 @@ void StartDefaultTask(void *argument) {
  * @retval None
  */
 /* USER CODE END Header_StartTime */
-void StartTime(void *argument) {
-	/* USER CODE BEGIN StartTime */
+void StartTime(void *argument)
+{
+  /* USER CODE BEGIN StartTime */
 	HAL_TIM_Base_Start_IT(&htim7);
 
 	/* Infinite loop */
@@ -248,7 +290,7 @@ void StartTime(void *argument) {
 			HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
 		}
 	}
-	/* USER CODE END StartTime */
+  /* USER CODE END StartTime */
 }
 
 /* USER CODE BEGIN Header_StartLED */
@@ -258,8 +300,9 @@ void StartTime(void *argument) {
  * @retval None
  */
 /* USER CODE END Header_StartLED */
-void StartLED(void *argument) {
-	/* USER CODE BEGIN StartLED */
+void StartLED(void *argument)
+{
+  /* USER CODE BEGIN StartLED */
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, SET);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, SET);
 	/* Infinite loop */
@@ -270,7 +313,7 @@ void StartLED(void *argument) {
 			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 		}
 	}
-	/* USER CODE END StartLED */
+  /* USER CODE END StartLED */
 }
 
 /* USER CODE BEGIN Header_StartLCD */
@@ -280,8 +323,9 @@ void StartLED(void *argument) {
  * @retval None
  */
 /* USER CODE END Header_StartLCD */
-void StartLCD(void *argument) {
-	/* USER CODE BEGIN StartLCD */
+void StartLCD(void *argument)
+{
+  /* USER CODE BEGIN StartLCD */
 
 	/* Infinite loop */
 	for (;;) {
@@ -298,7 +342,7 @@ void StartLCD(void *argument) {
 			CLCD_Puts(0, 0, (unsigned char*) str);
 		}
 	}
-	/* USER CODE END StartLCD */
+  /* USER CODE END StartLCD */
 }
 
 /* USER CODE BEGIN Header_StartUart */
@@ -308,8 +352,9 @@ void StartLCD(void *argument) {
  * @retval None
  */
 /* USER CODE END Header_StartUart */
-void StartUart(void *argument) {
-	/* USER CODE BEGIN StartUart */
+void StartUart(void *argument)
+{
+  /* USER CODE BEGIN StartUart */
 	/* Infinite loop */
 	for (;;) {
 		// TODO: 시간 전송
@@ -325,7 +370,7 @@ void StartUart(void *argument) {
 			printf("%lu\n", local_time);
 		}
 	}
-	/* USER CODE END StartUart */
+  /* USER CODE END StartUart */
 }
 
 /* USER CODE BEGIN Header_StartVS1003 */
@@ -335,8 +380,9 @@ void StartUart(void *argument) {
  * @retval None
  */
 /* USER CODE END Header_StartVS1003 */
-void StartVS1003(void *argument) {
-	/* USER CODE BEGIN StartVS1003 */
+void StartVS1003(void *argument)
+{
+  /* USER CODE BEGIN StartVS1003 */
 	VS1003_Init();
 	VS1003_SoftReset();
 	VS1003_SetVol();
@@ -349,8 +395,8 @@ void StartVS1003(void *argument) {
 
 		// 음량 변경 대기 및 처리
 		if (osMessageQueueGet(volQueueHandle, &vol, NULL, 0) == osOK) {
-		    vs1003ram[4] = vol;
-		    VS1003_SetVol();
+			vs1003ram[4] = vol;
+			VS1003_SetVol();
 		}
 
 		while (1) {
@@ -365,7 +411,7 @@ void StartVS1003(void *argument) {
 			}
 		}
 	}
-	/* USER CODE END StartVS1003 */
+  /* USER CODE END StartVS1003 */
 }
 
 /* USER CODE BEGIN Header_StartFATFS */
@@ -375,8 +421,9 @@ void StartVS1003(void *argument) {
  * @retval None
  */
 /* USER CODE END Header_StartFATFS */
-void StartFATFS(void *argument) {
-	/* USER CODE BEGIN StartFATFS */
+void StartFATFS(void *argument)
+{
+  /* USER CODE BEGIN StartFATFS */
 	hsd.Init.BusWide = SDIO_BUS_WIDE_1B;
 	uint32_t bw, br;
 	char str2[20];
@@ -437,7 +484,7 @@ void StartFATFS(void *argument) {
 		}
 		osDelay(10);
 	}
-	/* USER CODE END StartFATFS */
+  /* USER CODE END StartFATFS */
 }
 
 /* USER CODE BEGIN Header_StartADC2DMA */
@@ -447,14 +494,15 @@ void StartFATFS(void *argument) {
  * @retval None
  */
 /* USER CODE END Header_StartADC2DMA */
-void StartADC2DMA(void *argument) {
-	/* USER CODE BEGIN StartADC2DMA */
+void StartADC2DMA(void *argument)
+{
+  /* USER CODE BEGIN StartADC2DMA */
 	char str2[20];
 	uint8_t last_scaled = 0;
 
 	/* Infinite loop */
 	for (;;) {
-		uint8_t scaled = 255-(adcval[0] * 255) / 4100;
+		uint8_t scaled = 255 - (adcval[0] * 255) / 4100;
 		uint8_t scaled_10 = (scaled / 10) * 10;
 
 		// 음량 값이 바뀌었을 때만 업데이트 (불필요한 SPI 통신 줄이기)
@@ -467,7 +515,7 @@ void StartADC2DMA(void *argument) {
 		CLCD_Puts(5, 0, (unsigned char*) str2);
 		osDelay(100);
 	}
-	/* USER CODE END StartADC2DMA */
+  /* USER CODE END StartADC2DMA */
 }
 
 /* Private application code --------------------------------------------------*/

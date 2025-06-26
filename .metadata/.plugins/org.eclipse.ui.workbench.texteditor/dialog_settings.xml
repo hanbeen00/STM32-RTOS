@@ -3,15 +3,20 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="tcpip_init"/>
+		<item value="netif_add"/>
+		<item value="lwip_init_done"/>
+		<item value="assertion"/>
+		<item value="MP3_BUF_SIZE "/>
+		<item value="fail"/>
+		<item value="HAL_ETH_RxCpltCallback"/>
+		<item value="handler"/>
+		<item value="echo"/>
+		<item value="MX_LWIP_Init();"/>
+		<item value="osMessageQueuePut"/>
+		<item value="volQueueHandle"/>
+		<item value="queue"/>
 		<item value="vs1003ram"/>
 		<item value="buf"/>
-		<item value="ClockDiv "/>
-		<item value="1B"/>
-		<item value="str"/>
-		<item value="CLCD_Puts"/>
-		<item value="extern"/>
-		<item value="time"/>
-		<item value="evemt"/>
-		<item value="timeSemHandle"/>
 	</list>
 </section>

@@ -1,10 +1,46 @@
-15:34:56 **** Incremental Build of configuration Debug for project example ****
+23:34:16 **** Incremental Build of configuration Debug for project example ****
 make -j12 all 
+arm-none-eabi-gcc "../Core/Src/freertos.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -I../LWIP/App -I../LWIP/Target -I../Middlewares/Third_Party/LwIP/src/include -I../Middlewares/Third_Party/LwIP/system -I../Middlewares/Third_Party/LwIP/src/include/netif/ppp -I../Middlewares/Third_Party/LwIP/src/include/lwip -I../Middlewares/Third_Party/LwIP/src/include/lwip/apps -I../Middlewares/Third_Party/LwIP/src/include/lwip/priv -I../Middlewares/Third_Party/LwIP/src/include/lwip/prot -I../Middlewares/Third_Party/LwIP/src/include/netif -I../Middlewares/Third_Party/LwIP/src/include/compat/posix -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/arpa -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/net -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/sys -I../Middlewares/Third_Party/LwIP/src/include/compat/stdc -I../Middlewares/Third_Party/LwIP/system/arch -I../Drivers/BSP/Components/dp83848 -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/freertos.d" -MT"Core/Src/freertos.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/freertos.o"
+../Core/Src/freertos.c: In function 'MX_FREERTOS_Init':
+../Core/Src/freertos.c:224:16: warning: unused variable 'free_heap' [-Wunused-variable]
+  224 |         size_t free_heap = xPortGetFreeHeapSize();
+      |                ^~~~~~~~~
+../Core/Src/freertos.c: In function 'StartDefaultTask':
+../Core/Src/freertos.c:256:25: warning: implicit declaration of function 'ethernetif_input' [-Wimplicit-function-declaration]
+  256 |                         ethernetif_input(&gnetif);
+      |                         ^~~~~~~~~~~~~~~~
+../Core/Src/freertos.c:259:17: warning: implicit declaration of function 'sys_check_timeouts' [-Wimplicit-function-declaration]
+  259 |                 sys_check_timeouts();
+      |                 ^~~~~~~~~~~~~~~~~~
+../Core/Src/freertos.c: In function 'StartFATFS':
+../Core/Src/freertos.c:461:33: warning: implicit declaration of function 'memmove' [-Wimplicit-function-declaration]
+  461 |                                 memmove(mp3_buf, &mp3_buf[mp3_buf_index],
+      |                                 ^~~~~~~
+../Core/Src/freertos.c:39:1: note: include '<string.h>' or provide a declaration of 'memmove'
+   38 | #include "udp_ntp_client.h"
+  +++ |+#include <string.h>
+   39 | /* USER CODE END Includes */
+../Core/Src/freertos.c:461:33: warning: incompatible implicit declaration of built-in function 'memmove' [-Wbuiltin-declaration-mismatch]
+  461 |                                 memmove(mp3_buf, &mp3_buf[mp3_buf_index],
+      |                                 ^~~~~~~
+../Core/Src/freertos.c:461:33: note: include '<string.h>' or provide a declaration of 'memmove'
+../Core/Src/freertos.c:428:22: warning: unused variable 'br' [-Wunused-variable]
+  428 |         uint32_t bw, br;
+      |                      ^~
+../Core/Src/freertos.c:428:18: warning: unused variable 'bw' [-Wunused-variable]
+  428 |         uint32_t bw, br;
+      |                  ^~
+arm-none-eabi-gcc -o "example.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="example.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: example.elf
+ 
 arm-none-eabi-size  example.elf 
+arm-none-eabi-objdump -h -S example.elf  > "example.list"
    text	   data	    bss	    dec	    hex	filename
-  74140	    116	  27092	 101348	  18be4	example.elf
+ 139432	    148	  78620	 218200	  35458	example.elf
 Finished building: default.size.stdout
  
+Finished building: example.list
+ 
 
-15:34:56 Build Finished. 0 errors, 0 warnings. (took 619ms)
+23:34:19 Build Finished. 0 errors, 7 warnings. (took 2s.771ms)
 

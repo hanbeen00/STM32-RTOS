@@ -22,6 +22,7 @@
 #include "adc.h"
 #include "dma.h"
 #include "fatfs.h"
+#include "lwip.h"
 #include "sdio.h"
 #include "spi.h"
 #include "tim.h"
@@ -118,7 +119,6 @@ int main(void)
 	HAL_UART_Receive_IT(&huart3, &rx3_data, 1);
 	printf("Hello\n");
 
-
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -202,6 +202,9 @@ static void MX_NVIC_Init(void)
   /* USART3_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(USART3_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(USART3_IRQn);
+  /* ETH_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(ETH_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(ETH_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
@@ -224,6 +227,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 	}
 }
+
 /* USER CODE END 4 */
 
 /**

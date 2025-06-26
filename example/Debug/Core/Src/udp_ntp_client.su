@@ -1,0 +1,3 @@
+../Core/Src/udp_ntp_client.c:23:6:udp_ntp_receive_callback	64	static
+../Core/Src/udp_ntp_client.c:56:6:udp_ntp_send	16	static
+../Core/Src/udp_ntp_client.c:74:6:udp_ntp_client_init	8	static
