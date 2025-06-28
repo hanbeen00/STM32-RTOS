@@ -1,0 +1,553 @@
+/* USER CODE BEGIN Header */
+/**
+ ******************************************************************************
+ * File Name          : freertos.c
+ * Description        : Code for freertos applications
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2025 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
+/* USER CODE END Header */
+
+/* Includes ------------------------------------------------------------------*/
+#include "FreeRTOS.h"
+#include "task.h"
+#include "main.h"
+#include "cmsis_os.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include "gpio.h"
+#include "tim.h"
+#include "CLCD.h"
+#include "VS1003.h"
+#include "usart.h"
+#include "events.h"
+#include <stdio.h>
+#include "fatfs.h"
+#include "sdio.h"
+#include "udp_echoserver.h"
+#include "udp_ntp_client.h"
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+extern struct netif gnetif;
+
+#define MP3_BUF_SIZE 4096
+uint8_t mp3_buf[MP3_BUF_SIZE]; //MP3 데이터가 들어 있는 전체 버퍼
+volatile uint32_t mp3_buf_len = 0; //전체 길이
+volatile uint32_t mp3_buf_index = 0; //현재까지 전송된 위치
+extern uint16_t adcval[4];
+#define MP3_CHUNK_SIZE 32
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+/* USER CODE BEGIN Variables */
+volatile uint32_t time_1sec = 0;
+char str[20];
+/* USER CODE END Variables */
+/* Definitions for defaultTask */
+osThreadId_t defaultTaskHandle;
+const osThreadAttr_t defaultTask_attributes = {
+  .name = "defaultTask",
+  .stack_size = 2048 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
+/* Definitions for TimeTask */
+osThreadId_t TimeTaskHandle;
+const osThreadAttr_t TimeTask_attributes = {
+  .name = "TimeTask",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityAboveNormal,
+};
+/* Definitions for LEDTask */
+osThreadId_t LEDTaskHandle;
+const osThreadAttr_t LEDTask_attributes = {
+  .name = "LEDTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityBelowNormal,
+};
+/* Definitions for LCDTask */
+osThreadId_t LCDTaskHandle;
+const osThreadAttr_t LCDTask_attributes = {
+  .name = "LCDTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for UartTask */
+osThreadId_t UartTaskHandle;
+const osThreadAttr_t UartTask_attributes = {
+  .name = "UartTask",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityBelowNormal,
+};
+/* Definitions for VS1003Task */
+osThreadId_t VS1003TaskHandle;
+const osThreadAttr_t VS1003Task_attributes = {
+  .name = "VS1003Task",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for FATFSTask */
+osThreadId_t FATFSTaskHandle;
+const osThreadAttr_t FATFSTask_attributes = {
+  .name = "FATFSTask",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityBelowNormal,
+};
+/* Definitions for ADC2DMATask */
+osThreadId_t ADC2DMATaskHandle;
+const osThreadAttr_t ADC2DMATask_attributes = {
+  .name = "ADC2DMATask",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
+/* Definitions for volQueue */
+osMessageQueueId_t volQueueHandle;
+const osMessageQueueAttr_t volQueue_attributes = {
+  .name = "volQueue"
+};
+/* Definitions for timeMutex */
+osMutexId_t timeMutexHandle;
+const osMutexAttr_t timeMutex_attributes = {
+  .name = "timeMutex"
+};
+/* Definitions for eventFlags */
+osEventFlagsId_t eventFlagsHandle;
+const osEventFlagsAttr_t eventFlags_attributes = {
+  .name = "eventFlags"
+};
+
+/* Private function prototypes -----------------------------------------------*/
+/* USER CODE BEGIN FunctionPrototypes */
+
+/* USER CODE END FunctionPrototypes */
+
+void StartDefaultTask(void *argument);
+void StartTime(void *argument);
+void StartLED(void *argument);
+void StartLCD(void *argument);
+void StartUart(void *argument);
+void StartVS1003(void *argument);
+void StartFATFS(void *argument);
+void StartADC2DMA(void *argument);
+
+extern void MX_LWIP_Init(void);
+void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+
+/**
+  * @brief  FreeRTOS initialization
+  * @param  None
+  * @retval None
+  */
+void MX_FREERTOS_Init(void) {
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+  /* Create the mutex(es) */
+  /* creation of timeMutex */
+  timeMutexHandle = osMutexNew(&timeMutex_attributes);
+
+  /* USER CODE BEGIN RTOS_MUTEX */
+	/* add mutexes, ... */
+  /* USER CODE END RTOS_MUTEX */
+
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
+	/* add semaphores, ... */
+  /* USER CODE END RTOS_SEMAPHORES */
+
+  /* USER CODE BEGIN RTOS_TIMERS */
+	/* start timers, add new ones, ... */
+  /* USER CODE END RTOS_TIMERS */
+
+  /* Create the queue(s) */
+  /* creation of volQueue */
+  volQueueHandle = osMessageQueueNew (5, sizeof(uint8_t), &volQueue_attributes);
+
+  /* USER CODE BEGIN RTOS_QUEUES */
+	/* add queues, ... */
+  /* USER CODE END RTOS_QUEUES */
+
+  /* Create the thread(s) */
+  /* creation of defaultTask */
+  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+
+  /* creation of TimeTask */
+  TimeTaskHandle = osThreadNew(StartTime, NULL, &TimeTask_attributes);
+
+  /* creation of LEDTask */
+  LEDTaskHandle = osThreadNew(StartLED, NULL, &LEDTask_attributes);
+
+  /* creation of LCDTask */
+  LCDTaskHandle = osThreadNew(StartLCD, NULL, &LCDTask_attributes);
+
+  /* creation of UartTask */
+  UartTaskHandle = osThreadNew(StartUart, NULL, &UartTask_attributes);
+
+  /* creation of VS1003Task */
+  VS1003TaskHandle = osThreadNew(StartVS1003, NULL, &VS1003Task_attributes);
+
+  /* creation of FATFSTask */
+  FATFSTaskHandle = osThreadNew(StartFATFS, NULL, &FATFSTask_attributes);
+
+  /* creation of ADC2DMATask */
+  ADC2DMATaskHandle = osThreadNew(StartADC2DMA, NULL, &ADC2DMATask_attributes);
+
+  /* USER CODE BEGIN RTOS_THREADS */
+	/* add threads, ... */
+  /* USER CODE END RTOS_THREADS */
+
+  /* creation of eventFlags */
+  eventFlagsHandle = osEventFlagsNew(&eventFlags_attributes);
+
+  /* USER CODE BEGIN RTOS_EVENTS */
+	/* add events, ... */
+  /* USER CODE END RTOS_EVENTS */
+
+}
+
+/* USER CODE BEGIN Header_StartDefaultTask */
+/**
+ * @brief  Function implementing the defaultTask thread.
+ * @param  argument: Not used
+ * @retval None
+ */
+/* USER CODE END Header_StartDefaultTask */
+void StartDefaultTask(void *argument)
+{
+  /* init code for LWIP */
+  MX_LWIP_Init();
+  /* USER CODE BEGIN StartDefaultTask */
+	//osDelay(2000);
+	udp_ntp_client_init();
+	printf("cccccccc\n");
+	//udp_echoserver_init();
+
+	/* Infinite loop */
+	for (;;) {
+		/* Read a received packet from the Ethernet buffers and send it
+		 to the lwIP for handling */
+
+		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_ETH_BIT,
+		osFlagsWaitAny, osWaitForever);
+		if (flags & EVENT_ETH_BIT) {
+			ethernetif_input(&gnetif);
+		}
+		sys_check_timeouts();
+	}
+  /* USER CODE END StartDefaultTask */
+}
+
+/* USER CODE BEGIN Header_StartTime */
+/**
+ * @brief Function implementing the TimeTask thread.
+ * @param argument: Not used
+ * @retval None
+ *
+ * @details
+ * - 타이머7 인터럽트 시작 (1초 주기 가정)
+ * - 이벤트 플래그(EVENT_TIME_BIT)를 대기
+ * - 이벤트 발생 시, 뮤텍스 획득 후 time_1sec 카운터 증가
+ * - 뮤텍스 해제 후 GPIOC PIN6 토글
+ */
+/* USER CODE END Header_StartTime */
+void StartTime(void *argument)
+{
+  /* USER CODE BEGIN StartTime */
+	HAL_TIM_Base_Start_IT(&htim7); // 타이머 인터럽트 시작 (시간 측정 시작)
+	/* Infinite loop */
+	for (;;) {
+		// EVENT_TIME_BIT 이벤트 플래그 대기 (무한 대기)
+		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_TIME_BIT,
+		osFlagsWaitAny, osWaitForever);
+		if (flags & EVENT_TIME_BIT) {				// 이벤트 발생 확인(1초마다 이벤트 발생)
+			osMutexAcquire(timeMutexHandle, osWaitForever);	// 공유 변수 보호를 위해 뮤텍스 획득
+			time_1sec++;										// 1초 카운터 증가
+			osMutexRelease(timeMutexHandle);					// 뮤텍스 해제
+			HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);				// 디버깅 LED 토글
+		}
+	}
+  /* USER CODE END StartTime */
+}
+
+/* USER CODE BEGIN Header_StartLED */
+/**
+ * @brief Function implementing the LEDTask thread.
+ * @param argument: Not used
+ * @retval None
+ */
+/* USER CODE END Header_StartLED */
+void StartLED(void *argument)
+{
+  /* USER CODE BEGIN StartLED */
+
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, SET);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, SET);
+	/* Infinite loop */
+	for (;;) {
+		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_LED_BIT,
+		osFlagsWaitAny, osWaitForever);
+		if (flags & EVENT_LED_BIT) {
+			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+		}
+	}
+  /* USER CODE END StartLED */
+}
+
+/* USER CODE BEGIN Header_StartLCD */
+/**
+ * @brief Function implementing the LCDTask thread.
+ * @param argument: Not used
+ * @retval None
+ *
+ * @details
+ * - EVENT_LCD_BIT 이벤트 플래그를 대기
+ * - 이벤트 발생 시, 뮤텍스로 보호된 time_1sec 값을 읽어옴
+ * - 읽어온 시간을 문자열로 변환하여 LCD에 출력
+ */
+/* USER CODE END Header_StartLCD */
+void StartLCD(void *argument)
+{
+  /* USER CODE BEGIN StartLCD */
+
+	/* Infinite loop */
+	for (;;) {
+		// LCD 이벤트 플래그 대기 (무한 대기)
+		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_LCD_BIT,
+		osFlagsWaitAny, osWaitForever);
+
+		if (flags & EVENT_LCD_BIT) {							// 이벤트 발생 시 처리
+			uint32_t local_time;
+			osMutexAcquire(timeMutexHandle, osWaitForever);	// 공유 변수 보호를 위한 뮤텍스 획득
+			local_time = time_1sec;					// time_1sec 값을 로컬 변수에 복사
+			osMutexRelease(timeMutexHandle);					// 뮤텍스 해제
+			sprintf(str, "%lu", local_time);					// 숫자를 문자열로 변환
+			CLCD_Puts(0, 0, (unsigned char*) str);			// 변환된 문자열을 LCD에 출력
+		}
+	}
+  /* USER CODE END StartLCD */
+}
+
+/* USER CODE BEGIN Header_StartUart */
+/**
+ * @brief Function implementing the UartTask thread.
+ * @param argument: Not used
+ * @retval None
+ *
+ * @details
+ * - UART 수신 이벤트 비트(EVENT_UART_BIT)를 대기
+ * - 이벤트 발생 시, 뮤텍스 보호 하에 공유 변수(time_1sec) 읽기
+ * - 읽은 시간 정보를 UART로 출력
+ */
+/* USER CODE END Header_StartUart */
+void StartUart(void *argument)
+{
+  /* USER CODE BEGIN StartUart */
+	/* Infinite loop */
+	for (;;) {
+		// UART 이벤트 플래그 대기 (무한 대기)
+		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_UART_BIT,
+		osFlagsWaitAny, osWaitForever);
+
+		if (flags & EVENT_UART_BIT) {							// 이벤트 발생 확인
+			uint32_t local_time;
+			osMutexAcquire(timeMutexHandle, osWaitForever);	// 공유 변수 접근 보호 위해 뮤텍스 획득
+			local_time = time_1sec;							// time_1sec 값 로컬 복사
+			osMutexRelease(timeMutexHandle);					// 뮤텍스 해제
+			printf("%lu\n", local_time);				// UART 또는 콘솔에 현재 시간 출력
+		}
+	}
+  /* USER CODE END StartUart */
+}
+
+/* USER CODE BEGIN Header_StartVS1003 */
+/**
+ * @brief Function implementing the VS1003Task thread.
+ * @param argument: Not used
+ * @retval None
+ *
+ * @details
+ * - osThreadFlagsWait()로 플래그 대기
+ * - 플래그 수신 시, 볼륨 변경 메시지 큐에서 볼륨 값 읽기
+ * - 볼륨 값이 있으면 VS1003 볼륨 레지스터 업데이트 및 적용
+ * - MP3 버퍼 상태 확인 후, DREQ 핀이 HIGH이면 MP3 데이터를 청크 단위로 VS1003에 전송
+ * - DREQ가 LOW면 전송 대기
+ */
+/* USER CODE END Header_StartVS1003 */
+void StartVS1003(void *argument)
+{
+  /* USER CODE BEGIN StartVS1003 */
+
+	// VS1003 초기화 및 설정
+	VS1003_Init();
+	VS1003_SoftReset();
+	VS1003_SetVol();
+	uint8_t vol;
+
+	for (;;) {
+		osThreadFlagsWait(1, osFlagsWaitAny, osWaitForever); // 플래그 1을 세트할 때까지 무한 대기
+
+		// 음량 변경 대기 및 처리
+		if (osMessageQueueGet(volQueueHandle, &vol, NULL, 0) == osOK) { //큐에 들어온 볼륨 변경 메시지가 있는 경우
+			vs1003ram[4] = vol;		// VS1003 볼륨 설정
+			VS1003_SetVol(); 		// 볼륨 변경
+		}
+
+		// MP3 데이터 전송 루프
+		while (1) {
+			// 반복적으로 VS1003의 DREQ가 HIGH 상태이고
+			// 버퍼에 데이터가 충분할 때마다, MP3 데이터를 32바이트씩 SPI로 전송
+			if (mp3_buf_len - mp3_buf_index >= MP3_CHUNK_SIZE
+					&& MP3_DREQ == 1) {
+				VS1003_WriteData(&mp3_buf[mp3_buf_index]);
+				mp3_buf_index += MP3_CHUNK_SIZE;
+			}
+
+			else {
+				break;
+			}
+		}
+	}
+  /* USER CODE END StartVS1003 */
+}
+
+/* USER CODE BEGIN Header_StartFATFS */
+/**
+ * @brief Function implementing the FATFSTask thread.
+ * @param argument: Not used
+ * @retval None
+ */
+/* USER CODE END Header_StartFATFS */
+void StartFATFS(void *argument)
+{
+  /* USER CODE BEGIN StartFATFS */
+	hsd.Init.BusWide = SDIO_BUS_WIDE_1B;
+	uint32_t bw, br;
+	char str2[20];
+
+	// SD 카드 마운트
+	if ((retSD = f_mount(&SDFatFS, &SDPath[0], 1)) == FR_OK) {
+		sprintf(str2, "f_mount OK %d", retSD);
+		CLCD_Puts(0, 1, (unsigned char*) str2);
+	} else {
+		sprintf(str2, "f_mount failed %d", retSD);
+		CLCD_Puts(0, 1, (unsigned char*) str2);
+	}
+
+	const char *filename = "0:/1.mp3";
+
+	if ((retSD = f_open(&SDFile, filename, FA_READ)) == FR_OK) {
+
+		CLCD_Puts(0, 1, (unsigned char*) filename);
+	} else {
+
+		sprintf(str2, "open error %d", retSD);
+		CLCD_Puts(0, 1, (unsigned char*) str2);
+		vTaskDelete(NULL);
+	}
+
+	// 초기 버퍼 비움
+	mp3_buf_len = 0;
+	mp3_buf_index = 0;
+	/* Infinite loop */
+	for (;;) {
+		if (mp3_buf_len - mp3_buf_index < 512) {
+			UINT br;
+			// 버퍼를 앞으로 당김: 남은 데이터가 있다면 앞으로 복사
+			if (mp3_buf_index > 0 && mp3_buf_len > mp3_buf_index) {
+				memmove(mp3_buf, &mp3_buf[mp3_buf_index],
+						mp3_buf_len - mp3_buf_index);
+				mp3_buf_len = mp3_buf_len - mp3_buf_index;
+				mp3_buf_index = 0;
+			} else if (mp3_buf_index >= mp3_buf_len) {
+				mp3_buf_len = 0;
+				mp3_buf_index = 0;
+			}
+
+			retSD = f_read(&SDFile, &mp3_buf[mp3_buf_len],
+			MP3_BUF_SIZE - mp3_buf_len, &br);
+			if (retSD != FR_OK || br == 0) {
+				// 파일 끝 또는 오류 시 처음으로 되돌림
+				f_lseek(&SDFile, 0);
+				mp3_buf_len = 0;
+				mp3_buf_index = 0;
+				continue;
+			}
+			mp3_buf_len += br;
+
+			// VS1003Task에 알림 보내서 데이터 전송 재개
+			//xTaskNotifyGive(VS1003TaskHandle);
+			osThreadFlagsSet(VS1003TaskHandle, 1);
+		}
+		osDelay(10);
+	}
+  /* USER CODE END StartFATFS */
+}
+
+/* USER CODE BEGIN Header_StartADC2DMA */
+/**
+ * @brief Function implementing the ADC2DMATask thread.
+ * @param argument: Not used
+ * @retval None
+ *
+ * @details
+ * - ADC2 값을 이용해 가변 저항(볼륨)의 상태를 읽고, 이를 0~255 범위로 스케일링
+ * - 값이 이전과 비교해 10단위 이상 변할 경우만 볼륨 변경 큐에 전송 (불필요한 업데이트 최소화)
+ * - ADC 채널 값 LCD에 출력
+ * - 주기: 100ms
+ */
+/* USER CODE END Header_StartADC2DMA */
+void StartADC2DMA(void *argument)
+{
+  /* USER CODE BEGIN StartADC2DMA */
+	char str2[20];
+	uint8_t last_scaled = 0;
+
+	/* Infinite loop */
+	for (;;) {
+		// ADC2 결과를 0~255 범위로 역스케일링
+		// 10단위로 변환
+		uint8_t scaled = 255 - (adcval[0] * 255) / 4100;
+		uint8_t scaled_10 = (scaled / 10) * 10;
+
+		// 값이 변경되었을 때만 큐에 전송 (SPI 통신 최적화)
+		if (scaled_10 != last_scaled) {
+			last_scaled = scaled_10;
+			osMessageQueuePut(volQueueHandle, &scaled_10, 0, 0);  // VS1003 태스크에 전달
+		}
+
+		// 현재 ADC 값과 변환된 볼륨 값 표시
+		sprintf(str2, "%4d %4d", scaled, adcval[1]);
+		CLCD_Puts(5, 0, (unsigned char*) str2);
+
+		// 100ms 주기로 반복
+		osDelay(1000);
+	}
+  /* USER CODE END StartADC2DMA */
+}
+
+/* Private application code --------------------------------------------------*/
+/* USER CODE BEGIN Application */
+
+/* USER CODE END Application */
+

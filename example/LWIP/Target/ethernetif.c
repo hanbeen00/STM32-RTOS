@@ -34,6 +34,7 @@
 /* Within 'USER CODE' section, code will be kept by default at each generation */
 /* USER CODE BEGIN 0 */
 #include "events.h"
+extern osSemaphoreId_t RxPktSemaphore;
 /* USER CODE END 0 */
 
 /* Private define ------------------------------------------------------------*/

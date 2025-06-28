@@ -3,20 +3,20 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
-		<item value="tcpip_init"/>
-		<item value="netif_add"/>
-		<item value="lwip_init_done"/>
-		<item value="assertion"/>
-		<item value="MP3_BUF_SIZE "/>
-		<item value="fail"/>
-		<item value="HAL_ETH_RxCpltCallback"/>
-		<item value="handler"/>
-		<item value="echo"/>
-		<item value="MX_LWIP_Init();"/>
-		<item value="osMessageQueuePut"/>
+		<item value="thread"/>
+		<item value="theread"/>
+		<item value="event"/>
+		<item value="rx3_data"/>
+		<item value="adcval"/>
+		<item value="Semaphore"/>
+		<item value="dma"/>
+		<item value="scaled"/>
+		<item value="RxPktSemaphore"/>
+		<item value="RxPktSemaphoreHandle"/>
+		<item value="EVENT_ETH_BIT"/>
+		<item value="gnetif"/>
+		<item value="free_heap"/>
 		<item value="volQueueHandle"/>
-		<item value="queue"/>
-		<item value="vs1003ram"/>
-		<item value="buf"/>
+		<item value="tcpip_init"/>
 	</list>
 </section>

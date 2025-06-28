@@ -41,6 +41,7 @@ int _write(int file, char *p, int len) {
 	HAL_UART_Transmit(&huart3, (uint8_t*) p, len, 10);
 	return len;
 }
+extern DMA_HandleTypeDef hdma_adc1;  // hdma_adc1 핸들러 extern 선언
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -56,7 +57,7 @@ int _write(int file, char *p, int len) {
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint16_t adcval[4] = {0};
+uint16_t adcval[4] = { 0 };
 uint8_t rx3_data;
 /* USER CODE END PV */
 
@@ -113,9 +114,9 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-    CLCD_GPIO_Init();
-    CLCD_Init();
-    HAL_ADC_Start_DMA(&hadc1,&adcval[0],4);
+	CLCD_GPIO_Init();
+	CLCD_Init();
+	HAL_ADC_Start_DMA(&hadc1, &adcval[0], 4);
 	HAL_UART_Receive_IT(&huart3, &rx3_data, 1);
 	printf("Hello\n");
 
@@ -199,32 +200,57 @@ static void MX_NVIC_Init(void)
   /* EXTI9_5_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-  /* USART3_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(USART3_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(USART3_IRQn);
+  /* EXTI3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+  /* EXTI4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+  /* EXTI15_10_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
   /* ETH_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(ETH_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(ETH_IRQn);
+  /* USART3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART3_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(USART3_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
+/**
+ * @brief  UART 수신 완료 콜백 (인터럽트 기반)
+ * @note   USART3에서 1바이트 수신 시 호출됨
+ *         - 수신 시 LED 토글(GPIOB PIN5)
+ *         - 수신 데이터 Echo 송신
+ *         - 수신 인터럽트 재시작
+ *         - 이벤트 플래그 설정 (FreeRTOS 태스크 통신용)
+ * @param  huart: 수신 완료된 UART 핸들 포인터
+ */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	if (huart->Instance == USART3) {
-		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
-		HAL_UART_Transmit(&huart3, &rx3_data, 1, 10);
-		HAL_UART_Receive_IT(&huart3, &rx3_data, 1);
-		osEventFlagsSet(eventFlagsHandle, EVENT_UART_BIT);
+		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);                // 수신 시 LED 토글
+		HAL_UART_Transmit(&huart3, &rx3_data, 1, 10);         // Echo 전송
+		HAL_UART_Receive_IT(&huart3, &rx3_data, 1);           // 인터럽트 수신 재시작
+		osEventFlagsSet(eventFlagsHandle, EVENT_UART_BIT);    // 이벤트 플래그 설정
 	}
 }
 
 extern osThreadId_t VS1003TaskHandle;
-// EXTI 콜백 함수 예시
+/**
+ * @brief  EXTI 인터럽트 콜백 함수
+ * @note   GPIO_PIN_7 (VS1003 DREQ 핀)에서 인터럽트 발생 시 호출
+ *         - VS1003 태스크에 알림 전송 (Direct-to-task notification)
+ * @param  GPIO_Pin: 인터럽트 발생 핀 번호
+ */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	if (GPIO_Pin == GPIO_PIN_7) // DREQ 핀
+	if (GPIO_Pin == GPIO_PIN_7) 	// VS1003 DREQ 핀에 대한 외부 인터럽트 확인
 	{
-		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-		vTaskNotifyGiveFromISR(VS1003TaskHandle, &xHigherPriorityTaskWoken);
-		portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+		osThreadFlagsSet(VS1003TaskHandle, 1); // VS1003 테스크 플래그 설정
+	}
+
+	else if (GPIO_Pin == GPIO_PIN_3) {
+		osEventFlagsSet(eventFlagsHandle, EVENT_BTN_BIT);
 	}
 }
 
@@ -242,8 +268,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 	if (htim->Instance == TIM7) {
-		//osSemaphoreRelease(timeSemHandle);  // 세마포어로 TimeTask 깨우기
-
 		osEventFlagsSet(eventFlagsHandle,
 		EVENT_TIME_BIT | EVENT_LED_BIT | EVENT_LCD_BIT | EVENT_UART_BIT);
 	}
