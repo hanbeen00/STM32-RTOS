@@ -31,8 +31,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "events.h"
-#include <stdio.h>
+#include "common.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -119,6 +118,7 @@ int main(void)
 	HAL_ADC_Start_DMA(&hadc1, &adcval[0], 4);
 	HAL_UART_Receive_IT(&huart3, &rx3_data, 1);
 	printf("Hello\n");
+
 
   /* USER CODE END 2 */
 
@@ -236,7 +236,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	}
 }
 
-extern osThreadId_t VS1003TaskHandle;
 /**
  * @brief  EXTI 인터럽트 콜백 함수
  * @note   GPIO_PIN_7 (VS1003 DREQ 핀)에서 인터럽트 발생 시 호출
@@ -253,7 +252,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		osEventFlagsSet(eventFlagsHandle, EVENT_BTN_BIT);
 	}
 }
-
 /* USER CODE END 4 */
 
 /**
@@ -269,7 +267,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 	if (htim->Instance == TIM7) {
 		osEventFlagsSet(eventFlagsHandle,
-		EVENT_TIME_BIT | EVENT_LED_BIT | EVENT_LCD_BIT | EVENT_UART_BIT);
+				EVENT_TIME_BIT | EVENT_LED_BIT | EVENT_LCD_BIT | EVENT_UART_BIT
+						| EVENT_7SEG_BIT);
 	}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM3)

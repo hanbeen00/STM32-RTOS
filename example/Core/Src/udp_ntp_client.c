@@ -1,4 +1,5 @@
-#include "main.h"
+//#include "main.h"
+#include "lwip/ip6_addr.h"
 #include "lwip/pbuf.h"
 #include "lwip/udp.h"
 #include "lwip/ip_addr.h"

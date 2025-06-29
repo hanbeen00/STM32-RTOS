@@ -3,20 +3,20 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="extern"/>
+		<item value="extern\"/>
+		<item value="VS1003TaskHandle"/>
+		<item value="adcval"/>
+		<item value="bw"/>
+		<item value="STAT"/>
+		<item value="MP3_BUF_SIZE"/>
+		<item value="mp3_buf_len"/>
+		<item value="EVENT_ETH_BIT"/>
+		<item value="time_1sec"/>
+		<item value="is_playing"/>
 		<item value="filename"/>
 		<item value="str2"/>
 		<item value="CLCD"/>
 		<item value="CL"/>
-		<item value="CLD"/>
-		<item value="adcval"/>
-		<item value="thread"/>
-		<item value="theread"/>
-		<item value="event"/>
-		<item value="rx3_data"/>
-		<item value="Semaphore"/>
-		<item value="dma"/>
-		<item value="scaled"/>
-		<item value="RxPktSemaphore"/>
-		<item value="RxPktSemaphoreHandle"/>
 	</list>
 </section>

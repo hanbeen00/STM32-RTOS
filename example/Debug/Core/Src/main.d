@@ -88,7 +88,11 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../LWIP/Target/ethernetif.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/tcpip.h \
  ../Core/Inc/sdio.h ../Core/Inc/spi.h ../Core/Inc/tim.h \
- ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/events.h
+ ../Core/Inc/usart.h ../Core/Inc/gpio.h ../Core/Inc/common.h \
+ ../Core/Inc/adc.h ../Core/Inc/dma.h ../Core/Inc/spi.h ../Core/Inc/sdio.h \
+ ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
+ ../Core/Inc/CLCD.h ../Core/Inc/VS1003.h ../Core/Inc/7SEG.h \
+ ../Core/Inc/events.h ../Core/Inc/udp_ntp_client.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -188,4 +192,16 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/tim.h:
 ../Core/Inc/usart.h:
 ../Core/Inc/gpio.h:
+../Core/Inc/common.h:
+../Core/Inc/adc.h:
+../Core/Inc/dma.h:
+../Core/Inc/spi.h:
+../Core/Inc/sdio.h:
+../Core/Inc/tim.h:
+../Core/Inc/usart.h:
+../Core/Inc/gpio.h:
+../Core/Inc/CLCD.h:
+../Core/Inc/VS1003.h:
+../Core/Inc/7SEG.h:
 ../Core/Inc/events.h:
+../Core/Inc/udp_ntp_client.h:

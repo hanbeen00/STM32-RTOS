@@ -1,0 +1,51 @@
+#ifndef __COMMON_H
+#define __COMMON_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Standard C Libraries */
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+/* STM32 HAL */
+#include "stm32f4xx_hal.h"
+
+/* Middleware */
+#include "cmsis_os.h"
+#include "fatfs.h"
+#include "lwip.h"
+
+/* Peripherals */
+#include "adc.h"
+#include "dma.h"
+#include "spi.h"
+#include "sdio.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
+/* User Components */
+#include "CLCD.h"
+#include "VS1003.h"
+#include "7SEG.h"
+#include "events.h"
+#include "udp_ntp_client.h"
+
+/* FreeRTOS-related external handles and defines can also be declared here */
+extern osEventFlagsId_t eventFlagsHandle;
+extern osThreadId_t VS1003TaskHandle;
+extern uint16_t adcval[4];
+extern struct netif gnetif;
+extern osSemaphoreId_t RxPktSemaphore;
+
+/* Exported functions prototypes */
+void Error_Handler(void);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __COMMON_H */
