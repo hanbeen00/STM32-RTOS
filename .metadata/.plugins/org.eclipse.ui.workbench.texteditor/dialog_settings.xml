@@ -3,6 +3,11 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
+		<item value="time_"/>
+		<item value="time"/>
+		<item value="mp3_buf_len"/>
+		<item value="time_1sec"/>
+		<item value="value"/>
 		<item value="extern"/>
 		<item value="extern\"/>
 		<item value="VS1003TaskHandle"/>
@@ -10,13 +15,8 @@
 		<item value="bw"/>
 		<item value="STAT"/>
 		<item value="MP3_BUF_SIZE"/>
-		<item value="mp3_buf_len"/>
 		<item value="EVENT_ETH_BIT"/>
-		<item value="time_1sec"/>
 		<item value="is_playing"/>
 		<item value="filename"/>
-		<item value="str2"/>
-		<item value="CLCD"/>
-		<item value="CL"/>
 	</list>
 </section>

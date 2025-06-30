@@ -1,10 +1,38 @@
-01:41:35 **** Incremental Build of configuration Debug for project example ****
+16:16:38 **** Incremental Build of configuration Debug for project example ****
 make -j12 all 
+arm-none-eabi-gcc "../Core/Src/freertos.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -I../LWIP/App -I../LWIP/Target -I../Middlewares/Third_Party/LwIP/src/include -I../Middlewares/Third_Party/LwIP/system -I../Middlewares/Third_Party/LwIP/src/include/netif/ppp -I../Middlewares/Third_Party/LwIP/src/include/lwip -I../Middlewares/Third_Party/LwIP/src/include/lwip/apps -I../Middlewares/Third_Party/LwIP/src/include/lwip/priv -I../Middlewares/Third_Party/LwIP/src/include/lwip/prot -I../Middlewares/Third_Party/LwIP/src/include/netif -I../Middlewares/Third_Party/LwIP/src/include/compat/posix -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/arpa -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/net -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/sys -I../Middlewares/Third_Party/LwIP/src/include/compat/stdc -I../Middlewares/Third_Party/LwIP/system/arch -I../Drivers/BSP/Components/dp83848 -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/freertos.d" -MT"Core/Src/freertos.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/freertos.o"
+../Core/Src/freertos.c: In function 'StartLCD':
+../Core/Src/freertos.c:400:44: warning: format '%d' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  400 |                         sprintf(LCD_str, "%d", local_time);
+      |                                           ~^   ~~~~~~~~~~
+      |                                            |   |
+      |                                            int uint32_t {aka long unsigned int}
+      |                                           %ld
+../Core/Src/freertos.c: In function 'StartUart':
+../Core/Src/freertos.c:461:34: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  461 |                         printf("%d\n", local_time);
+      |                                 ~^     ~~~~~~~~~~
+      |                                  |     |
+      |                                  int   uint32_t {aka long unsigned int}
+      |                                 %ld
+../Core/Src/freertos.c: In function 'StartVS1003':
+../Core/Src/freertos.c:489:18: warning: variable 'local_buf_index' set but not used [-Wunused-but-set-variable]
+  489 |         uint32_t local_buf_index;
+      |                  ^~~~~~~~~~~~~~~
+../Core/Src/freertos.c:488:18: warning: variable 'local_buf_len' set but not used [-Wunused-but-set-variable]
+  488 |         uint32_t local_buf_len;
+      |                  ^~~~~~~~~~~~~
+arm-none-eabi-gcc -o "example.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\STM32-RTOS\example\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="example.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: example.elf
+ 
 arm-none-eabi-size  example.elf 
+arm-none-eabi-objdump -h -S example.elf  > "example.list"
    text	   data	    bss	    dec	    hex	filename
- 142656	    148	  78612	 221416	  360e8	example.elf
+ 143056	    148	  78620	 221824	  36280	example.elf
 Finished building: default.size.stdout
  
+Finished building: example.list
+ 
 
-01:41:36 Build Finished. 0 errors, 0 warnings. (took 1s.279ms)
+16:16:41 Build Finished. 0 errors, 4 warnings. (took 2s.454ms)
 

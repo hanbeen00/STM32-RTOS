@@ -35,7 +35,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-volatile uint32_t time_1sec = 0;
+uint32_t time_1sec = 0;
 
 #define MP3_BUF_SIZE 4096
 #define MP3_CHUNK_SIZE 32
@@ -43,7 +43,6 @@ uint8_t mp3_buf[MP3_BUF_SIZE]; //MP3 데이터가 들어 있는 전체 버퍼
 volatile uint32_t mp3_buf_len = 0; //전체 길이
 volatile uint32_t mp3_buf_index = 0; //현재까지 전송된 위치
 volatile bool is_playing = true;  // 기본값: 재생 중
-
 
 // lcd 동기화 관련 이슈
 // 변수 포맷 관련 이슈
@@ -63,94 +62,62 @@ volatile bool is_playing = true;  // 기본값: 재생 중
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-  .name = "defaultTask",
-  .stack_size = 2048 * 4,
-  .priority = (osPriority_t) osPriorityLow,
-};
+const osThreadAttr_t defaultTask_attributes = { .name = "defaultTask",
+		.stack_size = 2048 * 4, .priority = (osPriority_t) osPriorityLow, };
 /* Definitions for TimeTask */
 osThreadId_t TimeTaskHandle;
-const osThreadAttr_t TimeTask_attributes = {
-  .name = "TimeTask",
-  .stack_size = 256 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal,
-};
+const osThreadAttr_t TimeTask_attributes = { .name = "TimeTask", .stack_size =
+		256 * 4, .priority = (osPriority_t) osPriorityAboveNormal, };
 /* Definitions for LEDTask */
 osThreadId_t LEDTaskHandle;
-const osThreadAttr_t LEDTask_attributes = {
-  .name = "LEDTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal,
-};
+const osThreadAttr_t LEDTask_attributes = { .name = "LEDTask", .stack_size = 128
+		* 4, .priority = (osPriority_t) osPriorityBelowNormal, };
 /* Definitions for LCDTask */
 osThreadId_t LCDTaskHandle;
-const osThreadAttr_t LCDTask_attributes = {
-  .name = "LCDTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
-};
+const osThreadAttr_t LCDTask_attributes = { .name = "LCDTask", .stack_size = 128
+		* 4, .priority = (osPriority_t) osPriorityNormal, };
 /* Definitions for UartTask */
 osThreadId_t UartTaskHandle;
-const osThreadAttr_t UartTask_attributes = {
-  .name = "UartTask",
-  .stack_size = 512 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal,
-};
+const osThreadAttr_t UartTask_attributes = { .name = "UartTask", .stack_size =
+		512 * 4, .priority = (osPriority_t) osPriorityBelowNormal, };
 /* Definitions for VS1003Task */
 osThreadId_t VS1003TaskHandle;
-const osThreadAttr_t VS1003Task_attributes = {
-  .name = "VS1003Task",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
-};
+const osThreadAttr_t VS1003Task_attributes = { .name = "VS1003Task",
+		.stack_size = 128 * 4, .priority = (osPriority_t) osPriorityNormal, };
 /* Definitions for FATFSTask */
 osThreadId_t FATFSTaskHandle;
-const osThreadAttr_t FATFSTask_attributes = {
-  .name = "FATFSTask",
-  .stack_size = 512 * 4,
-  .priority = (osPriority_t) osPriorityBelowNormal,
-};
+const osThreadAttr_t FATFSTask_attributes = { .name = "FATFSTask", .stack_size =
+		512 * 4, .priority = (osPriority_t) osPriorityBelowNormal, };
 /* Definitions for ADC2DMATask */
 osThreadId_t ADC2DMATaskHandle;
-const osThreadAttr_t ADC2DMATask_attributes = {
-  .name = "ADC2DMATask",
-  .stack_size = 512 * 4,
-  .priority = (osPriority_t) osPriorityLow,
-};
+const osThreadAttr_t ADC2DMATask_attributes = { .name = "ADC2DMATask",
+		.stack_size = 512 * 4, .priority = (osPriority_t) osPriorityLow, };
 /* Definitions for ButtonTask */
 osThreadId_t ButtonTaskHandle;
-const osThreadAttr_t ButtonTask_attributes = {
-  .name = "ButtonTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
-};
+const osThreadAttr_t ButtonTask_attributes = { .name = "ButtonTask",
+		.stack_size = 128 * 4, .priority = (osPriority_t) osPriorityNormal, };
 /* Definitions for SEG7Task */
 osThreadId_t SEG7TaskHandle;
-const osThreadAttr_t SEG7Task_attributes = {
-  .name = "SEG7Task",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
-};
+const osThreadAttr_t SEG7Task_attributes = { .name = "SEG7Task", .stack_size =
+		128 * 4, .priority = (osPriority_t) osPriorityNormal, };
 /* Definitions for volQueue */
 osMessageQueueId_t volQueueHandle;
-const osMessageQueueAttr_t volQueue_attributes = {
-  .name = "volQueue"
-};
+const osMessageQueueAttr_t volQueue_attributes = { .name = "volQueue" };
 /* Definitions for timeMutex */
 osMutexId_t timeMutexHandle;
-const osMutexAttr_t timeMutex_attributes = {
-  .name = "timeMutex"
-};
+const osMutexAttr_t timeMutex_attributes = { .name = "timeMutex" };
 /* Definitions for lcdMutex */
 osMutexId_t lcdMutexHandle;
-const osMutexAttr_t lcdMutex_attributes = {
-  .name = "lcdMutex"
-};
+const osMutexAttr_t lcdMutex_attributes = { .name = "lcdMutex" };
+/* Definitions for mp3BufferMutex */
+osMutexId_t mp3BufferMutexHandle;
+const osMutexAttr_t mp3BufferMutex_attributes = { .name = "mp3BufferMutex" };
+/* Definitions for playStateMutex */
+osMutexId_t playStateMutexHandle;
+const osMutexAttr_t playStateMutex_attributes = { .name = "playStateMutex" };
 /* Definitions for eventFlags */
 osEventFlagsId_t eventFlagsHandle;
-const osEventFlagsAttr_t eventFlags_attributes = {
-  .name = "eventFlags"
-};
+const osEventFlagsAttr_t eventFlags_attributes = { .name = "eventFlags" };
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -172,82 +139,91 @@ extern void MX_LWIP_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
-  * @brief  FreeRTOS initialization
-  * @param  None
-  * @retval None
-  */
+ * @brief  FreeRTOS initialization
+ * @param  None
+ * @retval None
+ */
 void MX_FREERTOS_Init(void) {
-  /* USER CODE BEGIN Init */
+	/* USER CODE BEGIN Init */
 
-  /* USER CODE END Init */
-  /* Create the mutex(es) */
-  /* creation of timeMutex */
-  timeMutexHandle = osMutexNew(&timeMutex_attributes);
+	/* USER CODE END Init */
+	/* Create the mutex(es) */
+	/* creation of timeMutex */
+	timeMutexHandle = osMutexNew(&timeMutex_attributes);
 
-  /* creation of lcdMutex */
-  lcdMutexHandle = osMutexNew(&lcdMutex_attributes);
+	/* creation of lcdMutex */
+	lcdMutexHandle = osMutexNew(&lcdMutex_attributes);
 
-  /* USER CODE BEGIN RTOS_MUTEX */
+	/* creation of mp3BufferMutex */
+	mp3BufferMutexHandle = osMutexNew(&mp3BufferMutex_attributes);
+
+	/* creation of playStateMutex */
+	playStateMutexHandle = osMutexNew(&playStateMutex_attributes);
+
+	/* USER CODE BEGIN RTOS_MUTEX */
 	/* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
+	/* USER CODE END RTOS_MUTEX */
 
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
+	/* USER CODE BEGIN RTOS_SEMAPHORES */
 	/* add semaphores, ... */
-  /* USER CODE END RTOS_SEMAPHORES */
+	/* USER CODE END RTOS_SEMAPHORES */
 
-  /* USER CODE BEGIN RTOS_TIMERS */
+	/* USER CODE BEGIN RTOS_TIMERS */
 	/* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
+	/* USER CODE END RTOS_TIMERS */
 
-  /* Create the queue(s) */
-  /* creation of volQueue */
-  volQueueHandle = osMessageQueueNew (5, sizeof(uint8_t), &volQueue_attributes);
+	/* Create the queue(s) */
+	/* creation of volQueue */
+	volQueueHandle = osMessageQueueNew(5, sizeof(uint8_t),
+			&volQueue_attributes);
 
-  /* USER CODE BEGIN RTOS_QUEUES */
+	/* USER CODE BEGIN RTOS_QUEUES */
 	/* add queues, ... */
-  /* USER CODE END RTOS_QUEUES */
+	/* USER CODE END RTOS_QUEUES */
 
-  /* Create the thread(s) */
-  /* creation of defaultTask */
-  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+	/* Create the thread(s) */
+	/* creation of defaultTask */
+	defaultTaskHandle = osThreadNew(StartDefaultTask, NULL,
+			&defaultTask_attributes);
 
-  /* creation of TimeTask */
-  TimeTaskHandle = osThreadNew(StartTime, NULL, &TimeTask_attributes);
+	/* creation of TimeTask */
+	TimeTaskHandle = osThreadNew(StartTime, NULL, &TimeTask_attributes);
 
-  /* creation of LEDTask */
-  LEDTaskHandle = osThreadNew(StartLED, NULL, &LEDTask_attributes);
+	/* creation of LEDTask */
+	LEDTaskHandle = osThreadNew(StartLED, NULL, &LEDTask_attributes);
 
-  /* creation of LCDTask */
-  LCDTaskHandle = osThreadNew(StartLCD, NULL, &LCDTask_attributes);
+	/* creation of LCDTask */
+	LCDTaskHandle = osThreadNew(StartLCD, NULL, &LCDTask_attributes);
 
-  /* creation of UartTask */
-  UartTaskHandle = osThreadNew(StartUart, NULL, &UartTask_attributes);
+	/* creation of UartTask */
+	UartTaskHandle = osThreadNew(StartUart, NULL, &UartTask_attributes);
 
-  /* creation of VS1003Task */
-  VS1003TaskHandle = osThreadNew(StartVS1003, NULL, &VS1003Task_attributes);
+	/* creation of VS1003Task */
+	VS1003TaskHandle = osThreadNew(StartVS1003, NULL, &VS1003Task_attributes);
 
-  /* creation of FATFSTask */
-  FATFSTaskHandle = osThreadNew(StartFATFS, NULL, &FATFSTask_attributes);
+	/* creation of FATFSTask */
+	FATFSTaskHandle = osThreadNew(StartFATFS, NULL, &FATFSTask_attributes);
 
-  /* creation of ADC2DMATask */
-  ADC2DMATaskHandle = osThreadNew(StartADC2DMA, NULL, &ADC2DMATask_attributes);
+	/* creation of ADC2DMATask */
+	ADC2DMATaskHandle = osThreadNew(StartADC2DMA, NULL,
+			&ADC2DMATask_attributes);
 
-  /* creation of ButtonTask */
-  ButtonTaskHandle = osThreadNew(StartButton, NULL, &ButtonTask_attributes);
+	/* creation of ButtonTask */
+	ButtonTaskHandle = osThreadNew(StartButton, NULL, &ButtonTask_attributes);
 
-  /* creation of SEG7Task */
-  SEG7TaskHandle = osThreadNew(Start7SEG, NULL, &SEG7Task_attributes);
+	/* creation of SEG7Task */
+	SEG7TaskHandle = osThreadNew(Start7SEG, NULL, &SEG7Task_attributes);
 
-  /* USER CODE BEGIN RTOS_THREADS */
+	/* USER CODE BEGIN RTOS_THREADS */
 	/* add threads, ... */
-  /* USER CODE END RTOS_THREADS */
+	/* USER CODE END RTOS_THREADS */
 
-  /* creation of eventFlags */
-  eventFlagsHandle = osEventFlagsNew(&eventFlags_attributes);
+	/* creation of eventFlags */
+	eventFlagsHandle = osEventFlagsNew(&eventFlags_attributes);
 
-  /* USER CODE BEGIN RTOS_EVENTS */
+	/* USER CODE BEGIN RTOS_EVENTS */
 	/* add events, ... */
-  /* USER CODE END RTOS_EVENTS */
+	/* USER CODE END RTOS_EVENTS */
 
 }
 
@@ -258,11 +234,10 @@ void MX_FREERTOS_Init(void) {
  * @retval None
  */
 /* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument)
-{
-  /* init code for LWIP */
-  MX_LWIP_Init();
-  /* USER CODE BEGIN StartDefaultTask */
+void StartDefaultTask(void *argument) {
+	/* init code for LWIP */
+	MX_LWIP_Init();
+	/* USER CODE BEGIN StartDefaultTask */
 
 	//NTP INIT & GET INTERNET TIME DATA
 	udp_ntp_client_init();
@@ -285,7 +260,7 @@ void StartDefaultTask(void *argument)
 		sys_check_timeouts();
 		//
 	}
-  /* USER CODE END StartDefaultTask */
+	/* USER CODE END StartDefaultTask */
 }
 
 /* USER CODE BEGIN Header_StartTime */
@@ -301,9 +276,8 @@ void StartDefaultTask(void *argument)
  * - 뮤텍스 해제 후 GPIOC PIN6 토글
  */
 /* USER CODE END Header_StartTime */
-void StartTime(void *argument)
-{
-  /* USER CODE BEGIN StartTime */
+void StartTime(void *argument) {
+	/* USER CODE BEGIN StartTime */
 
 	//TIMER START
 	HAL_TIM_Base_Start_IT(&htim7);
@@ -326,7 +300,7 @@ void StartTime(void *argument)
 		}
 		//
 	}
-  /* USER CODE END StartTime */
+	/* USER CODE END StartTime */
 }
 
 /* USER CODE BEGIN Header_StartLED */
@@ -336,9 +310,8 @@ void StartTime(void *argument)
  * @retval None
  */
 /* USER CODE END Header_StartLED */
-void StartLED(void *argument)
-{
-  /* USER CODE BEGIN StartLED */
+void StartLED(void *argument) {
+	/* USER CODE BEGIN StartLED */
 
 	//LED STATUS INIT
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, SET);
@@ -362,7 +335,7 @@ void StartLED(void *argument)
 		//
 
 	}
-  /* USER CODE END StartLED */
+	/* USER CODE END StartLED */
 }
 
 /* USER CODE BEGIN Header_StartLCD */
@@ -377,17 +350,21 @@ void StartLED(void *argument)
  * - 읽어온 시간을 문자열로 변환하여 LCD에 출력
  */
 /* USER CODE END Header_StartLCD */
-void StartLCD(void *argument)
-{
-  /* USER CODE BEGIN StartLCD */
+void StartLCD(void *argument) {
+	/* USER CODE BEGIN StartLCD */
 
 	//TASK LOCAL VARIABLES
 	char LCD_str[20];
+	bool local_is_playing;
 	//
 
 	///LCD INIT -> PRINT MP3 PLAYING STATUS
+	osMutexAcquire(playStateMutexHandle, osWaitForever);
+	local_is_playing = is_playing;
+	osMutexRelease(playStateMutexHandle);
+
 	osMutexAcquire(lcdMutexHandle, osWaitForever);	// LCD 뮤텍스 획득
-	if (is_playing) {
+	if (local_is_playing) {
 		sprintf(LCD_str, "       ");
 		CLCD_Puts(9, 1, (unsigned char*) LCD_str);
 		sprintf(LCD_str, "playing");
@@ -428,8 +405,12 @@ void StartLCD(void *argument)
 
 		//BTN EVENT -> GET PLAYING STATUS AND PRINT AT LCD
 		if (flags & EVENT_BTN_BIT) {
+			osMutexAcquire(playStateMutexHandle, osWaitForever);
+			local_is_playing = is_playing;
+			osMutexRelease(playStateMutexHandle);
+
 			osMutexAcquire(lcdMutexHandle, osWaitForever);  // LCD 뮤텍스 획득
-			if (is_playing) {
+			if (local_is_playing) {
 				sprintf(LCD_str, "       ");
 				CLCD_Puts(9, 1, (unsigned char*) LCD_str);
 				sprintf(LCD_str, "playing");
@@ -446,7 +427,7 @@ void StartLCD(void *argument)
 		}
 		//
 	}
-  /* USER CODE END StartLCD */
+	/* USER CODE END StartLCD */
 }
 
 /* USER CODE BEGIN Header_StartUart */
@@ -461,9 +442,8 @@ void StartLCD(void *argument)
  * - 읽은 시간 정보를 UART로 출력
  */
 /* USER CODE END Header_StartUart */
-void StartUart(void *argument)
-{
-  /* USER CODE BEGIN StartUart */
+void StartUart(void *argument) {
+	/* USER CODE BEGIN StartUart */
 	/* Infinite loop */
 	for (;;) {
 
@@ -482,7 +462,7 @@ void StartUart(void *argument)
 		}
 		//
 	}
-  /* USER CODE END StartUart */
+	/* USER CODE END StartUart */
 }
 
 /* USER CODE BEGIN Header_StartVS1003 */
@@ -499,12 +479,14 @@ void StartUart(void *argument)
  * - DREQ가 LOW면 전송 대기
  */
 /* USER CODE END Header_StartVS1003 */
-void StartVS1003(void *argument)
-{
-  /* USER CODE BEGIN StartVS1003 */
+void StartVS1003(void *argument) {
+	/* USER CODE BEGIN StartVS1003 */
 
 	//TASK LOCAL VARIABLES
 	uint8_t vol;
+	bool local_is_playing;
+	uint32_t local_buf_len;
+	uint32_t local_buf_index;
 	//
 
 	//INIT VS1003
@@ -527,7 +509,18 @@ void StartVS1003(void *argument)
 		//
 
 		// SEND MP3 DATA TO VS1003 IF IS PLAYING STATUS
-		while (is_playing) {
+		osMutexAcquire(playStateMutexHandle, osWaitForever);
+		local_is_playing = is_playing;
+		osMutexRelease(playStateMutexHandle);
+		//
+
+		// SEND MP3 DATA TO VS1003 IF IS PLAYING STATUS
+		while (local_is_playing) {
+			// MP3 버퍼 접근을 뮤텍스로 보호
+			osMutexAcquire(mp3BufferMutexHandle, osWaitForever); // MP3 버퍼 뮤텍스 획득
+			local_buf_len = mp3_buf_len;
+			local_buf_index = mp3_buf_index;
+
 			// IF ENOUGH DATA AND DREQ IS HIGH, SEND 32 BYTES
 			if (mp3_buf_len - mp3_buf_index >= MP3_CHUNK_SIZE
 					&& MP3_DREQ == 1) {
@@ -536,14 +529,21 @@ void StartVS1003(void *argument)
 			}
 
 			else {
+				osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
 				break;
 			}
+			osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
 			//
+
+			// 재생 상태 다시 확인
+			osMutexAcquire(playStateMutexHandle, osWaitForever); // 재생 상태 뮤텍스 획득
+			local_is_playing = is_playing;
+			osMutexRelease(playStateMutexHandle);  // 재생 상태 뮤텍스 해제
 		}
 		//
 
 	}
-  /* USER CODE END StartVS1003 */
+	/* USER CODE END StartVS1003 */
 }
 
 /* USER CODE BEGIN Header_StartFATFS */
@@ -553,9 +553,8 @@ void StartVS1003(void *argument)
  * @retval None
  */
 /* USER CODE END Header_StartFATFS */
-void StartFATFS(void *argument)
-{
-  /* USER CODE BEGIN StartFATFS */
+void StartFATFS(void *argument) {
+	/* USER CODE BEGIN StartFATFS */
 
 	//TASK LOCAL VARIABLES
 	hsd.Init.BusWide = SDIO_BUS_WIDE_1B;
@@ -593,16 +592,24 @@ void StartFATFS(void *argument)
 	//
 
 	// RESET MP3 BUFFER
+	osMutexAcquire(mp3BufferMutexHandle, osWaitForever);  // MP3 버퍼 뮤텍스 획득
 	mp3_buf_len = 0;
 	mp3_buf_index = 0;
+	osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
 	//
 
 	/* Infinite loop */
 	for (;;) {
+		// MP3 버퍼 상태 확인을 뮤텍스로 보호
+		osMutexAcquire(mp3BufferMutexHandle, osWaitForever);  // MP3 버퍼 뮤텍스 획득
+		uint32_t current_buf_len = mp3_buf_len;
+		uint32_t current_buf_index = mp3_buf_index;
+		osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
+		//
 
-		if (mp3_buf_len - mp3_buf_index < 512) {	// IF BUFFER LOW, READ MORE FROM FILE
+		if (current_buf_len - current_buf_index < 512) { // IF BUFFER LOW, READ MORE FROM FILE
 			UINT br;
-
+			osMutexAcquire(mp3BufferMutexHandle, osWaitForever);  // MP3 버퍼 뮤텍스 획득
 			// SHIFT REMAINING DATA TO FRONT
 			if (mp3_buf_index > 0 && mp3_buf_len > mp3_buf_index) {
 				memmove(mp3_buf, &mp3_buf[mp3_buf_index],
@@ -620,14 +627,17 @@ void StartFATFS(void *argument)
 			// READ FROM FILE
 			retSD = f_read(&SDFile, &mp3_buf[mp3_buf_len],
 			MP3_BUF_SIZE - mp3_buf_len, &br);
-			if (retSD != FR_OK || br == 0) {	// END OF FILE OR ERROR → RESTARTS
+			if (retSD != FR_OK || br == 0) {  // END OF FILE OR ERROR → RESTARTS
 				f_lseek(&SDFile, 0);
 				mp3_buf_len = 0;
 				mp3_buf_index = 0;
+				osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
 				continue;
 			}
 			mp3_buf_len += br;
 			//
+
+			osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
 
 			// NOTIFY VS1003 TASK TO PLAY DATA
 			osThreadFlagsSet(VS1003TaskHandle, 1);
@@ -638,7 +648,7 @@ void StartFATFS(void *argument)
 		osDelay(10);
 		//
 	}
-  /* USER CODE END StartFATFS */
+	/* USER CODE END StartFATFS */
 }
 
 /* USER CODE BEGIN Header_StartADC2DMA */
@@ -654,9 +664,8 @@ void StartFATFS(void *argument)
  * - 주기: 100ms
  */
 /* USER CODE END Header_StartADC2DMA */
-void StartADC2DMA(void *argument)
-{
-  /* USER CODE BEGIN StartADC2DMA */
+void StartADC2DMA(void *argument) {
+	/* USER CODE BEGIN StartADC2DMA */
 
 	//TASK LOCAL VARIABLES
 	char ADC_str[20];
@@ -692,7 +701,7 @@ void StartADC2DMA(void *argument)
 		//
 
 	}
-  /* USER CODE END StartADC2DMA */
+	/* USER CODE END StartADC2DMA */
 }
 
 /* USER CODE BEGIN Header_StartButton */
@@ -702,9 +711,8 @@ void StartADC2DMA(void *argument)
  * @retval None
  */
 /* USER CODE END Header_StartButton */
-void StartButton(void *argument)
-{
-  /* USER CODE BEGIN StartButton */
+void StartButton(void *argument) {
+	/* USER CODE BEGIN StartButton */
 
 	//TASK LOCAL VARIABLES
 	static bool sw1_is_pressed = false;
@@ -723,7 +731,9 @@ void StartButton(void *argument)
 			GPIO_PinState pin = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_3);
 			if (pin == GPIO_PIN_SET && sw1_is_pressed == false) {	// PUSH BTN
 				sw1_is_pressed = true;		// SW DEBOUNCING
+				osMutexAcquire(playStateMutexHandle, osWaitForever); // 재생 상태 뮤텍스 획득
 				is_playing = !is_playing;
+				osMutexRelease(playStateMutexHandle);  // 재생 상태 뮤텍스 해제
 				osThreadFlagsSet(VS1003TaskHandle, 1);	// WAKE UP VS1003Task
 				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
 			}
@@ -736,7 +746,7 @@ void StartButton(void *argument)
 		//
 
 	}
-  /* USER CODE END StartButton */
+	/* USER CODE END StartButton */
 }
 
 /* USER CODE BEGIN Header_Start7SEG */
@@ -746,9 +756,8 @@ void StartButton(void *argument)
  * @retval None
  */
 /* USER CODE END Header_Start7SEG */
-void Start7SEG(void *argument)
-{
-  /* USER CODE BEGIN Start7SEG */
+void Start7SEG(void *argument) {
+	/* USER CODE BEGIN Start7SEG */
 
 	//7SEG INIT
 	_7SEG_GPIO_Init();
@@ -774,7 +783,7 @@ void Start7SEG(void *argument)
 		//
 
 	}
-  /* USER CODE END Start7SEG */
+	/* USER CODE END Start7SEG */
 }
 
 /* Private application code --------------------------------------------------*/
