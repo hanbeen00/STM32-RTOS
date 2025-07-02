@@ -1,1 +1,717 @@
-2025-06-30 01:45:01,060 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 
+2025-07-03 00:54:28,821 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] 
+2025-07-03 00:54:30,488 [INFO] ProjectBuilder:5191 - Time for Generating toolchain IDE Files: 1992mS.
+2025-07-03 00:54:30,489 [INFO] ProjectBuilder:3181 - Time for Copy CMSIS : 0mS.
+2025-07-03 00:54:30,526 [INFO] ProjectBuilder:3181 - Time for Copy CMSIS : 0mS.
+2025-07-03 00:55:08,310 [WARN] BspModel:444 - BSP dependency skipped because of component: name='USER_PHY', api='USER_BSP_COMPONENT_DRIVER'
+2025-07-03 00:55:09,438 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 394468720 Bytes (744488960)
+2025-07-03 00:55:09,581 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 413343088 Bytes (744488960)
+2025-07-03 00:55:10,101 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 509812080 Bytes (744488960)
+2025-07-03 00:55:10,261 [INFO] ProjectBuilder:2382 - IP not ready for code generation: FATFS
+2025-07-03 00:55:11,327 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SPI
+2025-07-03 00:55:11,327 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: FREERTOS
+2025-07-03 00:55:11,327 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SDIO
+2025-07-03 00:55:11,327 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: TIM6_7
+2025-07-03 00:55:11,327 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SYS
+2025-07-03 00:55:11,327 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: ADC
+2025-07-03 00:55:11,327 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: RCC
+2025-07-03 00:55:11,327 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: NVIC
+2025-07-03 00:55:11,327 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: LWIP
+2025-07-03 00:55:11,327 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: USART
+2025-07-03 00:55:11,327 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: DMA
+2025-07-03 00:55:11,328 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: GPIO
+2025-07-03 00:55:11,328 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: ETH
+2025-07-03 00:55:11,328 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: FATFS
+2025-07-03 00:55:11,328 [INFO] CodeGenerator:882 - code generatio: config db path: C:\ST\STM32CubeIDE_1.14.0\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.14.1.202504091515\\db\
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : hdmavalue: null
+2025-07-03 00:55:11,334 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : Instancevalue: DMA2_Stream0
+2025-07-03 00:55:11,334 [INFO] Argument:335 - Argument : Instancevalue: DMA2_Stream0
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : Initvalue: null
+2025-07-03 00:55:11,334 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : Channelvalue: DMA_CHANNEL_0
+2025-07-03 00:55:11,334 [INFO] Argument:335 - Argument : Channelvalue: DMA_CHANNEL_0
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2025-07-03 00:55:11,334 [INFO] Argument:335 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:55:11,334 [INFO] Argument:335 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:55:11,334 [INFO] Argument:335 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_HALFWORD
+2025-07-03 00:55:11,334 [INFO] Argument:335 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_HALFWORD
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_HALFWORD
+2025-07-03 00:55:11,334 [INFO] Argument:335 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_HALFWORD
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : Modevalue: DMA_CIRCULAR
+2025-07-03 00:55:11,334 [INFO] Argument:335 - Argument : Modevalue: DMA_CIRCULAR
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:55:11,334 [INFO] Argument:335 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : FIFOModevalue: DMA_FIFOMODE_DISABLE
+2025-07-03 00:55:11,334 [INFO] Argument:335 - Argument : FIFOModevalue: DMA_FIFOMODE_DISABLE
+2025-07-03 00:55:11,334 [INFO] Argument:325 - Argument : FIFOThresholdvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:335 - Argument : FIFOThresholdvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:325 - Argument : MemBurstvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:335 - Argument : MemBurstvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:325 - Argument : PeriphBurstvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:335 - Argument : PeriphBurstvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:325 - Argument : Lockvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:335 - Argument : Lockvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:325 - Argument : Statevalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:335 - Argument : Statevalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:325 - Argument : Parentvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:335 - Argument : Parentvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:325 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:335 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:325 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:335 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:325 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:335 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:325 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:335 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:325 - Argument : ErrorCodevalue: null
+2025-07-03 00:55:11,335 [INFO] Argument:335 - Argument : ErrorCodevalue: null
+2025-07-03 00:55:11,349 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 00:55:11,351 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 00:55:11,368 [INFO] Argument:325 - Argument : hdmavalue: null
+2025-07-03 00:55:11,369 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : Instancevalue: DMA2_Stream3
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : Instancevalue: DMA2_Stream3
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : Initvalue: null
+2025-07-03 00:55:11,369 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : Channelvalue: DMA_CHANNEL_4
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : Channelvalue: DMA_CHANNEL_4
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : Directionvalue: DMA_MEMORY_TO_PERIPH
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : Directionvalue: DMA_MEMORY_TO_PERIPH
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_WORD
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_WORD
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_WORD
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_WORD
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : Modevalue: DMA_PFCTRL
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : Modevalue: DMA_PFCTRL
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : FIFOModevalue: DMA_FIFOMODE_ENABLE
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : FIFOModevalue: DMA_FIFOMODE_ENABLE
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : FIFOThresholdvalue: DMA_FIFO_THRESHOLD_FULL
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : FIFOThresholdvalue: DMA_FIFO_THRESHOLD_FULL
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : MemBurstvalue: DMA_MBURST_INC4
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : MemBurstvalue: DMA_MBURST_INC4
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : PeriphBurstvalue: DMA_PBURST_INC4
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : PeriphBurstvalue: DMA_PBURST_INC4
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : Lockvalue: null
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : Lockvalue: null
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : Statevalue: null
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : Statevalue: null
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : Parentvalue: null
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : Parentvalue: null
+2025-07-03 00:55:11,369 [INFO] Argument:325 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:55:11,369 [INFO] Argument:335 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:55:11,370 [INFO] Argument:335 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:55:11,370 [INFO] Argument:335 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:55:11,370 [INFO] Argument:335 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : ErrorCodevalue: null
+2025-07-03 00:55:11,370 [INFO] Argument:335 - Argument : ErrorCodevalue: null
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : hdmavalue: null
+2025-07-03 00:55:11,370 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : Instancevalue: DMA2_Stream6
+2025-07-03 00:55:11,370 [INFO] Argument:335 - Argument : Instancevalue: DMA2_Stream6
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : Initvalue: null
+2025-07-03 00:55:11,370 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : Channelvalue: DMA_CHANNEL_4
+2025-07-03 00:55:11,370 [INFO] Argument:335 - Argument : Channelvalue: DMA_CHANNEL_4
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2025-07-03 00:55:11,370 [INFO] Argument:335 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:55:11,370 [INFO] Argument:335 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:55:11,370 [INFO] Argument:335 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:55:11,370 [INFO] Argument:325 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_WORD
+2025-07-03 00:55:11,370 [INFO] Argument:335 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_WORD
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_WORD
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_WORD
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : Modevalue: DMA_PFCTRL
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : Modevalue: DMA_PFCTRL
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : FIFOModevalue: DMA_FIFOMODE_ENABLE
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : FIFOModevalue: DMA_FIFOMODE_ENABLE
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : FIFOThresholdvalue: DMA_FIFO_THRESHOLD_FULL
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : FIFOThresholdvalue: DMA_FIFO_THRESHOLD_FULL
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : MemBurstvalue: DMA_MBURST_INC4
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : MemBurstvalue: DMA_MBURST_INC4
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : PeriphBurstvalue: DMA_PBURST_INC4
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : PeriphBurstvalue: DMA_PBURST_INC4
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : Lockvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : Lockvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : Statevalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : Statevalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : Parentvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : Parentvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:325 - Argument : ErrorCodevalue: null
+2025-07-03 00:55:11,371 [INFO] Argument:335 - Argument : ErrorCodevalue: null
+2025-07-03 00:55:11,430 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\license.tmp_save
+2025-07-03 00:55:11,501 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\license.tmp
+2025-07-03 00:55:11,570 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\gpio.c_save
+2025-07-03 00:55:11,626 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\gpio.c
+2025-07-03 00:55:11,632 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\gpio.h_save
+2025-07-03 00:55:11,679 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\gpio.h
+2025-07-03 00:55:11,757 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_vars.tmp_save
+2025-07-03 00:55:11,800 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_vars.tmp
+2025-07-03 00:55:11,804 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_inc.tmp_save
+2025-07-03 00:55:11,845 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_inc.tmp
+2025-07-03 00:55:11,850 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_HalInit.tmp_save
+2025-07-03 00:55:11,898 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_HalInit.tmp
+2025-07-03 00:55:11,902 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_Msp.tmp_save
+2025-07-03 00:55:11,954 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_Msp.tmp
+2025-07-03 00:55:12,505 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:55:12,511 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp_save
+2025-07-03 00:55:12,553 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp
+2025-07-03 00:55:12,557 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp_save
+2025-07-03 00:55:12,610 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp
+2025-07-03 00:55:12,616 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp_save
+2025-07-03 00:55:12,660 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp
+2025-07-03 00:55:12,665 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp_save
+2025-07-03 00:55:12,716 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp
+2025-07-03 00:55:12,722 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp_save
+2025-07-03 00:55:12,770 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp
+2025-07-03 00:55:12,775 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp_save
+2025-07-03 00:55:12,816 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp
+2025-07-03 00:55:12,821 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp_save
+2025-07-03 00:55:12,864 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp
+2025-07-03 00:55:12,869 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp_save
+2025-07-03 00:55:12,911 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp
+2025-07-03 00:55:12,916 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp_save
+2025-07-03 00:55:12,957 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp
+2025-07-03 00:55:12,964 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:55:12,970 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_HalInit.tmp_save
+2025-07-03 00:55:13,011 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_HalInit.tmp
+2025-07-03 00:55:13,015 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_vars.tmp_save
+2025-07-03 00:55:13,057 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_vars.tmp
+2025-07-03 00:55:13,061 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_ext_vars.tmp_save
+2025-07-03 00:55:13,102 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_ext_vars.tmp
+2025-07-03 00:55:13,106 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_inc.tmp_save
+2025-07-03 00:55:13,147 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_inc.tmp
+2025-07-03 00:55:13,155 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:55:13,178 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:55:13,186 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp_save
+2025-07-03 00:55:13,227 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp
+2025-07-03 00:55:13,233 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp_save
+2025-07-03 00:55:13,275 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp
+2025-07-03 00:55:13,281 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp_save
+2025-07-03 00:55:13,322 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp
+2025-07-03 00:55:13,328 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp_save
+2025-07-03 00:55:13,369 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp
+2025-07-03 00:55:13,375 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp_save
+2025-07-03 00:55:13,418 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp
+2025-07-03 00:55:13,424 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp_save
+2025-07-03 00:55:13,465 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp
+2025-07-03 00:55:13,471 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp_save
+2025-07-03 00:55:13,513 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp
+2025-07-03 00:55:13,520 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp_save
+2025-07-03 00:55:13,565 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp
+2025-07-03 00:55:13,571 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp_save
+2025-07-03 00:55:13,613 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp
+2025-07-03 00:55:13,620 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\FreeRTOSConfig.h_save
+2025-07-03 00:55:13,670 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\FreeRTOSConfig.h
+2025-07-03 00:55:13,677 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\freertos.c_save
+2025-07-03 00:55:13,758 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\freertos.c
+2025-07-03 00:55:13,772 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\adc.c_save
+2025-07-03 00:55:13,835 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\adc.c
+2025-07-03 00:55:13,841 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\adc.h_save
+2025-07-03 00:55:13,887 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\adc.h
+2025-07-03 00:55:13,953 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\dma.c_save
+2025-07-03 00:55:14,002 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\dma.c
+2025-07-03 00:55:14,008 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\dma.h_save
+2025-07-03 00:55:14,053 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\dma.h
+2025-07-03 00:55:14,059 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:55:14,067 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_HalInit.tmp_save
+2025-07-03 00:55:14,109 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_HalInit.tmp
+2025-07-03 00:55:14,116 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_vars.tmp_save
+2025-07-03 00:55:14,157 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_vars.tmp
+2025-07-03 00:55:14,164 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_ext_vars.tmp_save
+2025-07-03 00:55:14,205 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_ext_vars.tmp
+2025-07-03 00:55:14,211 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_inc.tmp_save
+2025-07-03 00:55:14,253 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_inc.tmp
+2025-07-03 00:55:14,259 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\ffconf.h_save
+2025-07-03 00:55:14,308 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\ffconf.h
+2025-07-03 00:55:14,315 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\bsp_driver_sd.c_save
+2025-07-03 00:55:14,361 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\bsp_driver_sd.c
+2025-07-03 00:55:14,367 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\bsp_driver_sd.h_save
+2025-07-03 00:55:14,412 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\bsp_driver_sd.h
+2025-07-03 00:55:14,419 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\sd_diskio.h_save
+2025-07-03 00:55:14,463 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\sd_diskio.h
+2025-07-03 00:55:14,470 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\sd_diskio.c_save
+2025-07-03 00:55:14,518 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\sd_diskio.c
+2025-07-03 00:55:14,524 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\App\fatfs.c_save
+2025-07-03 00:55:14,570 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\App\fatfs.c
+2025-07-03 00:55:14,576 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\App\fatfs.h_save
+2025-07-03 00:55:14,621 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\App\fatfs.h
+2025-07-03 00:55:14,628 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:55:14,640 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\App\lwip.c_save
+2025-07-03 00:55:14,690 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\App\lwip.c
+2025-07-03 00:55:14,696 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\App\lwip.h_save
+2025-07-03 00:55:14,743 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\App\lwip.h
+2025-07-03 00:55:14,749 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\lwipopts.h_save
+2025-07-03 00:55:14,832 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\lwipopts.h
+2025-07-03 00:55:14,838 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\ethernetif.c_save
+2025-07-03 00:55:14,906 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\ethernetif.c
+2025-07-03 00:55:14,913 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\ethernetif.h_save
+2025-07-03 00:55:14,959 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\ethernetif.h
+2025-07-03 00:55:14,971 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\sdio.c_save
+2025-07-03 00:55:15,032 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\sdio.c
+2025-07-03 00:55:15,038 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\sdio.h_save
+2025-07-03 00:55:15,082 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\sdio.h
+2025-07-03 00:55:15,095 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\spi.c_save
+2025-07-03 00:55:15,153 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\spi.c
+2025-07-03 00:55:15,159 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\spi.h_save
+2025-07-03 00:55:15,203 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\spi.h
+2025-07-03 00:55:15,214 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\tim.c_save
+2025-07-03 00:55:15,276 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\tim.c
+2025-07-03 00:55:15,282 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\tim.h_save
+2025-07-03 00:55:15,326 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\tim.h
+2025-07-03 00:55:15,338 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\usart.c_save
+2025-07-03 00:55:15,395 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\usart.c
+2025-07-03 00:55:15,401 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\usart.h_save
+2025-07-03 00:55:15,446 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\usart.h
+2025-07-03 00:55:15,462 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_it.c_save
+2025-07-03 00:55:15,539 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_it.c
+2025-07-03 00:55:15,545 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_it.h_save
+2025-07-03 00:55:15,589 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_it.h
+2025-07-03 00:55:15,606 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_msp.c_save
+2025-07-03 00:55:15,664 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_msp.c
+2025-07-03 00:55:15,669 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\system.tmp_save
+2025-07-03 00:55:15,711 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\system.tmp
+2025-07-03 00:55:15,717 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_timebase_tim.c_save
+2025-07-03 00:55:15,764 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_timebase_tim.c
+2025-07-03 00:55:15,777 [INFO] CodeEngine:319 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_hal_conf.h_save
+2025-07-03 00:55:15,826 [INFO] CodeEngine:343 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_hal_conf.h
+2025-07-03 00:55:15,856 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\main.h_save
+2025-07-03 00:55:15,906 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\main.h
+2025-07-03 00:55:15,913 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\main.c_save
+2025-07-03 00:55:15,990 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\main.c
+2025-07-03 00:55:17,086 [INFO] ProjectBuilder:3324 - Time for Copy HAL[1] : 812mS.
+2025-07-03 00:55:17,109 [INFO] ProjectBuilder:4912 - Project Generator version: 4.6.0.1-B1
+2025-07-03 00:55:17,164 [INFO] ConfigFileManager:1590 - The Die is : DIE413
+2025-07-03 00:55:18,807 [INFO] ProjectBuilder:5191 - Time for Generating toolchain IDE Files: 1698mS.
+2025-07-03 00:55:18,808 [INFO] ProjectBuilder:3181 - Time for Copy CMSIS : 1mS.
+2025-07-03 00:55:18,842 [INFO] ProjectBuilder:3181 - Time for Copy CMSIS : 0mS.
+2025-07-03 00:56:38,018 [ERROR] RtosPanel:558 - Can not restore the selected Tab for FREERTOS(A reason can be that the tab is no more available.)
+2025-07-03 00:56:40,895 [WARN] BspModel:444 - BSP dependency skipped because of component: name='USER_PHY', api='USER_BSP_COMPONENT_DRIVER'
+2025-07-03 00:56:41,034 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 503985496 Bytes (749731840)
+2025-07-03 00:56:41,195 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 523402840 Bytes (749731840)
+2025-07-03 00:56:41,742 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 608297384 Bytes (749731840)
+2025-07-03 00:56:42,016 [INFO] ProjectBuilder:2382 - IP not ready for code generation: FATFS
+2025-07-03 00:56:42,957 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SPI
+2025-07-03 00:56:42,957 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: FREERTOS
+2025-07-03 00:56:42,957 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SDIO
+2025-07-03 00:56:42,957 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: TIM6_7
+2025-07-03 00:56:42,957 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: SYS
+2025-07-03 00:56:42,957 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: ADC
+2025-07-03 00:56:42,958 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: RCC
+2025-07-03 00:56:42,958 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: NVIC
+2025-07-03 00:56:42,958 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: LWIP
+2025-07-03 00:56:42,958 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: USART
+2025-07-03 00:56:42,958 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: DMA
+2025-07-03 00:56:42,959 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: GPIO
+2025-07-03 00:56:42,959 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: ETH
+2025-07-03 00:56:42,959 [INFO] BlockDiagram:2775 - set Specific Code input for plugin: FATFS
+2025-07-03 00:56:42,960 [INFO] CodeGenerator:882 - code generatio: config db path: C:\ST\STM32CubeIDE_1.14.0\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.14.1.202504091515\\db\
+2025-07-03 00:56:42,967 [INFO] Argument:325 - Argument : hdmavalue: null
+2025-07-03 00:56:42,967 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:56:42,967 [INFO] Argument:325 - Argument : Instancevalue: DMA2_Stream0
+2025-07-03 00:56:42,967 [INFO] Argument:335 - Argument : Instancevalue: DMA2_Stream0
+2025-07-03 00:56:42,967 [INFO] Argument:325 - Argument : Initvalue: null
+2025-07-03 00:56:42,967 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:56:42,967 [INFO] Argument:325 - Argument : Channelvalue: DMA_CHANNEL_0
+2025-07-03 00:56:42,968 [INFO] Argument:335 - Argument : Channelvalue: DMA_CHANNEL_0
+2025-07-03 00:56:42,968 [INFO] Argument:325 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2025-07-03 00:56:42,968 [INFO] Argument:335 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2025-07-03 00:56:42,968 [INFO] Argument:325 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:56:42,968 [INFO] Argument:335 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:56:42,968 [INFO] Argument:325 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:56:42,968 [INFO] Argument:335 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:56:42,968 [INFO] Argument:325 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_HALFWORD
+2025-07-03 00:56:42,968 [INFO] Argument:335 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_HALFWORD
+2025-07-03 00:56:42,968 [INFO] Argument:325 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_HALFWORD
+2025-07-03 00:56:42,968 [INFO] Argument:335 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_HALFWORD
+2025-07-03 00:56:42,968 [INFO] Argument:325 - Argument : Modevalue: DMA_CIRCULAR
+2025-07-03 00:56:42,968 [INFO] Argument:335 - Argument : Modevalue: DMA_CIRCULAR
+2025-07-03 00:56:42,968 [INFO] Argument:325 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:56:42,968 [INFO] Argument:335 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:56:42,968 [INFO] Argument:325 - Argument : FIFOModevalue: DMA_FIFOMODE_DISABLE
+2025-07-03 00:56:42,968 [INFO] Argument:335 - Argument : FIFOModevalue: DMA_FIFOMODE_DISABLE
+2025-07-03 00:56:42,968 [INFO] Argument:325 - Argument : FIFOThresholdvalue: null
+2025-07-03 00:56:42,968 [INFO] Argument:335 - Argument : FIFOThresholdvalue: null
+2025-07-03 00:56:42,968 [INFO] Argument:325 - Argument : MemBurstvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:335 - Argument : MemBurstvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:325 - Argument : PeriphBurstvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:335 - Argument : PeriphBurstvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:325 - Argument : Lockvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:335 - Argument : Lockvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:325 - Argument : Statevalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:335 - Argument : Statevalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:325 - Argument : Parentvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:335 - Argument : Parentvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:325 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:335 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:325 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:335 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:325 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:335 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:325 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:335 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:325 - Argument : ErrorCodevalue: null
+2025-07-03 00:56:42,969 [INFO] Argument:335 - Argument : ErrorCodevalue: null
+2025-07-03 00:56:42,976 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 00:56:42,977 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 00:56:43,001 [INFO] Argument:325 - Argument : hdmavalue: null
+2025-07-03 00:56:43,001 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:56:43,001 [INFO] Argument:325 - Argument : Instancevalue: DMA2_Stream3
+2025-07-03 00:56:43,001 [INFO] Argument:335 - Argument : Instancevalue: DMA2_Stream3
+2025-07-03 00:56:43,001 [INFO] Argument:325 - Argument : Initvalue: null
+2025-07-03 00:56:43,001 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:56:43,001 [INFO] Argument:325 - Argument : Channelvalue: DMA_CHANNEL_4
+2025-07-03 00:56:43,001 [INFO] Argument:335 - Argument : Channelvalue: DMA_CHANNEL_4
+2025-07-03 00:56:43,001 [INFO] Argument:325 - Argument : Directionvalue: DMA_MEMORY_TO_PERIPH
+2025-07-03 00:56:43,001 [INFO] Argument:335 - Argument : Directionvalue: DMA_MEMORY_TO_PERIPH
+2025-07-03 00:56:43,001 [INFO] Argument:325 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:56:43,001 [INFO] Argument:335 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:56:43,001 [INFO] Argument:325 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:56:43,001 [INFO] Argument:335 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:56:43,001 [INFO] Argument:325 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_WORD
+2025-07-03 00:56:43,001 [INFO] Argument:335 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_WORD
+2025-07-03 00:56:43,001 [INFO] Argument:325 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_WORD
+2025-07-03 00:56:43,001 [INFO] Argument:335 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_WORD
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : Modevalue: DMA_PFCTRL
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : Modevalue: DMA_PFCTRL
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : FIFOModevalue: DMA_FIFOMODE_ENABLE
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : FIFOModevalue: DMA_FIFOMODE_ENABLE
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : FIFOThresholdvalue: DMA_FIFO_THRESHOLD_FULL
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : FIFOThresholdvalue: DMA_FIFO_THRESHOLD_FULL
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : MemBurstvalue: DMA_MBURST_INC4
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : MemBurstvalue: DMA_MBURST_INC4
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : PeriphBurstvalue: DMA_PBURST_INC4
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : PeriphBurstvalue: DMA_PBURST_INC4
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : Lockvalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : Lockvalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : Statevalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : Statevalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : Parentvalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : Parentvalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:335 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:56:43,002 [INFO] Argument:325 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:56:43,003 [INFO] Argument:335 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:56:43,003 [INFO] Argument:325 - Argument : ErrorCodevalue: null
+2025-07-03 00:56:43,003 [INFO] Argument:335 - Argument : ErrorCodevalue: null
+2025-07-03 00:56:43,003 [INFO] Argument:325 - Argument : hdmavalue: null
+2025-07-03 00:56:43,003 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:56:43,003 [INFO] Argument:325 - Argument : Instancevalue: DMA2_Stream6
+2025-07-03 00:56:43,003 [INFO] Argument:335 - Argument : Instancevalue: DMA2_Stream6
+2025-07-03 00:56:43,003 [INFO] Argument:325 - Argument : Initvalue: null
+2025-07-03 00:56:43,003 [INFO] Argument:327 - 	 sub Args: 
+2025-07-03 00:56:43,003 [INFO] Argument:325 - Argument : Channelvalue: DMA_CHANNEL_4
+2025-07-03 00:56:43,003 [INFO] Argument:335 - Argument : Channelvalue: DMA_CHANNEL_4
+2025-07-03 00:56:43,003 [INFO] Argument:325 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2025-07-03 00:56:43,003 [INFO] Argument:335 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2025-07-03 00:56:43,003 [INFO] Argument:325 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:56:43,003 [INFO] Argument:335 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_WORD
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_WORD
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_WORD
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_WORD
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : Modevalue: DMA_PFCTRL
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : Modevalue: DMA_PFCTRL
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : FIFOModevalue: DMA_FIFOMODE_ENABLE
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : FIFOModevalue: DMA_FIFOMODE_ENABLE
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : FIFOThresholdvalue: DMA_FIFO_THRESHOLD_FULL
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : FIFOThresholdvalue: DMA_FIFO_THRESHOLD_FULL
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : MemBurstvalue: DMA_MBURST_INC4
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : MemBurstvalue: DMA_MBURST_INC4
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : PeriphBurstvalue: DMA_PBURST_INC4
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : PeriphBurstvalue: DMA_PBURST_INC4
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : Lockvalue: null
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : Lockvalue: null
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : Statevalue: null
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : Statevalue: null
+2025-07-03 00:56:43,004 [INFO] Argument:325 - Argument : Parentvalue: null
+2025-07-03 00:56:43,004 [INFO] Argument:335 - Argument : Parentvalue: null
+2025-07-03 00:56:43,005 [INFO] Argument:325 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:56:43,005 [INFO] Argument:335 - Argument : XferCpltCallbackvalue: null
+2025-07-03 00:56:43,005 [INFO] Argument:325 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:56:43,005 [INFO] Argument:335 - Argument : XferHalfCpltCallbackvalue: null
+2025-07-03 00:56:43,005 [INFO] Argument:325 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:56:43,005 [INFO] Argument:335 - Argument : XferM1CpltCallbackvalue: null
+2025-07-03 00:56:43,005 [INFO] Argument:325 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:56:43,005 [INFO] Argument:335 - Argument : XferErrorCallbackvalue: null
+2025-07-03 00:56:43,005 [INFO] Argument:325 - Argument : ErrorCodevalue: null
+2025-07-03 00:56:43,005 [INFO] Argument:335 - Argument : ErrorCodevalue: null
+2025-07-03 00:56:43,061 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\license.tmp_save
+2025-07-03 00:56:43,172 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\license.tmp
+2025-07-03 00:56:43,231 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\gpio.c_save
+2025-07-03 00:56:43,308 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\gpio.c
+2025-07-03 00:56:43,315 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\gpio.h_save
+2025-07-03 00:56:43,382 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\gpio.h
+2025-07-03 00:56:43,488 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_vars.tmp_save
+2025-07-03 00:56:43,554 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_vars.tmp
+2025-07-03 00:56:43,559 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_inc.tmp_save
+2025-07-03 00:56:43,618 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_inc.tmp
+2025-07-03 00:56:43,622 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_HalInit.tmp_save
+2025-07-03 00:56:43,709 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_HalInit.tmp
+2025-07-03 00:56:43,715 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_Msp.tmp_save
+2025-07-03 00:56:43,798 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\eth_Msp.tmp
+2025-07-03 00:56:44,545 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:56:44,554 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp_save
+2025-07-03 00:56:44,604 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp
+2025-07-03 00:56:44,609 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp_save
+2025-07-03 00:56:44,660 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp
+2025-07-03 00:56:44,665 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp_save
+2025-07-03 00:56:44,711 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp
+2025-07-03 00:56:44,716 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp_save
+2025-07-03 00:56:44,763 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp
+2025-07-03 00:56:44,769 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp_save
+2025-07-03 00:56:44,825 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp
+2025-07-03 00:56:44,830 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp_save
+2025-07-03 00:56:44,875 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp
+2025-07-03 00:56:44,880 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp_save
+2025-07-03 00:56:44,926 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp
+2025-07-03 00:56:44,931 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp_save
+2025-07-03 00:56:44,975 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp
+2025-07-03 00:56:44,979 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp_save
+2025-07-03 00:56:45,023 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp
+2025-07-03 00:56:45,030 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:56:45,039 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_HalInit.tmp_save
+2025-07-03 00:56:45,082 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_HalInit.tmp
+2025-07-03 00:56:45,086 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_vars.tmp_save
+2025-07-03 00:56:45,128 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_vars.tmp
+2025-07-03 00:56:45,133 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_ext_vars.tmp_save
+2025-07-03 00:56:45,175 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_ext_vars.tmp
+2025-07-03 00:56:45,179 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_inc.tmp_save
+2025-07-03 00:56:45,221 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_inc.tmp
+2025-07-03 00:56:45,233 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:56:45,260 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:56:45,270 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp_save
+2025-07-03 00:56:45,312 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_inc.tmp
+2025-07-03 00:56:45,318 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp_save
+2025-07-03 00:56:45,360 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelInit.tmp
+2025-07-03 00:56:45,366 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp_save
+2025-07-03 00:56:45,407 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_kernelStart.tmp
+2025-07-03 00:56:45,413 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp_save
+2025-07-03 00:56:45,455 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_typedefs.tmp
+2025-07-03 00:56:45,461 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp_save
+2025-07-03 00:56:45,504 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_vars.tmp
+2025-07-03 00:56:45,510 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp_save
+2025-07-03 00:56:45,553 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_pfp.tmp
+2025-07-03 00:56:45,559 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp_save
+2025-07-03 00:56:45,603 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_obj_creat.tmp
+2025-07-03 00:56:45,609 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp_save
+2025-07-03 00:56:45,652 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_default_thread.tmp
+2025-07-03 00:56:45,658 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp_save
+2025-07-03 00:56:45,700 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\rtos_threads.tmp
+2025-07-03 00:56:45,706 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\FreeRTOSConfig.h_save
+2025-07-03 00:56:45,758 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\FreeRTOSConfig.h
+2025-07-03 00:56:45,764 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\freertos.c_save
+2025-07-03 00:56:45,851 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\freertos.c
+2025-07-03 00:56:45,865 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\adc.c_save
+2025-07-03 00:56:45,932 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\adc.c
+2025-07-03 00:56:45,939 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\adc.h_save
+2025-07-03 00:56:45,985 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\adc.h
+2025-07-03 00:56:46,043 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\dma.c_save
+2025-07-03 00:56:46,091 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\dma.c
+2025-07-03 00:56:46,097 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\dma.h_save
+2025-07-03 00:56:46,141 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\dma.h
+2025-07-03 00:56:46,147 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:56:46,155 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_HalInit.tmp_save
+2025-07-03 00:56:46,196 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_HalInit.tmp
+2025-07-03 00:56:46,203 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_vars.tmp_save
+2025-07-03 00:56:46,244 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_vars.tmp
+2025-07-03 00:56:46,250 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_ext_vars.tmp_save
+2025-07-03 00:56:46,292 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_ext_vars.tmp
+2025-07-03 00:56:46,298 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_inc.tmp_save
+2025-07-03 00:56:46,340 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\fatfs_inc.tmp
+2025-07-03 00:56:46,347 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\ffconf.h_save
+2025-07-03 00:56:46,396 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\ffconf.h
+2025-07-03 00:56:46,402 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\bsp_driver_sd.c_save
+2025-07-03 00:56:46,450 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\bsp_driver_sd.c
+2025-07-03 00:56:46,456 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\bsp_driver_sd.h_save
+2025-07-03 00:56:46,500 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\bsp_driver_sd.h
+2025-07-03 00:56:46,507 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\sd_diskio.h_save
+2025-07-03 00:56:46,550 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\sd_diskio.h
+2025-07-03 00:56:46,557 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\sd_diskio.c_save
+2025-07-03 00:56:46,611 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\Target\sd_diskio.c
+2025-07-03 00:56:46,617 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\App\fatfs.c_save
+2025-07-03 00:56:46,664 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\App\fatfs.c
+2025-07-03 00:56:46,671 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\App\fatfs.h_save
+2025-07-03 00:56:46,716 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\FATFS\App\fatfs.h
+2025-07-03 00:56:46,724 [INFO] Middleware:1452 - No code input for Bsp Dependency
+2025-07-03 00:56:46,736 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\App\lwip.c_save
+2025-07-03 00:56:46,787 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\App\lwip.c
+2025-07-03 00:56:46,793 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\App\lwip.h_save
+2025-07-03 00:56:46,840 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\App\lwip.h
+2025-07-03 00:56:46,846 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\lwipopts.h_save
+2025-07-03 00:56:46,931 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\lwipopts.h
+2025-07-03 00:56:46,938 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\ethernetif.c_save
+2025-07-03 00:56:47,017 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\ethernetif.c
+2025-07-03 00:56:47,024 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\ethernetif.h_save
+2025-07-03 00:56:47,077 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\LWIP\Target\ethernetif.h
+2025-07-03 00:56:47,091 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\sdio.c_save
+2025-07-03 00:56:47,173 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\sdio.c
+2025-07-03 00:56:47,180 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\sdio.h_save
+2025-07-03 00:56:47,225 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\sdio.h
+2025-07-03 00:56:47,237 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\spi.c_save
+2025-07-03 00:56:47,298 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\spi.c
+2025-07-03 00:56:47,305 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\spi.h_save
+2025-07-03 00:56:47,353 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\spi.h
+2025-07-03 00:56:47,368 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\tim.c_save
+2025-07-03 00:56:47,450 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\tim.c
+2025-07-03 00:56:47,462 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\tim.h_save
+2025-07-03 00:56:47,529 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\tim.h
+2025-07-03 00:56:47,549 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\usart.c_save
+2025-07-03 00:56:47,632 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\usart.c
+2025-07-03 00:56:47,643 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\usart.h_save
+2025-07-03 00:56:47,707 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\usart.h
+2025-07-03 00:56:47,733 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_it.c_save
+2025-07-03 00:56:47,843 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_it.c
+2025-07-03 00:56:47,850 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_it.h_save
+2025-07-03 00:56:47,899 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_it.h
+2025-07-03 00:56:47,918 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_msp.c_save
+2025-07-03 00:56:47,985 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_msp.c
+2025-07-03 00:56:47,991 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\system.tmp_save
+2025-07-03 00:56:48,038 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\MXTmpFiles\system.tmp
+2025-07-03 00:56:48,046 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_timebase_tim.c_save
+2025-07-03 00:56:48,103 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\stm32f4xx_hal_timebase_tim.c
+2025-07-03 00:56:48,118 [INFO] CodeEngine:319 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_hal_conf.h_save
+2025-07-03 00:56:48,177 [INFO] CodeEngine:343 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\stm32f4xx_hal_conf.h
+2025-07-03 00:56:48,217 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\main.h_save
+2025-07-03 00:56:48,272 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Inc\main.h
+2025-07-03 00:56:48,280 [INFO] CodeEngine:263 - oldGeneratedFile, C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\main.c_save
+2025-07-03 00:56:48,355 [INFO] CodeEngine:287 - Generated code: C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\Core\Src\main.c
+2025-07-03 00:56:49,386 [INFO] ProjectBuilder:3324 - Time for Copy HAL[1] : 790mS.
+2025-07-03 00:56:49,407 [INFO] ProjectBuilder:4912 - Project Generator version: 4.6.0.1-B1
+2025-07-03 00:56:49,465 [INFO] ConfigFileManager:1590 - The Die is : DIE413
+2025-07-03 00:56:51,079 [INFO] ProjectBuilder:5191 - Time for Generating toolchain IDE Files: 1672mS.
+2025-07-03 00:56:51,080 [INFO] ProjectBuilder:3181 - Time for Copy CMSIS : 0mS.
+2025-07-03 00:56:51,127 [INFO] ProjectBuilder:3181 - Time for Copy CMSIS : 0mS.
+2025-07-03 01:30:06,133 [WARN] BspModel:444 - BSP dependency skipped because of component: name='USER_PHY', api='USER_BSP_COMPONENT_DRIVER'
+2025-07-03 01:30:06,137 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:06,143 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:06,189 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:06,192 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:12,774 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:12,775 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:13,575 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:13,576 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:14,520 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:14,521 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:15,806 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:15,808 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:16,761 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:16,762 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:17,843 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:17,844 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:19,043 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:19,044 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:21,129 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:21,130 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:22,625 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:22,626 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:23,545 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:23,546 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:24,274 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:24,275 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:24,991 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:24,992 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:25,503 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:25,504 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:35,846 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:35,848 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:44,881 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:44,883 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:45,397 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:45,398 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:46,050 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:46,051 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:47,858 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:47,859 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:50,015 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:50,016 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:50,824 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:50,825 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:53,021 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:53,022 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:55,100 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:55,101 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:56,110 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:56,111 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:58,760 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:58,761 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:59,407 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:59,408 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:59,860 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:30:59,862 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:31:00,482 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:31:00,483 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:31:01,201 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:31:01,202 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:31:01,524 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:31:01,526 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:31:02,210 [WARN] IP:2250 - LWIP_RAM_HEAP_POINTER not found: check if there is a RefParameter without a condition.
+2025-07-03 01:31:02,211 [WARN] IP:2250 - LWIP_NETIF_HOSTNAME_NAME not found: check if there is a RefParameter without a condition.
+2025-07-03 01:31:50,251 [INFO] NvicIntPanel:101 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,0x0,invalid,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2025-07-03 01:42:24,067 [ERROR] RtosPanel:558 - Can not restore the selected Tab for FREERTOS(A reason can be that the tab is no more available.)
+2025-07-03 01:42:25,817 [INFO] TasksAndQueuesTab:757 - Dynamic
+2025-07-03 01:42:25,817 [WARN] TasksAndQueuesTab:763 - 2048 128
+2025-07-03 01:42:25,817 [WARN] TasksAndQueuesTab:775 - max value is: 8192.0
+2025-07-03 01:42:25,817 [INFO] TasksAndQueuesTab:757 - Dynamic
+2025-07-03 01:42:25,817 [WARN] TasksAndQueuesTab:763 - 256 128
+2025-07-03 01:42:25,817 [WARN] TasksAndQueuesTab:775 - max value is: 8192.0
+2025-07-03 01:42:25,817 [INFO] TasksAndQueuesTab:757 - Dynamic
+2025-07-03 01:42:25,817 [WARN] TasksAndQueuesTab:763 - 128 128
+2025-07-03 01:42:25,818 [WARN] TasksAndQueuesTab:775 - max value is: 8192.0
+2025-07-03 01:42:25,818 [INFO] TasksAndQueuesTab:757 - Dynamic
+2025-07-03 01:42:25,818 [WARN] TasksAndQueuesTab:763 - 128 128
+2025-07-03 01:42:25,818 [WARN] TasksAndQueuesTab:775 - max value is: 8192.0
+2025-07-03 01:42:25,818 [INFO] TasksAndQueuesTab:757 - Dynamic
+2025-07-03 01:42:25,818 [WARN] TasksAndQueuesTab:763 - 512 128
+2025-07-03 01:42:25,818 [WARN] TasksAndQueuesTab:775 - max value is: 8192.0
+2025-07-03 01:42:25,818 [INFO] TasksAndQueuesTab:757 - Dynamic
+2025-07-03 01:42:25,819 [WARN] TasksAndQueuesTab:763 - 128 128
+2025-07-03 01:42:25,819 [WARN] TasksAndQueuesTab:775 - max value is: 8192.0
+2025-07-03 01:42:25,819 [INFO] TasksAndQueuesTab:757 - Dynamic
+2025-07-03 01:42:25,819 [WARN] TasksAndQueuesTab:763 - 512 128
+2025-07-03 01:42:25,819 [WARN] TasksAndQueuesTab:775 - max value is: 8192.0
+2025-07-03 01:42:25,819 [INFO] TasksAndQueuesTab:757 - Dynamic
+2025-07-03 01:42:25,819 [WARN] TasksAndQueuesTab:763 - 512 128
+2025-07-03 01:42:25,819 [WARN] TasksAndQueuesTab:775 - max value is: 8192.0
+2025-07-03 01:42:25,819 [INFO] TasksAndQueuesTab:757 - Dynamic
+2025-07-03 01:42:25,819 [WARN] TasksAndQueuesTab:763 - 128 128
+2025-07-03 01:42:25,820 [WARN] TasksAndQueuesTab:775 - max value is: 8192.0
+2025-07-03 01:42:25,820 [INFO] TasksAndQueuesTab:757 - Dynamic
+2025-07-03 01:42:25,820 [WARN] TasksAndQueuesTab:763 - 128 128
+2025-07-03 01:42:25,820 [WARN] TasksAndQueuesTab:775 - max value is: 8192.0
+2025-07-03 01:42:28,153 [INFO] EditThreadDialog:704 - RAM SIZE (in KB): 128
+2025-07-03 01:42:28,153 [INFO] EditThreadDialog:706 - RAM SIZE (in words): 32768
+2025-07-03 01:52:53,039 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 

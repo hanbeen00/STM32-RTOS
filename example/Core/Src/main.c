@@ -119,7 +119,6 @@ int main(void)
 	HAL_UART_Receive_IT(&huart3, &rx3_data, 1);
 	printf("Hello\n");
 
-
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -248,7 +247,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		osThreadFlagsSet(VS1003TaskHandle, 1); // VS1003 테스크 플래그 설정
 	}
 
-	else if (GPIO_Pin == GPIO_PIN_3) {
+	else if (GPIO_Pin == GPIO_PIN_3||GPIO_Pin == GPIO_PIN_4) {
 		osEventFlagsSet(eventFlagsHandle, EVENT_BTN_BIT);
 	}
 }

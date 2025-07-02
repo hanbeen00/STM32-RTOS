@@ -79,8 +79,8 @@ all: main-build
 main-build: example.elf secondary-outputs
 
 # Tool invocations
-example.elf example.map: $(OBJS) $(USER_OBJS) C:\STM32-RTOS\example\STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "example.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\STM32-RTOS\example\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="example.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+example.elf example.map: $(OBJS) $(USER_OBJS) C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "example.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="example.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

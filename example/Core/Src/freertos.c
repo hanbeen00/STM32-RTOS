@@ -35,6 +35,11 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
+typedef struct {
+	char filename[32];
+} mp3_file_t;
+
 uint32_t time_1sec = 0;
 
 #define MP3_BUF_SIZE 4096
@@ -43,6 +48,11 @@ uint8_t mp3_buf[MP3_BUF_SIZE]; //MP3 데이터가 들어 있는 전체 버퍼
 volatile uint32_t mp3_buf_len = 0; //전체 길이
 volatile uint32_t mp3_buf_index = 0; //현재까지 전송된 위치
 volatile bool is_playing = true;  // 기본값: 재생 중
+
+static mp3_file_t mp3_files[50];  // 최대 50개 MP3 파일
+static uint32_t total_mp3_files = 0;
+static uint32_t current_track_index = 0;
+static bool track_changed = false;
 
 // lcd 동기화 관련 이슈
 // 변수 포맷 관련 이슈
@@ -60,10 +70,10 @@ volatile bool is_playing = true;  // 기본값: 재생 중
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
-/* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = { .name = "defaultTask",
-		.stack_size = 2048 * 4, .priority = (osPriority_t) osPriorityLow, };
+/* Definitions for NTPTask */
+osThreadId_t NTPTaskHandle;
+const osThreadAttr_t NTPTask_attributes = { .name = "NTPTask", .stack_size =
+		2048 * 4, .priority = (osPriority_t) osPriorityLow, };
 /* Definitions for TimeTask */
 osThreadId_t TimeTaskHandle;
 const osThreadAttr_t TimeTask_attributes = { .name = "TimeTask", .stack_size =
@@ -124,7 +134,7 @@ const osEventFlagsAttr_t eventFlags_attributes = { .name = "eventFlags" };
 
 /* USER CODE END FunctionPrototypes */
 
-void StartDefaultTask(void *argument);
+void StartNTP(void *argument);
 void StartTime(void *argument);
 void StartLED(void *argument);
 void StartLCD(void *argument);
@@ -182,9 +192,8 @@ void MX_FREERTOS_Init(void) {
 	/* USER CODE END RTOS_QUEUES */
 
 	/* Create the thread(s) */
-	/* creation of defaultTask */
-	defaultTaskHandle = osThreadNew(StartDefaultTask, NULL,
-			&defaultTask_attributes);
+	/* creation of NTPTask */
+	NTPTaskHandle = osThreadNew(StartNTP, NULL, &NTPTask_attributes);
 
 	/* creation of TimeTask */
 	TimeTaskHandle = osThreadNew(StartTime, NULL, &TimeTask_attributes);
@@ -227,40 +236,31 @@ void MX_FREERTOS_Init(void) {
 
 }
 
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_StartNTP */
 /**
- * @brief  Function implementing the defaultTask thread.
+ * @brief  Function implementing the NTPTask thread.
  * @param  argument: Not used
  * @retval None
+ *
+ * @details
+ * - NTP 서버 접속 및 현재 시각 수신
  */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument) {
+/* USER CODE END Header_StartNTP */
+void StartNTP(void *argument) {
 	/* init code for LWIP */
 	MX_LWIP_Init();
-	/* USER CODE BEGIN StartDefaultTask */
-
-	//NTP INIT & GET INTERNET TIME DATA
+	/* USER CODE BEGIN StartNTP */
 	udp_ntp_client_init();
-	//udp_echoserver_init();
-	//
-
 	/* Infinite loop */
 	for (;;) {
-//		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_ETH_BIT,
-//		osFlagsWaitAny, osWaitForever);
-//		if (flags & EVENT_ETH_BIT) {
-//			ethernetif_input(&gnetif);
-//		}
-
 		//ON ETH DATA RECEPTION, SEND DATA TO LWIP STACK
 		// CHECK & HANDLE LWIP INTERNAL TIMEOUTS (e.g. TCP retransmission, ARP refresh)
 		if (osSemaphoreAcquire(RxPktSemaphore, osWaitForever) == osOK) {
 			ethernetif_input(&gnetif);
 		}
 		sys_check_timeouts();
-		//
 	}
-	/* USER CODE END StartDefaultTask */
+	/* USER CODE END StartNTP */
 }
 
 /* USER CODE BEGIN Header_StartTime */
@@ -485,8 +485,6 @@ void StartVS1003(void *argument) {
 	//TASK LOCAL VARIABLES
 	uint8_t vol;
 	bool local_is_playing;
-	uint32_t local_buf_len;
-	uint32_t local_buf_index;
 	//
 
 	//INIT VS1003
@@ -498,10 +496,12 @@ void StartVS1003(void *argument) {
 	for (;;) {
 
 		// Wait until any other task signals (BTN, FATFS)
+		// 버튼테스크, FATFS에서 VS1003 테스크 깨움
 		osThreadFlagsWait(1, osFlagsWaitAny, osWaitForever);
 		//
 
 		// CHECK IF VOLUME MESSAGE IS AVAILABLE
+		// ADC테스크에서 볼륨 정보 큐로 보냄(큐에 정보 있으면 해당 값으로 볼륨 조절)
 		if (osMessageQueueGet(volQueueHandle, &vol, NULL, 0) == osOK) {
 			vs1003ram[4] = vol;
 			VS1003_SetVol();
@@ -509,33 +509,40 @@ void StartVS1003(void *argument) {
 		//
 
 		// SEND MP3 DATA TO VS1003 IF IS PLAYING STATUS
+		// 버튼테스크에서 전역변수 is_playing 조작
 		osMutexAcquire(playStateMutexHandle, osWaitForever);
 		local_is_playing = is_playing;
 		osMutexRelease(playStateMutexHandle);
 		//
 
 		// SEND MP3 DATA TO VS1003 IF IS PLAYING STATUS
+		// 버튼으로 playing 활성화되면
 		while (local_is_playing) {
 			// MP3 버퍼 접근을 뮤텍스로 보호
+			// FATFS 태스크에서 mp3_buf_len, mp3_buf_index 같이 사용하므로 뮤텍스로 공통 변수 보호
 			osMutexAcquire(mp3BufferMutexHandle, osWaitForever); // MP3 버퍼 뮤텍스 획득
-			local_buf_len = mp3_buf_len;
-			local_buf_index = mp3_buf_index;
 
 			// IF ENOUGH DATA AND DREQ IS HIGH, SEND 32 BYTES
+			// Data REQuest 핀이 활성화(디코더 칩이 새로운 데이터를 수신할 준비가 되었는지)
+			// mp3_buf_len == 현재까지 FATFS 태스크에서 읽어들인 MP3 데이터 총 길이
+			// mp3_buf_index == 현재까지 VS1003로 전송한 위치 (offset)
+			// 아직 보내지 않은 데이터가 32바이트 이상 있는가?
 			if (mp3_buf_len - mp3_buf_index >= MP3_CHUNK_SIZE
 					&& MP3_DREQ == 1) {
+				//mp3_buf의 현재 위치부터 32바이트 전송
 				VS1003_WriteData(&mp3_buf[mp3_buf_index]);
+				//다음 전송 위치로 인덱스 이동 (32바이트 뒤)
 				mp3_buf_index += MP3_CHUNK_SIZE;
+				osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
 			}
 
 			else {
 				osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
 				break;
 			}
-			osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
 			//
 
-			// 재생 상태 다시 확인
+			// 재생 상태 다시 확인 (FROM 버튼테스크)
 			osMutexAcquire(playStateMutexHandle, osWaitForever); // 재생 상태 뮤텍스 획득
 			local_is_playing = is_playing;
 			osMutexRelease(playStateMutexHandle);  // 재생 상태 뮤텍스 해제
@@ -552,73 +559,178 @@ void StartVS1003(void *argument) {
  * @param argument: Not used
  * @retval None
  */
+// MP3 파일 스캔 함수
+uint32_t scan_mp3_files(void) {
+	DIR dir;
+	FILINFO fno;
+	uint32_t count = 0;
+
+	if (f_opendir(&dir, "0:/") == FR_OK) {
+		while (f_readdir(&dir, &fno) == FR_OK && fno.fname[0] && count < 50) {
+			if (!(fno.fattrib & AM_DIR)) {  // 파일인 경우
+				// MP3 확장자 확인
+				char *ext = strrchr(fno.fname, '.');
+				if (ext
+						&& (strcasecmp(ext, ".mp3") == 0
+								|| strcasecmp(ext, ".MP3") == 0)) {
+					snprintf(mp3_files[count].filename,
+							sizeof(mp3_files[count].filename), "0:/%s",
+							fno.fname);
+					count++;
+				}
+			}
+		}
+		f_closedir(&dir);
+	}
+	return count;
+}
+
+// 현재 트랙 열기 함수
+bool open_current_track(void) {
+	char FATFS_str[50];
+
+	// 현재 트랙 열기
+	if ((retSD = f_open(&SDFile, mp3_files[current_track_index].filename,
+	FA_READ)) == FR_OK) {
+		osMutexAcquire(lcdMutexHandle, osWaitForever);
+
+		// 파일명만 추출해서 표시 (경로 제외)
+		char *filename_only = strrchr(mp3_files[current_track_index].filename,
+				'/');
+		if (filename_only) {
+			filename_only++;  // '/' 다음 문자부터
+		} else {
+			filename_only = mp3_files[current_track_index].filename;
+		}
+
+		snprintf(FATFS_str, "%.20s", filename_only);
+		CLCD_Puts(0, 1, (unsigned char*) FATFS_str);
+		osMutexRelease(lcdMutexHandle);
+
+		return true;
+	} else {
+		osMutexAcquire(lcdMutexHandle, osWaitForever);
+		sprintf(FATFS_str, "open error %d", retSD);
+		CLCD_Puts(0, 1, (unsigned char*) FATFS_str);
+		osMutexRelease(lcdMutexHandle);
+
+		return false;
+	}
+}
+
+// 다음 트랙으로 이동 함수
+bool switch_to_next_track(void) {
+	f_close(&SDFile);
+	current_track_index = (current_track_index + 1) % total_mp3_files;
+
+	// 최대 전체 파일 수만큼 시도
+	for (uint32_t attempts = 0; attempts < total_mp3_files; attempts++) {
+		if (open_current_track()) {
+			// MP3 버퍼 리셋
+			osMutexAcquire(mp3BufferMutexHandle, osWaitForever);
+			mp3_buf_len = 0;
+			mp3_buf_index = 0;
+			osMutexRelease(mp3BufferMutexHandle);
+
+			return true;
+		}
+
+		// 실패하면 다음 트랙 시도
+		current_track_index = (current_track_index + 1) % total_mp3_files;
+		osDelay(100);
+	}
+
+	return false;  // 모든 파일 오픈 실패
+}
+
 /* USER CODE END Header_StartFATFS */
 void StartFATFS(void *argument) {
 	/* USER CODE BEGIN StartFATFS */
 
 	//TASK LOCAL VARIABLES
 	hsd.Init.BusWide = SDIO_BUS_WIDE_1B;
-	char FATFS_str[20];
-	const char *filename = "0:/1.mp3";
+	char FATFS_str[50];
+	bool file_opened = false;
 	//
 
 	// MOUNT SD CARD
-	if ((retSD = f_mount(&SDFatFS, &SDPath[0], 1)) == FR_OK) {	// Mount OK
+	// f_mount 함수 : SD 카드에 FAT 파일 시스템을 마운트
+	// &SDPath[0]: 드라이브 경로 문자열 포인터 ( 0: )
+	// 1 : 강제로 마운트 시도
+	if ((retSD = f_mount(&SDFatFS, &SDPath[0], 1)) == FR_OK) { // 마운트 성공
+		// MP3 파일들 스캔 (mp3 파일 갯수 리턴)
+		total_mp3_files = scan_mp3_files();
+		if (total_mp3_files == 0) {
+			osThreadId_t tid = osThreadGetId();  // 현재 태스크 ID 얻기
+			osThreadTerminate(tid);               // 현재 태스크 종료
+		}
 	}
 
-	else {	// Mount failed, show error and exit task
+	else { // 마운트 실패
 		osMutexAcquire(lcdMutexHandle, osWaitForever);
 		sprintf(FATFS_str, "mount error %d", retSD);
 		CLCD_Puts(0, 1, (unsigned char*) FATFS_str);
 		osMutexRelease(lcdMutexHandle);
-		vTaskDelete(NULL);
+		osThreadId_t tid = osThreadGetId();  // 현재 태스크 ID 얻기
+		osThreadTerminate(tid);               // 현재 태스크 종료
 	}
 	//
 
-	// OPEN MP3 FILE
-	if ((retSD = f_open(&SDFile, filename, FA_READ)) == FR_OK) {
-		osMutexAcquire(lcdMutexHandle, osWaitForever);  // LCD 뮤텍스 획득
-		CLCD_Puts(0, 1, (unsigned char*) filename);
-		osMutexRelease(lcdMutexHandle);  // LCD 뮤텍스 해제
+	// 첫 번째 트랙 열기
+	if (!open_current_track()) {
+		if (!switch_to_next_track()) { // 있어야 하나??
+			osMutexAcquire(lcdMutexHandle, osWaitForever);
+			CLCD_Puts(0, 1, (unsigned char*) "No playable files");
+			osMutexRelease(lcdMutexHandle);
+			osThreadId_t tid = osThreadGetId();  // 현재 태스크 ID 얻기
+			osThreadTerminate(tid);               // 현재 태스크 종료
+		}
 	}
-
-	else {	// File open error
-		osMutexAcquire(lcdMutexHandle, osWaitForever);  // LCD 뮤텍스 획득
-		sprintf(FATFS_str, "open error %d", retSD);
-		CLCD_Puts(0, 1, (unsigned char*) FATFS_str);
-		osMutexRelease(lcdMutexHandle);  // LCD 뮤텍스 해제
-		vTaskDelete(NULL);
-	}
-	//
 
 	// RESET MP3 BUFFER
-	osMutexAcquire(mp3BufferMutexHandle, osWaitForever);  // MP3 버퍼 뮤텍스 획득
-	mp3_buf_len = 0;
-	mp3_buf_index = 0;
-	osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
+	osMutexAcquire(mp3BufferMutexHandle, osWaitForever);
+	mp3_buf_len = 0;	//SD 카드에서 지금까지 읽어들인 MP3 데이터 총 길이
+	mp3_buf_index = 0;	//VS1003에 보낸 데이터 위치
+	osMutexRelease(mp3BufferMutexHandle);
+	file_opened = true; // 필요한 변수??
 	//
 
 	/* Infinite loop */
 	for (;;) {
+
+		// 트랙 변경 요청 확인
+		uint32_t thread_flags = osThreadFlagsWait(2, osFlagsWaitAny, 0);
+
+		if (thread_flags & 2) {  // 플래그 2: 트랙 변경 요청
+			if (switch_to_next_track()) {
+				file_opened = true;
+				osThreadFlagsSet(VS1003TaskHandle, 1);  // VS1003 태스크 깨우기
+			}
+		}
+
+		if (!file_opened) {
+			osDelay(100);
+			continue;
+		}
+
 		// MP3 버퍼 상태 확인을 뮤텍스로 보호
-		osMutexAcquire(mp3BufferMutexHandle, osWaitForever);  // MP3 버퍼 뮤텍스 획득
+		osMutexAcquire(mp3BufferMutexHandle, osWaitForever);
 		uint32_t current_buf_len = mp3_buf_len;
 		uint32_t current_buf_index = mp3_buf_index;
-		osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
+		osMutexRelease(mp3BufferMutexHandle);
 		//
 
 		if (current_buf_len - current_buf_index < 512) { // IF BUFFER LOW, READ MORE FROM FILE
 			UINT br;
-			osMutexAcquire(mp3BufferMutexHandle, osWaitForever);  // MP3 버퍼 뮤텍스 획득
+			osMutexAcquire(mp3BufferMutexHandle, osWaitForever);
+
 			// SHIFT REMAINING DATA TO FRONT
 			if (mp3_buf_index > 0 && mp3_buf_len > mp3_buf_index) {
 				memmove(mp3_buf, &mp3_buf[mp3_buf_index],
 						mp3_buf_len - mp3_buf_index);
 				mp3_buf_len = mp3_buf_len - mp3_buf_index;
 				mp3_buf_index = 0;
-			}
-
-			else if (mp3_buf_index >= mp3_buf_len) {
+			} else if (mp3_buf_index >= mp3_buf_len) {
 				mp3_buf_len = 0;
 				mp3_buf_index = 0;
 			}
@@ -627,17 +739,23 @@ void StartFATFS(void *argument) {
 			// READ FROM FILE
 			retSD = f_read(&SDFile, &mp3_buf[mp3_buf_len],
 			MP3_BUF_SIZE - mp3_buf_len, &br);
-			if (retSD != FR_OK || br == 0) {  // END OF FILE OR ERROR → RESTARTS
-				f_lseek(&SDFile, 0);
-				mp3_buf_len = 0;
-				mp3_buf_index = 0;
-				osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
+			if (retSD != FR_OK || br == 0) { // END OF FILE → 다음 곡으로
+				osMutexRelease(mp3BufferMutexHandle);
+
+				if (switch_to_next_track()) {
+					file_opened = true;
+					osThreadFlagsSet(VS1003TaskHandle, 1);  // VS1003 태스크 깨우기
+				} else {
+					file_opened = false;
+				}
+
+				osDelay(500);  // 잠시 대기
 				continue;
 			}
 			mp3_buf_len += br;
 			//
 
-			osMutexRelease(mp3BufferMutexHandle);  // MP3 버퍼 뮤텍스 해제
+			osMutexRelease(mp3BufferMutexHandle);
 
 			// NOTIFY VS1003 TASK TO PLAY DATA
 			osThreadFlagsSet(VS1003TaskHandle, 1);
@@ -679,12 +797,16 @@ void StartADC2DMA(void *argument) {
 
 		//CONVERT ADC TO VOLUME (SCALED)
 		scaled = 255 - (adcval[0] * 255) / 4100;
+		//일의 자리 없애기(음량 변동을 없애기 위해)
 		scaled_10 = (scaled / 10) * 10;
 		//
 
 		//IF VALUE CHANGED, SEND TO QUEUE(CHANGING VOLUME AT VS1003Task)
 		if (scaled_10 != last_scaled) {
 			last_scaled = scaled_10;
+			//scaled_10 변수 값을 volQueueHandle 메시지 큐에 넣음
+			//우선순위는 기본값 0
+			//만약 큐가 꽉 차 있으면 즉시 실패 (대기하지 않고)
 			osMessageQueuePut(volQueueHandle, &scaled_10, 0, 0);
 		}
 		//
@@ -716,6 +838,7 @@ void StartButton(void *argument) {
 
 	//TASK LOCAL VARIABLES
 	static bool sw1_is_pressed = false;
+	static bool sw2_is_pressed = false;
 	//
 
 	/* Infinite loop */
@@ -740,6 +863,22 @@ void StartButton(void *argument) {
 
 			else if (pin == GPIO_PIN_RESET && sw1_is_pressed == true) {	// RELEASE BTN
 				sw1_is_pressed = false;		// SW DEBOUNCING
+				HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
+			}
+
+			// CHECK BUTTON 2 (GPIOE PIN_15) - 다음 곡 재생
+			GPIO_PinState pin2 = HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_4);
+			if (pin2 == GPIO_PIN_SET && !sw2_is_pressed) { // PUSH
+				sw2_is_pressed = true;
+
+				if (total_mp3_files > 1) {  // 다수의 MP3 파일이 있을 때만
+					// FATFS 태스크에 트랙 변경 신호 전송
+					osThreadFlagsSet(FATFSTaskHandle, 2);  // 플래그 2는 트랙 변경
+				}
+
+				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
+			} else if (pin2 == GPIO_PIN_RESET && sw2_is_pressed) { // RELEASE
+				sw2_is_pressed = false;
 				HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
 			}
 		}

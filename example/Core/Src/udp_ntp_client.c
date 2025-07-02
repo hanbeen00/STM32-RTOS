@@ -34,7 +34,7 @@ void udp_ntp_receive_callback(void *arg, struct udp_pcb *pcb, struct pbuf *p, co
         {
             ntp_time_unix = seconds - NTP_UNIX_OFFSET;
 
-            // UNIX time -> UTC 시간 구조체 변환
+            // UNIX time -> 시간 구조체 변환
             time_t rawtime = (time_t)ntp_time_unix;
             struct tm *timeinfo = gmtime(&rawtime);
 
@@ -45,8 +45,6 @@ void udp_ntp_receive_callback(void *arg, struct udp_pcb *pcb, struct pbuf *p, co
                 timeinfo->tm_hour,
                 timeinfo->tm_min,
                 timeinfo->tm_sec);
-
-            // STM32 RTC 업데이트 등 필요한 작업 수행
         }
     }
 
