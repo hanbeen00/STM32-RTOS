@@ -1,3 +1,3 @@
-../Core/Src/udp_ntp_client.c:24:6:udp_ntp_receive_callback	3
-../Core/Src/udp_ntp_client.c:55:6:udp_ntp_send	2
-../Core/Src/udp_ntp_client.c:73:6:udp_ntp_client_init	2
+../Core/Src/udp_ntp_client.c:26:6:udp_ntp_receive_callback	4
+../Core/Src/udp_ntp_client.c:46:6:udp_ntp_send	6
+../Core/Src/udp_ntp_client.c:75:6:udp_ntp_client_init	6

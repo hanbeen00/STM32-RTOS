@@ -40,7 +40,7 @@ typedef struct {
 	char filename[32];
 } mp3_file_t;
 
-uint32_t time_1sec = 0;
+volatile uint32_t time_1sec = 0;
 
 #define MP3_BUF_SIZE 4096
 #define MP3_CHUNK_SIZE 32
@@ -73,27 +73,27 @@ static bool track_changed = false;
 /* Definitions for NTPTask */
 osThreadId_t NTPTaskHandle;
 const osThreadAttr_t NTPTask_attributes = { .name = "NTPTask", .stack_size =
-		2048 * 4, .priority = (osPriority_t) osPriorityLow, };
+		4096 * 4, .priority = (osPriority_t) osPriorityNormal, };
 /* Definitions for TimeTask */
 osThreadId_t TimeTaskHandle;
 const osThreadAttr_t TimeTask_attributes = { .name = "TimeTask", .stack_size =
-		256 * 4, .priority = (osPriority_t) osPriorityAboveNormal, };
+		1024 * 4, .priority = (osPriority_t) osPriorityAboveNormal, };
 /* Definitions for LEDTask */
 osThreadId_t LEDTaskHandle;
-const osThreadAttr_t LEDTask_attributes = { .name = "LEDTask", .stack_size = 128
+const osThreadAttr_t LEDTask_attributes = { .name = "LEDTask", .stack_size = 512
 		* 4, .priority = (osPriority_t) osPriorityBelowNormal, };
 /* Definitions for LCDTask */
 osThreadId_t LCDTaskHandle;
-const osThreadAttr_t LCDTask_attributes = { .name = "LCDTask", .stack_size = 128
+const osThreadAttr_t LCDTask_attributes = { .name = "LCDTask", .stack_size = 512
 		* 4, .priority = (osPriority_t) osPriorityNormal, };
 /* Definitions for UartTask */
 osThreadId_t UartTaskHandle;
 const osThreadAttr_t UartTask_attributes = { .name = "UartTask", .stack_size =
-		512 * 4, .priority = (osPriority_t) osPriorityBelowNormal, };
+		1024 * 4, .priority = (osPriority_t) osPriorityBelowNormal, };
 /* Definitions for VS1003Task */
 osThreadId_t VS1003TaskHandle;
 const osThreadAttr_t VS1003Task_attributes = { .name = "VS1003Task",
-		.stack_size = 128 * 4, .priority = (osPriority_t) osPriorityNormal, };
+		.stack_size = 512 * 4, .priority = (osPriority_t) osPriorityNormal, };
 /* Definitions for FATFSTask */
 osThreadId_t FATFSTaskHandle;
 const osThreadAttr_t FATFSTask_attributes = { .name = "FATFSTask", .stack_size =
@@ -105,14 +105,20 @@ const osThreadAttr_t ADC2DMATask_attributes = { .name = "ADC2DMATask",
 /* Definitions for ButtonTask */
 osThreadId_t ButtonTaskHandle;
 const osThreadAttr_t ButtonTask_attributes = { .name = "ButtonTask",
-		.stack_size = 128 * 4, .priority = (osPriority_t) osPriorityNormal, };
+		.stack_size = 512 * 4, .priority = (osPriority_t) osPriorityNormal, };
 /* Definitions for SEG7Task */
 osThreadId_t SEG7TaskHandle;
 const osThreadAttr_t SEG7Task_attributes = { .name = "SEG7Task", .stack_size =
-		128 * 4, .priority = (osPriority_t) osPriorityNormal, };
+		512 * 4, .priority = (osPriority_t) osPriorityNormal, };
 /* Definitions for volQueue */
 osMessageQueueId_t volQueueHandle;
 const osMessageQueueAttr_t volQueue_attributes = { .name = "volQueue" };
+/* Definitions for uartQueue */
+osMessageQueueId_t uartQueueHandle;
+const osMessageQueueAttr_t uartQueue_attributes = { .name = "uartQueue" };
+/* Definitions for segQueue */
+osMessageQueueId_t segQueueHandle;
+const osMessageQueueAttr_t segQueue_attributes = { .name = "segQueue" };
 /* Definitions for timeMutex */
 osMutexId_t timeMutexHandle;
 const osMutexAttr_t timeMutex_attributes = { .name = "timeMutex" };
@@ -125,6 +131,9 @@ const osMutexAttr_t mp3BufferMutex_attributes = { .name = "mp3BufferMutex" };
 /* Definitions for playStateMutex */
 osMutexId_t playStateMutexHandle;
 const osMutexAttr_t playStateMutex_attributes = { .name = "playStateMutex" };
+/* Definitions for uartMutex */
+osMutexId_t uartMutexHandle;
+const osMutexAttr_t uartMutex_attributes = { .name = "uartMutex" };
 /* Definitions for eventFlags */
 osEventFlagsId_t eventFlagsHandle;
 const osEventFlagsAttr_t eventFlags_attributes = { .name = "eventFlags" };
@@ -170,6 +179,9 @@ void MX_FREERTOS_Init(void) {
 	/* creation of playStateMutex */
 	playStateMutexHandle = osMutexNew(&playStateMutex_attributes);
 
+	/* creation of uartMutex */
+	uartMutexHandle = osMutexNew(&uartMutex_attributes);
+
 	/* USER CODE BEGIN RTOS_MUTEX */
 	/* add mutexes, ... */
 	/* USER CODE END RTOS_MUTEX */
@@ -186,6 +198,13 @@ void MX_FREERTOS_Init(void) {
 	/* creation of volQueue */
 	volQueueHandle = osMessageQueueNew(5, sizeof(uint8_t),
 			&volQueue_attributes);
+
+	/* creation of uartQueue */
+	uartQueueHandle = osMessageQueueNew(16, 128, &uartQueue_attributes);
+
+	/* creation of segQueue */
+	segQueueHandle = osMessageQueueNew(5, sizeof(uint16_t),
+			&segQueue_attributes);
 
 	/* USER CODE BEGIN RTOS_QUEUES */
 	/* add queues, ... */
@@ -250,15 +269,80 @@ void StartNTP(void *argument) {
 	/* init code for LWIP */
 	MX_LWIP_Init();
 	/* USER CODE BEGIN StartNTP */
-	udp_ntp_client_init();
+	uint8_t network_ready = 0;
+	uint8_t ntp_initialized = 0;
+	uint32_t last_ntp_request = 0;
+	char ntp_logBuf[128];
+
+	// NTP Task 시작 메시지를 큐에 전송
+	snprintf(ntp_logBuf, sizeof(ntp_logBuf),
+			"[NTP Task] Starting NTP client task\r\n");
+	osMessageQueuePut(uartQueueHandle, ntp_logBuf, 0, 0);
+
 	/* Infinite loop */
 	for (;;) {
-		//ON ETH DATA RECEPTION, SEND DATA TO LWIP STACK
-		// CHECK & HANDLE LWIP INTERNAL TIMEOUTS (e.g. TCP retransmission, ARP refresh)
-		if (osSemaphoreAcquire(RxPktSemaphore, osWaitForever) == osOK) {
-			ethernetif_input(&gnetif);
+		memset(ntp_logBuf, 0, sizeof(ntp_logBuf));
+		// 1. 네트워크 상태 확인
+		if (!network_ready) {
+			if (netif_is_up(&gnetif) && netif_is_link_up(&gnetif)) {
+				// IP 주소가 할당되었는지 확인
+				if (!ip4_addr_isany_val(*netif_ip4_addr(&gnetif))) {
+					network_ready = 1;
+					snprintf(ntp_logBuf, sizeof(ntp_logBuf),
+							"[NTP Task] Network is ready\r\n");
+					osMessageQueuePut(uartQueueHandle, ntp_logBuf, 0, 0);
+				} else {
+					snprintf(ntp_logBuf, sizeof(ntp_logBuf),
+							"[NTP Task] Waiting for IP address...\r\n");
+					osMessageQueuePut(uartQueueHandle, ntp_logBuf, 0, 0);
+					osDelay(1000);
+					continue;
+				}
+			}
+
+			else {
+				snprintf(ntp_logBuf, sizeof(ntp_logBuf),
+						"[NTP Task] Waiting for network link...\r\n");
+				osMessageQueuePut(uartQueueHandle, ntp_logBuf, 0, 0);
+				osDelay(2000);
+				continue;
+			}
 		}
-		sys_check_timeouts();
+
+		// 2. NTP 클라이언트 초기화 (네트워크 준비 후 한 번만)
+		if (network_ready && !ntp_initialized) {
+			snprintf(ntp_logBuf, sizeof(ntp_logBuf),
+					"[NTP Task] Initializing NTP client...\r\n");
+			osMessageQueuePut(uartQueueHandle, ntp_logBuf, 0, 0);
+			osDelay(1000); // 네트워크 안정화 대기
+			udp_ntp_client_init();
+			ntp_initialized = 1;
+			last_ntp_request = osKernelGetTickCount();
+		}
+
+		// 3. 주기적 NTP 요청
+		if (ntp_initialized) {
+			uint32_t current_tick = osKernelGetTickCount();
+			if ((current_tick - last_ntp_request) >= 10000) {
+				if (netif_is_up(&gnetif) && netif_is_link_up(&gnetif)) {
+					snprintf(ntp_logBuf, sizeof(ntp_logBuf),
+							"[NTP Task] Sending NTP request...\r\n");
+					osMessageQueuePut(uartQueueHandle, ntp_logBuf, 0, 0);
+					udp_ntp_send();
+					last_ntp_request = current_tick;
+				}
+
+				else {
+					snprintf(ntp_logBuf, sizeof(ntp_logBuf),
+							"[NTP Task] Network disconnected\r\n");
+					osMessageQueuePut(uartQueueHandle, ntp_logBuf, 0, 0);
+					network_ready = 0;
+					ntp_initialized = 0;
+				}
+			}
+		}
+
+		osDelay(5000);
 	}
 	/* USER CODE END StartNTP */
 }
@@ -283,20 +367,42 @@ void StartTime(void *argument) {
 	HAL_TIM_Base_Start_IT(&htim7);
 	//
 
+	// 로컬 타임 변수 초기화
+	time_t local_time = 0;
+	char time_logBuf[128] = { 0 }; // 버퍼 초기화
+
 	/* Infinite loop */
 	for (;;) {
-
+		memset(time_logBuf, 0, sizeof(time_logBuf));
 		//WAIT FOR TIME FLAGS -> TIME EVENT EVERY SECOND
 		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_TIME_BIT,
 		osFlagsWaitAny, osWaitForever);
 		//
 
 		//TIME EVENT -> TIME COUNT INCREASE AND TOGGLE LED
-		if (flags & EVENT_TIME_BIT) {				// 이벤트 발생 확인(1초마다 이벤트 발생)
+		if (flags & EVENT_TIME_BIT) {			// 이벤트 발생 확인(1초마다 이벤트 발생)
 			osMutexAcquire(timeMutexHandle, osWaitForever);	// 공유 변수 보호를 위해 뮤텍스 획득
-			time_1sec++;										// 1초 카운터 증가
+			// NTP 동기화가 됐으면 그걸 기준으로 증가
+			if (ntp_time_updated) {
+				local_time = ntp_time_unix + 1;
+				ntp_time_updated = 0; // 초기화
+			}
+			local_time++; // 1초 증가
+			time_1sec = local_time; // 전역변수 갱신
 			osMutexRelease(timeMutexHandle);					// 뮤텍스 해제
-			HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);				// 디버깅 LED 토글
+
+			// 유닉스 타임 → 시간 구조체 변환
+			struct tm *timeinfo = gmtime(&local_time);
+			// snprintf 길이 제한, 널문자 강제 삽입
+			snprintf(time_logBuf, sizeof(time_logBuf),
+					"[TIME Task] %04d-%02d-%02d %02d:%02d:%02d\r\n",
+					timeinfo->tm_year + 1900, timeinfo->tm_mon + 1,
+					timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min,
+					timeinfo->tm_sec);
+
+			// 큐에 문자열 복사
+			osMessageQueuePut(uartQueueHandle, time_logBuf, 0, 0);
+//			HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);			// 디버깅 LED 토글
 		}
 		//
 	}
@@ -322,7 +428,6 @@ void StartLED(void *argument) {
 
 	/* Infinite loop */
 	for (;;) {
-
 		//WAIT FOR EVENT FLAGS -> LED EVENTS EVERY SECOND
 		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_LED_BIT,
 		osFlagsWaitAny, osWaitForever);
@@ -332,8 +437,6 @@ void StartLED(void *argument) {
 		if (flags & EVENT_LED_BIT) {
 			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 		}
-		//
-
 	}
 	/* USER CODE END StartLED */
 }
@@ -357,6 +460,7 @@ void StartLCD(void *argument) {
 	char LCD_str[20];
 	bool local_is_playing;
 	//
+	char lcd_logBuf[128];
 
 	///LCD INIT -> PRINT MP3 PLAYING STATUS
 	osMutexAcquire(playStateMutexHandle, osWaitForever);
@@ -385,26 +489,38 @@ void StartLCD(void *argument) {
 
 		//WAIT FOR EVENT FLAGS -> LCD, BTN EVENTS EVERY SECOND
 		uint32_t flags = osEventFlagsWait(eventFlagsHandle,
-		EVENT_LCD_BIT | EVENT_BTN_BIT,
+		EVENT_LCD_BIT | EVENT_BTN2LCD_BIT,
 		osFlagsWaitAny, osWaitForever);
 		//
 
 		//LCD EVENT -> GET TIME FROM TIMER AND PRINT AT LCD
 		if (flags & EVENT_LCD_BIT) {
-			uint32_t local_time;
-			osMutexAcquire(timeMutexHandle, osWaitForever); // TIME 뮤텍스 획득
-			local_time = time_1sec;
-			osMutexRelease(timeMutexHandle);	// TIME 뮤텍스 해제
+			time_t rawtime;
+			struct tm *timeinfo;
 
+			osMutexAcquire(timeMutexHandle, osWaitForever); // TIME 뮤텍스 획득
+			rawtime = (time_t) time_1sec;                   // 유닉스 타임 값 가져오기
+			osMutexRelease(timeMutexHandle);                // TIME 뮤텍스 해제
+
+			// 유닉스 타임 → 시간 구조체 변환
+			timeinfo = gmtime(&rawtime);
+
+			// LCD 출력 문자열 포맷
 			osMutexAcquire(lcdMutexHandle, osWaitForever);  // LCD 뮤텍스 획득
-			sprintf(LCD_str, "%d", local_time);
-			CLCD_Puts(0, 0, (unsigned char*) LCD_str);
-			osMutexRelease(lcdMutexHandle);  // LCD 뮤텍스 해제
+			sprintf(LCD_str, "%04d-%02d-%02d", timeinfo->tm_year + 1900,
+					timeinfo->tm_mon + 1, timeinfo->tm_mday);
+			CLCD_Puts(0, 0, (unsigned char*) LCD_str);       // 첫 줄: 날짜
+
+			sprintf(LCD_str, "%02d:%02d:%02d", timeinfo->tm_hour,
+					timeinfo->tm_min, timeinfo->tm_sec);
+			CLCD_Puts(0, 1, (unsigned char*) LCD_str);       // 둘째 줄: 시각
+			osMutexRelease(lcdMutexHandle);                 // LCD 뮤텍스 해제
 		}
 		//
 
 		//BTN EVENT -> GET PLAYING STATUS AND PRINT AT LCD
-		if (flags & EVENT_BTN_BIT) {
+		if (flags & EVENT_BTN2LCD_BIT) {
+			memset(lcd_logBuf, 0, sizeof(lcd_logBuf));
 			osMutexAcquire(playStateMutexHandle, osWaitForever);
 			local_is_playing = is_playing;
 			osMutexRelease(playStateMutexHandle);
@@ -415,6 +531,10 @@ void StartLCD(void *argument) {
 				CLCD_Puts(9, 1, (unsigned char*) LCD_str);
 				sprintf(LCD_str, "playing");
 				CLCD_Puts(9, 1, (unsigned char*) LCD_str);
+
+				snprintf(lcd_logBuf, sizeof(lcd_logBuf),
+						"[CLCD Task] MP3 playing\r\n");
+				osMessageQueuePut(uartQueueHandle, lcd_logBuf, 0, 0);
 			}
 
 			else {
@@ -422,6 +542,10 @@ void StartLCD(void *argument) {
 				CLCD_Puts(9, 1, (unsigned char*) LCD_str);
 				sprintf(LCD_str, "paused");
 				CLCD_Puts(9, 1, (unsigned char*) LCD_str);
+
+				snprintf(lcd_logBuf, sizeof(lcd_logBuf),
+						"[CLCD Task] MP3 paused\r\n");
+				osMessageQueuePut(uartQueueHandle, lcd_logBuf, 0, 0);
 			}
 			osMutexRelease(lcdMutexHandle);  // LCD 뮤텍스 해제
 		}
@@ -444,23 +568,15 @@ void StartLCD(void *argument) {
 /* USER CODE END Header_StartUart */
 void StartUart(void *argument) {
 	/* USER CODE BEGIN StartUart */
+	char logBuf[128];
 	/* Infinite loop */
 	for (;;) {
-
-		//WAIT FOR EVENT FLAGS -> UART EVENT EVERY SECOND
-		uint32_t flags = osEventFlagsWait(eventFlagsHandle, EVENT_UART_BIT,
-		osFlagsWaitAny, osWaitForever);
-		//
-
-		//UART EVENT -> GET TIME FROM TIMER AND SEND USING UART
-		if (flags & EVENT_UART_BIT) {
-			uint32_t local_time;
-			osMutexAcquire(timeMutexHandle, osWaitForever);	// TIME 뮤텍스 획득
-			local_time = time_1sec;
-			osMutexRelease(timeMutexHandle);				// TIME 뮤텍스 해제
-			printf("%d\n", local_time);
+		memset(logBuf, 0, sizeof(logBuf));
+		// 큐에서 문자열 수신 (블로킹 대기)
+		if (osMessageQueueGet(uartQueueHandle, logBuf, NULL, osWaitForever)
+				== osOK) {
+			HAL_UART_Transmit(&huart3, (uint8_t*) logBuf, strlen(logBuf), 1000);
 		}
-		//
 	}
 	/* USER CODE END StartUart */
 }
@@ -604,14 +720,14 @@ bool open_current_track(void) {
 		}
 
 		snprintf(FATFS_str, "%.20s", filename_only);
-		CLCD_Puts(0, 1, (unsigned char*) FATFS_str);
+		CLCD_Puts(11, 0, (unsigned char*) FATFS_str);
 		osMutexRelease(lcdMutexHandle);
 
 		return true;
 	} else {
 		osMutexAcquire(lcdMutexHandle, osWaitForever);
 		sprintf(FATFS_str, "open error %d", retSD);
-		CLCD_Puts(0, 1, (unsigned char*) FATFS_str);
+		CLCD_Puts(11, 0, (unsigned char*) FATFS_str);
 		osMutexRelease(lcdMutexHandle);
 
 		return false;
@@ -651,6 +767,7 @@ void StartFATFS(void *argument) {
 	hsd.Init.BusWide = SDIO_BUS_WIDE_1B;
 	char FATFS_str[50];
 	bool file_opened = false;
+	char fatfs_logBuf[128];
 	//
 
 	// MOUNT SD CARD
@@ -704,6 +821,9 @@ void StartFATFS(void *argument) {
 		if (thread_flags & 2) {  // 플래그 2: 트랙 변경 요청
 			if (switch_to_next_track()) {
 				file_opened = true;
+				snprintf(fatfs_logBuf, sizeof(fatfs_logBuf),
+						"[FATFS Task] NEXT track\r\n");
+				osMessageQueuePut(uartQueueHandle, fatfs_logBuf, 0, 0);
 				osThreadFlagsSet(VS1003TaskHandle, 1);  // VS1003 태스크 깨우기
 			}
 		}
@@ -744,7 +864,7 @@ void StartFATFS(void *argument) {
 
 				if (switch_to_next_track()) {
 					file_opened = true;
-					osThreadFlagsSet(VS1003TaskHandle, 1);  // VS1003 태스크 깨우기
+					osThreadFlagsSet(VS1003TaskHandle, 1); // VS1003 태스크 깨우기
 				} else {
 					file_opened = false;
 				}
@@ -811,12 +931,8 @@ void StartADC2DMA(void *argument) {
 		}
 		//
 
-		//UPDATE LCD
-		osMutexAcquire(lcdMutexHandle, osWaitForever);  // LCD 뮤텍스 획득
-		sprintf(ADC_str, "%4d %4d", scaled_10, adcval[1]);
-		CLCD_Puts(6, 0, (unsigned char*) ADC_str);
-		osMutexRelease(lcdMutexHandle);  // LCD 뮤텍스 해제
-		//
+		_7SEG_SetNumber(DGT1, scaled_10 / 100, OFF);
+		_7SEG_SetNumber(DGT2, (scaled_10 / 10) % 10, ON);
 
 		//EVERY 100MS
 		osDelay(100);
@@ -840,6 +956,7 @@ void StartButton(void *argument) {
 	static bool sw1_is_pressed = false;
 	static bool sw2_is_pressed = false;
 	//
+	char btn_logBuf[128];
 
 	/* Infinite loop */
 	for (;;) {
@@ -851,18 +968,27 @@ void StartButton(void *argument) {
 
 		//BTN EVENT -> CHANGING PLAYING STATUS & TOGGLE LED
 		if (flags & EVENT_BTN_BIT) {
+			memset(btn_logBuf, 0, sizeof(btn_logBuf));
 			GPIO_PinState pin = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_3);
 			if (pin == GPIO_PIN_SET && sw1_is_pressed == false) {	// PUSH BTN
 				sw1_is_pressed = true;		// SW DEBOUNCING
 				osMutexAcquire(playStateMutexHandle, osWaitForever); // 재생 상태 뮤텍스 획득
 				is_playing = !is_playing;
 				osMutexRelease(playStateMutexHandle);  // 재생 상태 뮤텍스 해제
-				osThreadFlagsSet(VS1003TaskHandle, 1);	// WAKE UP VS1003Task
+				osThreadFlagsSet(VS1003TaskHandle, 1);  // WAKE UP VS1003Task
+
+//				snprintf(btn_logBuf, sizeof(btn_logBuf),
+//						"[BTN Task] BTN1 push\r\n");
+//				osMessageQueuePut(uartQueueHandle, btn_logBuf, 0, 0);
+				osEventFlagsSet(eventFlagsHandle, EVENT_BTN2LCD_BIT);
 				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
 			}
 
 			else if (pin == GPIO_PIN_RESET && sw1_is_pressed == true) {	// RELEASE BTN
 				sw1_is_pressed = false;		// SW DEBOUNCING
+//				snprintf(btn_logBuf, sizeof(btn_logBuf),
+//						"[BTN Task] BTN1 release\r\n");
+//				osMessageQueuePut(uartQueueHandle, btn_logBuf, 0, 0);
 				HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
 			}
 
@@ -875,10 +1001,18 @@ void StartButton(void *argument) {
 					// FATFS 태스크에 트랙 변경 신호 전송
 					osThreadFlagsSet(FATFSTaskHandle, 2);  // 플래그 2는 트랙 변경
 				}
+//				snprintf(btn_logBuf, sizeof(btn_logBuf),
+//						"[BTN Task] BTN3 push\r\n");
+//				osMessageQueuePut(uartQueueHandle, btn_logBuf, 0, 0);
 
 				HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
-			} else if (pin2 == GPIO_PIN_RESET && sw2_is_pressed) { // RELEASE
+			}
+
+			else if (pin2 == GPIO_PIN_RESET && sw2_is_pressed) { // RELEASE
 				sw2_is_pressed = false;
+//				snprintf(btn_logBuf, sizeof(btn_logBuf),
+//						"[BTN Task] BTN3 release\r\n");
+//				osMessageQueuePut(uartQueueHandle, btn_logBuf, 0, 0);
 				HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
 			}
 		}
@@ -912,14 +1046,8 @@ void Start7SEG(void *argument) {
 
 		//7SEG EVENT -> GET TIME FROM TIMER AND PRINT SECOND
 		if (flags & EVENT_7SEG_BIT) {
-			uint32_t local_time;
-			osMutexAcquire(timeMutexHandle, osWaitForever);	// TIME 뮤텍스 획득
-			local_time = time_1sec;
-			osMutexRelease(timeMutexHandle);				// TIME 뮤텍스 해제
-			_7SEG_SetNumber(DGT1, local_time / 10, OFF);
-			_7SEG_SetNumber(DGT2, local_time % 10, ON);
+
 		}
-		//
 
 	}
 	/* USER CODE END Start7SEG */

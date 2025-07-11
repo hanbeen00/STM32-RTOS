@@ -1,0 +1,153 @@
+// udp_ntp_client.c
+#include "lwip/ip6_addr.h"
+#include "lwip/pbuf.h"
+#include "lwip/udp.h"
+#include "lwip/ip_addr.h"
+#include "lwip/inet.h"
+#include "lwip.h"
+#include <string.h>
+#include <stdio.h>
+#include <time.h>
+#include "events.h"
+#include "cmsis_os.h"   // FreeRTOS CMSIS API 헤더
+
+// 외부 전역 핸들
+extern osMessageQueueId_t uartQueueHandle;  // UART 출력용 메시지 큐
+extern osMutexId_t timeMutexHandle;         // 시간 변수 보호용 뮤텍스
+
+#define NTP_PORT 123
+#define NTP_PACKET_SIZE 48
+#define NTP_UNIX_OFFSET 2208988800UL
+
+static struct udp_pcb *ntp_pcb;
+static ip_addr_t ntp_server_ip;
+static uint8_t ntp_packet[NTP_PACKET_SIZE];
+
+__IO uint32_t ntp_time_unix = 0;
+__IO uint8_t ntp_time_updated = 0;
+
+void udp_ntp_client_init(void);
+
+// NTP 수신 콜백 함수
+void udp_ntp_receive_callback(void *arg, struct udp_pcb *pcb, struct pbuf *p,
+                              const ip_addr_t *addr, u16_t port) {
+    if (p == NULL) return;
+
+    if (p->len >= NTP_PACKET_SIZE) {
+        uint32_t seconds;
+        memcpy(&seconds, (uint8_t*) p->payload + 40, 4);
+        seconds = ntohl(seconds);
+
+        if (seconds > NTP_UNIX_OFFSET) {
+            if (osMutexAcquire(timeMutexHandle, 10) == osOK) {
+                ntp_time_unix = seconds - NTP_UNIX_OFFSET;
+                ntp_time_updated = 1;
+                osMutexRelease(timeMutexHandle);
+
+                // 로그 출력
+                if (uartQueueHandle != NULL) {
+                    char logBuf[128];
+                    snprintf(logBuf, sizeof(logBuf),
+                             "[NTP] Time updated: %lu\n", ntp_time_unix);
+                    osMessageQueuePut(uartQueueHandle, logBuf, 0, 0);
+                }
+            }
+        }
+    }
+    pbuf_free(p);
+}
+
+// NTP 요청 패킷 전송 함수
+void udp_ntp_send(void) {
+    if (!netif_is_up(&gnetif) || !netif_is_link_up(&gnetif)) {
+        return;
+    }
+    if (ip4_addr_isany_val(*netif_ip4_addr(&gnetif))) {
+        return;
+    }
+    if (ntp_pcb == NULL) {
+        udp_ntp_client_init();
+        return;
+    }
+
+    struct pbuf *p;
+    memset(ntp_packet, 0, sizeof(ntp_packet));
+    ntp_packet[0] = 0x1B;  // NTP request flags
+
+    p = pbuf_alloc(PBUF_TRANSPORT, NTP_PACKET_SIZE, PBUF_RAM);
+    if (p != NULL) {
+        pbuf_take(p, ntp_packet, NTP_PACKET_SIZE);
+        err_t result = udp_send(ntp_pcb, p);
+        if (result != ERR_OK) {
+            if (uartQueueHandle != NULL) {
+                char logBuf[64];
+                snprintf(logBuf, sizeof(logBuf),
+                         "[NTP] udp_send failed: %d\n", result);
+                osMessageQueuePut(uartQueueHandle, logBuf, 0, 0);
+            }
+        }
+        pbuf_free(p);
+    }
+}
+
+// NTP 클라이언트 초기화 함수
+void udp_ntp_client_init(void) {
+    char logBuf[128];
+
+    if (!netif_is_up(&gnetif)) {
+        snprintf(logBuf, sizeof(logBuf), "[NTP] Network interface not up\n");
+        if (uartQueueHandle != NULL) {
+            osMessageQueuePut(uartQueueHandle, logBuf, 0, 0);
+        }
+        return;
+    }
+
+    if (ntp_pcb != NULL) {
+        udp_disconnect(ntp_pcb);
+        udp_remove(ntp_pcb);
+        ntp_pcb = NULL;
+    }
+
+    ntp_pcb = udp_new();
+    if (ntp_pcb == NULL) {
+        snprintf(logBuf, sizeof(logBuf), "[NTP] Failed to create UDP PCB\n");
+        if (uartQueueHandle != NULL) {
+            osMessageQueuePut(uartQueueHandle, logBuf, 0, 0);
+        }
+        return;
+    }
+
+    err_t bind_result = udp_bind(ntp_pcb, IP_ADDR_ANY, 0);
+    if (bind_result != ERR_OK) {
+        snprintf(logBuf, sizeof(logBuf), "[NTP] Failed to bind: %d\n", bind_result);
+        if (uartQueueHandle != NULL) {
+            osMessageQueuePut(uartQueueHandle, logBuf, 0, 0);
+        }
+        udp_remove(ntp_pcb);
+        ntp_pcb = NULL;
+        return;
+    }
+
+    // Google NTP 서버 IP 주소 설정
+    IP4_ADDR(&ntp_server_ip, 216, 239, 35, 0);
+
+    err_t connect_result = udp_connect(ntp_pcb, &ntp_server_ip, NTP_PORT);
+    if (connect_result != ERR_OK) {
+        snprintf(logBuf, sizeof(logBuf), "[NTP] Failed to connect: %d\n", connect_result);
+        if (uartQueueHandle != NULL) {
+            osMessageQueuePut(uartQueueHandle, logBuf, 0, 0);
+        }
+        udp_remove(ntp_pcb);
+        ntp_pcb = NULL;
+        return;
+    }
+
+    udp_recv(ntp_pcb, udp_ntp_receive_callback, NULL);
+
+    snprintf(logBuf, sizeof(logBuf), "[NTP] Client initialized successfully\n");
+    if (uartQueueHandle != NULL) {
+        osMessageQueuePut(uartQueueHandle, logBuf, 0, 0);
+    }
+
+    udp_ntp_send();
+}

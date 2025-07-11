@@ -1,23 +1,9 @@
-01:50:18 **** Incremental Build of configuration Debug for project example ****
+18:04:37 **** Incremental Build of configuration Debug for project example ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/freertos.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -I../LWIP/App -I../LWIP/Target -I../Middlewares/Third_Party/LwIP/src/include -I../Middlewares/Third_Party/LwIP/system -I../Middlewares/Third_Party/LwIP/src/include/netif/ppp -I../Middlewares/Third_Party/LwIP/src/include/lwip -I../Middlewares/Third_Party/LwIP/src/include/lwip/apps -I../Middlewares/Third_Party/LwIP/src/include/lwip/priv -I../Middlewares/Third_Party/LwIP/src/include/lwip/prot -I../Middlewares/Third_Party/LwIP/src/include/netif -I../Middlewares/Third_Party/LwIP/src/include/compat/posix -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/arpa -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/net -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/sys -I../Middlewares/Third_Party/LwIP/src/include/compat/stdc -I../Middlewares/Third_Party/LwIP/system/arch -I../Drivers/BSP/Components/dp83848 -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/freertos.d" -MT"Core/Src/freertos.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/freertos.o"
-../Core/Src/freertos.c: In function 'StartLCD':
-../Core/Src/freertos.c:400:44: warning: format '%d' expects argument of type 'int', but argument 3 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
-  400 |                         sprintf(LCD_str, "%d", local_time);
-      |                                           ~^   ~~~~~~~~~~
-      |                                            |   |
-      |                                            int uint32_t {aka long unsigned int}
-      |                                           %ld
-../Core/Src/freertos.c: In function 'StartUart':
-../Core/Src/freertos.c:461:34: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
-  461 |                         printf("%d\n", local_time);
-      |                                 ~^     ~~~~~~~~~~
-      |                                  |     |
-      |                                  int   uint32_t {aka long unsigned int}
-      |                                 %ld
 ../Core/Src/freertos.c: In function 'open_current_track':
-../Core/Src/freertos.c:606:37: warning: passing argument 2 of 'snprintf' makes integer from pointer without a cast [-Wint-conversion]
-  606 |                 snprintf(FATFS_str, "%.20s", filename_only);
+../Core/Src/freertos.c:722:37: warning: passing argument 2 of 'snprintf' makes integer from pointer without a cast [-Wint-conversion]
+  722 |                 snprintf(FATFS_str, "%.20s", filename_only);
       |                                     ^~~~~~~
       |                                     |
       |                                     char *
@@ -26,22 +12,38 @@ In file included from ../Core/Inc/common.h:9,
 C:\ST\STM32CubeIDE_1.14.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344\tools\bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/include/stdio.h:272:37: note: expected 'size_t' {aka 'unsigned int'} but argument is of type 'char *'
   272 | int     snprintf (char *__restrict, size_t, const char *__restrict, ...)
       |                                     ^~~~~~
+../Core/Src/freertos.c: In function 'StartADC2DMA':
+../Core/Src/freertos.c:909:14: warning: unused variable 'ADC_str' [-Wunused-variable]
+  909 |         char ADC_str[20];
+      |              ^~~~~~~
 ../Core/Src/freertos.c: At top level:
 ../Core/Src/freertos.c:55:13: warning: 'track_changed' defined but not used [-Wunused-variable]
    55 | static bool track_changed = false;
       |             ^~~~~~~~~~~~~
+../Core/Src/freertos.c: In function 'StartLCD':
+../Core/Src/freertos.c:510:48: warning: '%02d' directive writing between 2 and 11 bytes into a region of size between 8 and 15 [-Wformat-overflow=]
+  510 |                         sprintf(LCD_str, "%04d-%02d-%02d", timeinfo->tm_year + 1900,
+      |                                                ^~~~
+../Core/Src/freertos.c:510:42: note: directive argument in the range [-2147483647, 2147483647]
+  510 |                         sprintf(LCD_str, "%04d-%02d-%02d", timeinfo->tm_year + 1900,
+      |                                          ^~~~~~~~~~~~~~~~
+../Core/Src/freertos.c:510:25: note: 'sprintf' output between 11 and 36 bytes into a destination of size 20
+  510 |                         sprintf(LCD_str, "%04d-%02d-%02d", timeinfo->tm_year + 1900,
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  511 |                                         timeinfo->tm_mon + 1, timeinfo->tm_mday);
+      |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ../Core/Src/freertos.c: In function 'scan_mp3_files':
-../Core/Src/freertos.c:577:96: warning: '%s' directive output may be truncated writing up to 255 bytes into a region of size 29 [-Wformat-truncation=]
-  577 |                                                         sizeof(mp3_files[count].filename), "0:/%s",
+../Core/Src/freertos.c:693:96: warning: '%s' directive output may be truncated writing up to 255 bytes into a region of size 29 [-Wformat-truncation=]
+  693 |                                                         sizeof(mp3_files[count].filename), "0:/%s",
       |                                                                                                ^~
-  578 |                                                         fno.fname);
+  694 |                                                         fno.fname);
       |                                                         ~~~~~~~~~                               
-../Core/Src/freertos.c:576:41: note: 'snprintf' output between 4 and 259 bytes into a destination of size 32
-  576 |                                         snprintf(mp3_files[count].filename,
+../Core/Src/freertos.c:692:41: note: 'snprintf' output between 4 and 259 bytes into a destination of size 32
+  692 |                                         snprintf(mp3_files[count].filename,
       |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  577 |                                                         sizeof(mp3_files[count].filename), "0:/%s",
+  693 |                                                         sizeof(mp3_files[count].filename), "0:/%s",
       |                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  578 |                                                         fno.fname);
+  694 |                                                         fno.fname);
       |                                                         ~~~~~~~~~~
 arm-none-eabi-gcc -o "example.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="example.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: example.elf
@@ -49,11 +51,11 @@ Finished building target: example.elf
 arm-none-eabi-size  example.elf 
 arm-none-eabi-objdump -h -S example.elf  > "example.list"
    text	   data	    bss	    dec	    hex	filename
- 146040	    148	  80228	 226416	  37470	example.elf
+ 147680	    148	 113012	 260840	  3fae8	example.elf
 Finished building: default.size.stdout
  
 Finished building: example.list
  
 
-01:50:21 Build Finished. 0 errors, 5 warnings. (took 2s.931ms)
+18:04:40 Build Finished. 0 errors, 5 warnings. (took 3s.7ms)
 

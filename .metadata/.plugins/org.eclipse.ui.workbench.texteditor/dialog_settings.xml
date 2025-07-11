@@ -3,20 +3,22 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
-		<item value="RxPktSemaphore"/>
-		<item value="osThreadFlagsSet"/>
-		<item value="osThreadFlagsWait"/>
-		<item value="3"/>
-		<item value="0x00000003"/>
-		<item value="switch_to_next_track"/>
-		<item value="scan_mp3_files"/>
-		<item value="open_current_track"/>
-		<item value="current_buf_len"/>
-		<item value="mp3BufferMutexHandle, osWaitForever"/>
-		<item value="is_playing"/>
-		<item value="1"/>
-		<item value="osFlagsWaitAny"/>
-		<item value="vs1003ram"/>
-		<item value="filename"/>
+		<item value="network_ready "/>
+		<item value="#include &quot;lwip/ip6_addr.h&quot;"/>
+		<item value="ntp_time_updated"/>
+		<item value="hreadFlag"/>
+		<item value="GPIO"/>
+		<item value="GPIOB"/>
+		<item value="toggle"/>
+		<item value="volQueueHandle"/>
+		<item value="waiting"/>
+		<item value="EVENT_BTN_BIT"/>
+		<item value="last_sync_tick"/>
+		<item value="osMessageQueueNew"/>
+		<item value="printf"/>
+		<item value="time_1sec"/>
+		<item value="timeMutexHandle"/>
+	</list>
+	<list key="replacehistory">
 	</list>
 </section>

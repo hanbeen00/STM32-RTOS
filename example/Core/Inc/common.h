@@ -9,6 +9,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <time.h>
 
 /* STM32 HAL */
 #include "stm32f4xx_hal.h"

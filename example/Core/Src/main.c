@@ -228,10 +228,10 @@ static void MX_NVIC_Init(void)
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	if (huart->Instance == USART3) {
-		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);                // 수신 시 LED 토글
-		HAL_UART_Transmit(&huart3, &rx3_data, 1, 10);         // Echo 전송
-		HAL_UART_Receive_IT(&huart3, &rx3_data, 1);           // 인터럽트 수신 재시작
-		osEventFlagsSet(eventFlagsHandle, EVENT_UART_BIT);    // 이벤트 플래그 설정
+//		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);                // 수신 시 LED 토글
+//		HAL_UART_Transmit(&huart3, &rx3_data, 1, 10);         // Echo 전송
+//		HAL_UART_Receive_IT(&huart3, &rx3_data, 1);           // 인터럽트 수신 재시작
+//		osEventFlagsSet(eventFlagsHandle, EVENT_UART_BIT);    // 이벤트 플래그 설정
 	}
 }
 

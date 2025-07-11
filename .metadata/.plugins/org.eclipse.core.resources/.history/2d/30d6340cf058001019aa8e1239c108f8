@@ -1,0 +1,103 @@
+#include "lwip/ip6_addr.h"
+#include "lwip/pbuf.h"
+#include "lwip/udp.h"
+#include "lwip/ip_addr.h"
+#include "lwip/inet.h"
+#include "lwip.h"
+#include <string.h>
+#include <stdio.h>
+#include <time.h>
+#include "events.h"
+
+#define NTP_PORT 123
+#define NTP_PACKET_SIZE 48
+#define NTP_UNIX_OFFSET 2208988800UL
+
+static struct udp_pcb *ntp_pcb;
+static ip_addr_t ntp_server_ip;
+static uint8_t ntp_packet[NTP_PACKET_SIZE];
+
+__IO uint32_t ntp_time_unix = 0;
+__IO uint8_t ntp_time_updated = 0;
+
+// NTP 수신 콜백
+void udp_ntp_receive_callback(void *arg, struct udp_pcb *pcb, struct pbuf *p,
+		const ip_addr_t *addr, u16_t port) {
+	if (p->len >= NTP_PACKET_SIZE) {
+		uint32_t seconds;
+
+		memcpy(&seconds, (uint8_t*) p->payload + 40, 4);
+		seconds = ntohl(seconds);
+
+		if (seconds > NTP_UNIX_OFFSET) {
+			ntp_time_unix = seconds - NTP_UNIX_OFFSET;
+			ntp_time_updated = 1;
+
+			time_t rawtime = (time_t) ntp_time_unix;
+			struct tm *timeinfo = gmtime(&rawtime);
+
+			printf("NTP Time: %04d-%02d-%02d %02d:%02d:%02d (UTC)\r\n",
+				timeinfo->tm_year + 1900,
+				timeinfo->tm_mon + 1,
+				timeinfo->tm_mday,
+				timeinfo->tm_hour,
+				timeinfo->tm_min,
+				timeinfo->tm_sec);
+		}
+	}
+	pbuf_free(p);
+}
+
+// NTP 요청 전송 함수
+void udp_ntp_send() {
+	if (ntp_pcb == NULL) {
+		printf("NTP PCB is NULL. Reinitializing.\r\n");
+		udp_ntp_client_init();
+		return;
+	}
+
+	if (!netif_is_link_up(&gnetif)) {
+		printf("[NTP] Link is down. Cannot send request.\r\n");
+		return;
+	}
+
+	struct pbuf *p;
+
+	udp_disconnect(ntp_pcb);
+	udp_connect(ntp_pcb, &ntp_server_ip, NTP_PORT);
+	udp_recv(ntp_pcb, udp_ntp_receive_callback, NULL);
+
+	memset(ntp_packet, 0, sizeof(ntp_packet));
+	ntp_packet[0] = 0x1B; // LI=0, VN=3, Mode=3 (Client)
+
+	p = pbuf_alloc(PBUF_TRANSPORT, NTP_PACKET_SIZE, PBUF_POOL);
+	if (p != NULL) {
+		pbuf_take(p, ntp_packet, NTP_PACKET_SIZE);
+		err_t result = udp_send(ntp_pcb, p);
+		if (result != ERR_OK) {
+			printf("udp_send failed: %d\r\n", result);
+		} else {
+			printf("[NTP] Request sent.\r\n");
+		}
+		pbuf_free(p);
+	}
+}
+
+// NTP 초기화 함수
+void udp_ntp_client_init() {
+	ntp_pcb = udp_new();
+	if (ntp_pcb == NULL) {
+		printf("Failed to create UDP PCB\r\n");
+		return;
+	}
+
+	udp_bind(ntp_pcb, IP_ADDR_ANY, 0);  // 로컬 포트 바인딩
+
+	// NTP 서버 IP (Google NTP 서버 예시)
+	IP4_ADDR(&ntp_server_ip, 216, 239, 35, 0);
+
+	udp_connect(ntp_pcb, &ntp_server_ip, NTP_PORT);
+	udp_recv(ntp_pcb, udp_ntp_receive_callback, NULL);
+
+	udp_ntp_send();
+}
