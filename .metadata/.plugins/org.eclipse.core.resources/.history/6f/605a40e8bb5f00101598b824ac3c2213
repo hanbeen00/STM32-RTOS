@@ -1,0 +1,21 @@
+#include "common.h"
+
+uint16_t adcval[4] = { 0, };
+
+
+typedef struct {
+	char filename[32];
+} mp3_file_t;
+
+volatile uint32_t time_1sec = 0;
+
+
+uint8_t mp3_buf[MP3_BUF_SIZE]; //MP3 데이터가 들어 있는 전체 버퍼
+volatile uint32_t mp3_buf_len = 0; //전체 길이
+volatile uint32_t mp3_buf_index = 0; //현재까지 전송된 위치
+volatile bool is_playing = true;  // 기본값: 재생 중
+
+static mp3_file_t mp3_files[50];  // 최대 50개 MP3 파일
+static uint32_t total_mp3_files = 0;
+static uint32_t current_track_index = 0;
+static bool track_changed = false;

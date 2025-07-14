@@ -3,21 +3,21 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<item key="replaceBarOpen" value="false"/>
 	<list key="searchhistory">
-		<item value="network_ready "/>
-		<item value="#include &quot;lwip/ip6_addr.h&quot;"/>
-		<item value="ntp_time_updated"/>
-		<item value="hreadFlag"/>
-		<item value="GPIO"/>
-		<item value="GPIOB"/>
-		<item value="toggle"/>
-		<item value="volQueueHandle"/>
-		<item value="waiting"/>
+		<item value="segQueue"/>
+		<item value="CLCD_Puts"/>
+		<item value="CLCD_Puts\"/>
+		<item value="EVENT_TIME_BIT"/>
+		<item value="EVENT_LCD_BIT"/>
+		<item value="EVENT_UART_BIT"/>
 		<item value="EVENT_BTN_BIT"/>
-		<item value="last_sync_tick"/>
-		<item value="osMessageQueueNew"/>
-		<item value="printf"/>
-		<item value="time_1sec"/>
-		<item value="timeMutexHandle"/>
+		<item value="eventFlagsHandle"/>
+		<item value="LEDTaskHandle"/>
+		<item value="GPIO_PIN_13"/>
+		<item value="uartMutex"/>
+		<item value="uartQueueHandle"/>
+		<item value="adcval"/>
+		<item value="filename"/>
+		<item value="network_ready "/>
 	</list>
 	<list key="replacehistory">
 	</list>

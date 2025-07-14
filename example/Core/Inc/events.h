@@ -11,8 +11,4 @@
 #define EVENT_7SEG_BIT   (1 << 7)
 #define EVENT_BTN2LCD_BIT   (1 << 8)
 
-
-#define LOG_QUEUE_SIZE 16     // 로그 메시지 최대 개수
-#define LOG_ITEM_SIZE 128     // 한 메시지 최대 길이
-
 #endif

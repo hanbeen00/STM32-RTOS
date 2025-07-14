@@ -1,9 +1,10 @@
-18:04:37 **** Incremental Build of configuration Debug for project example ****
+00:23:48 **** Incremental Build of configuration Debug for project example ****
 make -j12 all 
 arm-none-eabi-gcc "../Core/Src/freertos.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -I../LWIP/App -I../LWIP/Target -I../Middlewares/Third_Party/LwIP/src/include -I../Middlewares/Third_Party/LwIP/system -I../Middlewares/Third_Party/LwIP/src/include/netif/ppp -I../Middlewares/Third_Party/LwIP/src/include/lwip -I../Middlewares/Third_Party/LwIP/src/include/lwip/apps -I../Middlewares/Third_Party/LwIP/src/include/lwip/priv -I../Middlewares/Third_Party/LwIP/src/include/lwip/prot -I../Middlewares/Third_Party/LwIP/src/include/netif -I../Middlewares/Third_Party/LwIP/src/include/compat/posix -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/arpa -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/net -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/sys -I../Middlewares/Third_Party/LwIP/src/include/compat/stdc -I../Middlewares/Third_Party/LwIP/system/arch -I../Drivers/BSP/Components/dp83848 -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/freertos.d" -MT"Core/Src/freertos.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/freertos.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -I../LWIP/App -I../LWIP/Target -I../Middlewares/Third_Party/LwIP/src/include -I../Middlewares/Third_Party/LwIP/system -I../Middlewares/Third_Party/LwIP/src/include/netif/ppp -I../Middlewares/Third_Party/LwIP/src/include/lwip -I../Middlewares/Third_Party/LwIP/src/include/lwip/apps -I../Middlewares/Third_Party/LwIP/src/include/lwip/priv -I../Middlewares/Third_Party/LwIP/src/include/lwip/prot -I../Middlewares/Third_Party/LwIP/src/include/netif -I../Middlewares/Third_Party/LwIP/src/include/compat/posix -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/arpa -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/net -I../Middlewares/Third_Party/LwIP/src/include/compat/posix/sys -I../Middlewares/Third_Party/LwIP/src/include/compat/stdc -I../Middlewares/Third_Party/LwIP/system/arch -I../Drivers/BSP/Components/dp83848 -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 ../Core/Src/freertos.c: In function 'open_current_track':
-../Core/Src/freertos.c:722:37: warning: passing argument 2 of 'snprintf' makes integer from pointer without a cast [-Wint-conversion]
-  722 |                 snprintf(FATFS_str, "%.20s", filename_only);
+../Core/Src/freertos.c:654:37: warning: passing argument 2 of 'snprintf' makes integer from pointer without a cast [-Wint-conversion]
+  654 |                 snprintf(FATFS_str, "%.20s", filename_only);
       |                                     ^~~~~~~
       |                                     |
       |                                     char *
@@ -13,49 +14,62 @@ C:\ST\STM32CubeIDE_1.14.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.external
   272 | int     snprintf (char *__restrict, size_t, const char *__restrict, ...)
       |                                     ^~~~~~
 ../Core/Src/freertos.c: In function 'StartADC2DMA':
-../Core/Src/freertos.c:909:14: warning: unused variable 'ADC_str' [-Wunused-variable]
-  909 |         char ADC_str[20];
+../Core/Src/freertos.c:835:14: warning: unused variable 'ADC_str' [-Wunused-variable]
+  835 |         char ADC_str[20];
       |              ^~~~~~~
 ../Core/Src/freertos.c: At top level:
 ../Core/Src/freertos.c:55:13: warning: 'track_changed' defined but not used [-Wunused-variable]
    55 | static bool track_changed = false;
       |             ^~~~~~~~~~~~~
 ../Core/Src/freertos.c: In function 'StartLCD':
-../Core/Src/freertos.c:510:48: warning: '%02d' directive writing between 2 and 11 bytes into a region of size between 8 and 15 [-Wformat-overflow=]
-  510 |                         sprintf(LCD_str, "%04d-%02d-%02d", timeinfo->tm_year + 1900,
+../Core/Src/freertos.c:473:48: warning: '%02d' directive writing between 2 and 11 bytes into a region of size between 8 and 15 [-Wformat-overflow=]
+  473 |                         sprintf(LCD_str, "%04d-%02d-%02d", timeinfo->tm_year + 1900,
       |                                                ^~~~
-../Core/Src/freertos.c:510:42: note: directive argument in the range [-2147483647, 2147483647]
-  510 |                         sprintf(LCD_str, "%04d-%02d-%02d", timeinfo->tm_year + 1900,
+../Core/Src/freertos.c:473:42: note: directive argument in the range [-2147483647, 2147483647]
+  473 |                         sprintf(LCD_str, "%04d-%02d-%02d", timeinfo->tm_year + 1900,
       |                                          ^~~~~~~~~~~~~~~~
-../Core/Src/freertos.c:510:25: note: 'sprintf' output between 11 and 36 bytes into a destination of size 20
-  510 |                         sprintf(LCD_str, "%04d-%02d-%02d", timeinfo->tm_year + 1900,
+../Core/Src/freertos.c:473:25: note: 'sprintf' output between 11 and 36 bytes into a destination of size 20
+  473 |                         sprintf(LCD_str, "%04d-%02d-%02d", timeinfo->tm_year + 1900,
       |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  511 |                                         timeinfo->tm_mon + 1, timeinfo->tm_mday);
+  474 |                                         timeinfo->tm_mon + 1, timeinfo->tm_mday);
       |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ../Core/Src/freertos.c: In function 'scan_mp3_files':
-../Core/Src/freertos.c:693:96: warning: '%s' directive output may be truncated writing up to 255 bytes into a region of size 29 [-Wformat-truncation=]
-  693 |                                                         sizeof(mp3_files[count].filename), "0:/%s",
+../Core/Src/freertos.c:625:96: warning: '%s' directive output may be truncated writing up to 255 bytes into a region of size 29 [-Wformat-truncation=]
+  625 |                                                         sizeof(mp3_files[count].filename), "0:/%s",
       |                                                                                                ^~
-  694 |                                                         fno.fname);
+  626 |                                                         fno.fname);
       |                                                         ~~~~~~~~~                               
-../Core/Src/freertos.c:692:41: note: 'snprintf' output between 4 and 259 bytes into a destination of size 32
-  692 |                                         snprintf(mp3_files[count].filename,
+../Core/Src/freertos.c:624:41: note: 'snprintf' output between 4 and 259 bytes into a destination of size 32
+  624 |                                         snprintf(mp3_files[count].filename,
       |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  693 |                                                         sizeof(mp3_files[count].filename), "0:/%s",
+  625 |                                                         sizeof(mp3_files[count].filename), "0:/%s",
       |                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  694 |                                                         fno.fname);
+  626 |                                                         fno.fname);
       |                                                         ~~~~~~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:116:35: warning: passing argument 2 of 'HAL_ADC_Start_DMA' from incompatible pointer type [-Wincompatible-pointer-types]
+  116 |         HAL_ADC_Start_DMA(&hadc1, &adcval[0], 4);
+      |                                   ^~~~~~~~~~
+      |                                   |
+      |                                   uint16_t * {aka short unsigned int *}
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:304,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h:594:72: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'uint16_t *' {aka 'short unsigned int *'}
+  594 | HAL_StatusTypeDef HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, uint32_t *pData, uint32_t Length);
+      |                                                              ~~~~~~~~~~^~~~~
 arm-none-eabi-gcc -o "example.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Hanbin\Desktop\RTOS-Example\STM32-RTOS\example\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="example.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: example.elf
  
 arm-none-eabi-size  example.elf 
 arm-none-eabi-objdump -h -S example.elf  > "example.list"
    text	   data	    bss	    dec	    hex	filename
- 147680	    148	 113012	 260840	  3fae8	example.elf
+ 147348	    148	 113004	 260500	  3f994	example.elf
 Finished building: default.size.stdout
  
 Finished building: example.list
  
 
-18:04:40 Build Finished. 0 errors, 5 warnings. (took 3s.7ms)
+00:23:51 Build Finished. 0 errors, 6 warnings. (took 2s.820ms)
 
